@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -162,12 +163,13 @@ export function Footer() {
           {/* Column 1: Brand Info */}
           <div className="col-span-2 md:col-span-3 lg:col-span-1 space-y-4">
             <Link href="/" className="inline-flex items-center gap-2 group">
-              <div className="h-9 w-9 rounded-xl bg-primary flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-                <Sparkles className="h-4 w-4" />
-              </div>
-              <span className="font-black text-xl tracking-tight text-primary">
-                VEXLORA
-              </span>
+              <Image
+                src="/images/vexlora.png"
+                alt="Vexlora Logo"
+                width={140}
+                height={36}
+                className="h-9 w-auto object-contain group-hover:scale-105 transition-transform"
+              />
             </Link>
             <p className="text-[14px] text-secondary leading-relaxed">
               Vexlora is a premier multi-vendor marketplace connecting verified independent vendors and artisan creators with discerning customers worldwide.

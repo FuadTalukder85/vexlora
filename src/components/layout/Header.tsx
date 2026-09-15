@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   Search,
@@ -110,17 +111,13 @@ export function Header() {
 
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="h-10 w-10 rounded-2xl bg-primary flex items-center justify-center text-white shadow-lg group-hover:scale-105 transition-transform duration-200">
-                <Sparkles className="h-5 w-5" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-black text-2xl tracking-tight text-primary leading-none">
-                  VEXLORA
-                </span>
-                <span className="text-[10px] font-bold tracking-widest text-secondary uppercase mt-0.5">
-                  Marketplace
-                </span>
-              </div>
+              <Image
+                src="/images/vexlora.png"
+                alt="Vexlora Logo"
+                width={150}
+                height={40}
+                priority
+              />
             </Link>
           </div>
 

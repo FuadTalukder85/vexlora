@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   X,
@@ -76,17 +77,13 @@ export function MobileNav() {
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center gap-2 group"
           >
-            <div className="h-9 w-9 rounded-xl bg-primary flex items-center justify-center text-white shadow-md">
-              <Sparkles className="h-5 w-5" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-black text-lg tracking-tight text-primary leading-none">
-                VEXLORA
-              </span>
-              <span className="text-[9px] font-semibold tracking-wider text-secondary uppercase">
-                Customer Store
-              </span>
-            </div>
+            <Image
+              src="/images/vexlora.png"
+              alt="Vexlora Logo"
+              width={130}
+              height={32}
+              className="h-8 w-auto object-contain"
+            />
           </Link>
 
           <button
