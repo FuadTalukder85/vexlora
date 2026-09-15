@@ -4,13 +4,13 @@ export default function GlobalLoading() {
       <div className="flex flex-col items-center space-y-4 max-w-sm w-full">
         {/* Animated Spinner & Brand Pulse */}
         <div className="relative flex items-center justify-center">
-          <div className="h-12 w-12 rounded-full border-3 border-indigo-100 border-t-indigo-600 animate-spin" />
+          <div className="h-12 w-12 rounded-full border-3 border-slate-200 border-t-primary animate-spin" />
         </div>
 
         {/* Text */}
         <div className="space-y-1 text-center">
-          <p className="text-sm font-semibold text-slate-800">Loading Vexlora...</p>
-          <p className="text-xs text-slate-400">Connecting to Vexlora marketplace</p>
+          <p className="text-sm font-semibold text-primary">Loading Vexlora...</p>
+          <p className="text-xs text-secondary">Connecting to Vexlora marketplace</p>
         </div>
 
         {/* Skeleton Bars */}
