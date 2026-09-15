@@ -21,7 +21,7 @@ export function Navbar() {
           {/* Today's Hot Deals */}
           <Link
             href="#"
-            className="inline-flex items-center gap-1.5 font-semibold text-rose-600 hover:text-rose-700 transition-colors py-1 text-[14px]"
+            className="inline-flex items-center gap-1.5 font-semibold text-highlight hover:text-rose-700 transition-colors py-1 text-[14px]"
           >
             <Flame className="h-3.5 w-3.5" />
             <span>Today&apos;s Hot Deals</span>

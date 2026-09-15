@@ -3,7 +3,7 @@
 @theme {
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
-  --color-light: var(--light);
+  --color-highlight: var(--highlight);
 }
 
 @layer base {
@@ -18,7 +18,7 @@
     --primary-foreground: #ffffff;
     --secondary: #90A1B9;
     --secondary-foreground: #062D54;
-    --light: #0F172B;
+    --highlight: #E11D48;
     --muted: #f1f5f9;
     --muted-foreground: #90A1B9;
     --accent: #f8fafc;

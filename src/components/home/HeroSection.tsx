@@ -10,6 +10,7 @@ import {
   Zap,
   TrendingUp,
   ShieldCheck,
+  ChevronLeft,
   ChevronRight,
   ArrowRight,
   Store,
@@ -29,29 +30,38 @@ const categories = [
 
 export function HeroSection() {
   const [activeSlide, setActiveSlide] = React.useState(0);
+  const [timerSeconds, setTimerSeconds] = React.useState(32786); // 09:06:26
 
   const heroSlides = [
     {
-      badge: "Mega Multi-Vendor Fest • Up to 60% Off",
-      title: "Discover Premium Verified Multi-Vendor Stores",
-      subtitle:
-        "Connect directly with independent creators, artisan brands, and verified global vendors with 100% escrow buyer protection.",
-      ctaPrimary: "Explore Marketplace",
-      ctaSecondary: "View Verified Stores",
-      bgGradient: "from-primary via-[#0a3a6b] to-[#124d88]",
-      discountTag: "60% OFF",
+      badge: "Limited Edition",
+      titleLine1: "Modern",
+      titleLine2: "Dinning Chair",
+      subtitle: "Discover our new items. Up to ",
+      highlight: "25% Off !",
+      cta: "Shop Now",
+      image: "/images/bg-01.png",
+      align: "right",
     },
     {
-      badge: "Next-Gen Tech & Electronics",
-      title: "Upgrade Your Gear with Factory Direct Deals",
-      subtitle:
-        "Get direct warranty coverage and fast dispatch on certified tech gear across top vendor storefronts.",
-      ctaPrimary: "Shop Tech Deals",
-      ctaSecondary: "Browse Brands",
-      bgGradient: "from-[#04203e] via-primary to-[#0e447b]",
-      discountTag: "HOT DEAL",
+      badge: "New Arrivals",
+      titleLine1: "Wall clock",
+      titleLine2: "renaissance",
+      subtitle: "Discover our new items. Up to ",
+      highlight: "25% Off !",
+      cta: "Shop Now",
+      image: "/images/bg-02.png",
+      align: "left",
     },
   ];
+
+  const handlePrevSlide = () => {
+    setActiveSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  };
+
+  const handleNextSlide = () => {
+    setActiveSlide((prev) => (prev + 1) % heroSlides.length);
+  };
 
   React.useEffect(() => {
     const timer = setInterval(() => {
@@ -60,6 +70,51 @@ export function HeroSection() {
     return () => clearInterval(timer);
   }, [heroSlides.length]);
 
+  React.useEffect(() => {
+    const countdown = setInterval(() => {
+      setTimerSeconds((prev) => (prev > 0 ? prev - 1 : 32400));
+    }, 1000);
+    return () => clearInterval(countdown);
+  }, []);
+
+  const formatTimer = (totalSec: number) => {
+    const h = Math.floor(totalSec / 3600).toString().padStart(2, "0");
+    const m = Math.floor((totalSec % 3600) / 60).toString().padStart(2, "0");
+    const s = (totalSec % 60).toString().padStart(2, "0");
+    return `${h}:${m}:${s}`;
+  };
+
+  const dealsForYou = [
+    {
+      id: "deal-1",
+      title: "Laptop Keyboard Cover",
+      discount: "11% off",
+      dealType: "Limited time deal",
+      image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=500&q=80",
+    },
+    {
+      id: "deal-2",
+      title: "Windows 11 Gaming Laptop",
+      discount: "40% off",
+      dealType: "Limited time deal",
+      image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=500&q=80",
+    },
+    {
+      id: "deal-3",
+      title: "Black Wide-Leg High Waist Jeans",
+      discount: "44% off",
+      dealType: `Ends in ${formatTimer(timerSeconds)}`,
+      image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=500&q=80",
+    },
+    {
+      id: "deal-4",
+      title: "Blue Wide-Leg Denim Jeans",
+      discount: "12% off",
+      dealType: "Limited Prime deal",
+      image: "https://images.unsplash.com/photo-1542272604-780c36856f67?auto=format&fit=crop&w=500&q=80",
+    },
+  ];
+
   return (
     <section className="w-full py-6 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 bg-slate-50/50">
       <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
@@ -67,7 +122,7 @@ export function HeroSection() {
         <div className="hidden lg:block lg:col-span-3 bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between pb-3 mb-2 border-b border-slate-100 px-2">
-              <h3 className="text-sm font-bold text-primary flex items-center gap-2">
+              <h3 className="text-sm font-semibold text-primary flex items-center gap-2">
                 <Zap className="h-4 w-4 text-primary" />
                 <span>Categories</span>
               </h3>
@@ -83,7 +138,7 @@ export function HeroSection() {
                   <Link
                     key={cat.name}
                     href="#"
-                    className="flex items-center justify-between p-2.5 rounded-xl text-xs font-medium text-secondary hover:bg-slate-50 hover:text-primary transition-all group"
+                    className="flex items-center justify-between p-2.5 rounded-xl text-sm font-normal text-primary hover:bg-slate-50 hover:text-primary transition-all group"
                   >
                     <div className="flex items-center gap-2.5">
                       <div className="h-8 w-8 rounded-lg bg-slate-100 group-hover:bg-primary group-hover:text-white flex items-center justify-center text-primary transition-colors">
@@ -93,7 +148,7 @@ export function HeroSection() {
                     </div>
                     <div className="flex items-center gap-1">
                       {cat.tag && (
-                        <span className="text-[9px] font-bold text-white bg-primary px-1.5 py-0.5 rounded">
+                        <span className="text-[9px] font-bold text-white bg-highlight px-1.5 py-0.5 rounded">
                           {cat.tag}
                         </span>
                       )}
@@ -115,124 +170,156 @@ export function HeroSection() {
         </div>
 
         {/* Center Main Column: Dynamic Hero Slider Showcase */}
-        <div className="lg:col-span-6 relative rounded-2xl overflow-hidden shadow-lg border border-primary/20 min-h-[380px] lg:min-h-[420px] flex flex-col justify-between">
+        <div className="lg:col-span-6 relative rounded-2xl overflow-hidden shadow-sm border border-slate-200/80 min-h-[380px] lg:min-h-[420px] flex flex-col justify-between group bg-white">
+          {/* Previous Slide Button */}
+          <button
+            type="button"
+            onClick={handlePrevSlide}
+            aria-label="Previous slide"
+            className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-slate-700 shadow-md hover:bg-slate-50 hover:scale-105 active:scale-95 flex items-center justify-center transition-all cursor-pointer border border-slate-100"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          {/* Next Slide Button */}
+          <button
+            type="button"
+            onClick={handleNextSlide}
+            aria-label="Next slide"
+            className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-slate-700 shadow-md hover:bg-slate-50 hover:scale-105 active:scale-95 flex items-center justify-center transition-all cursor-pointer border border-slate-100"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+
           {heroSlides.map((slide, index) => (
             <div
-              key={slide.title}
-              className={`absolute inset-0 p-6 sm:p-10 flex flex-col justify-between bg-gradient-to-br ${
-                slide.bgGradient
-              } text-white transition-opacity duration-700 ${
-                index === activeSlide ? "opacity-100 z-10 pointer-events-auto" : "opacity-0 z-0 pointer-events-none"
-              }`}
+              key={slide.badge + index}
+              className={`absolute inset-0 p-6 sm:p-10 flex flex-col justify-center transition-opacity duration-700 ${index === activeSlide
+                ? "opacity-100 z-10 pointer-events-auto"
+                : "opacity-0 z-0 pointer-events-none"
+                }`}
             >
-              <div className="space-y-4 max-w-xl">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-xs border border-white/20 text-xs font-semibold text-white">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  <span>{slide.badge}</span>
-                </span>
-
-                <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
-                  {slide.title}
-                </h1>
-
-                <p className="text-xs sm:text-sm text-slate-200 leading-relaxed line-clamp-2 sm:line-clamp-3">
-                  {slide.subtitle}
-                </p>
+              {/* Background Banner Image */}
+              <div className="absolute inset-0 z-0 overflow-hidden">
+                <img
+                  src={slide.image}
+                  alt={`${slide.titleLine1} ${slide.titleLine2}`}
+                  className="w-full h-full object-cover object-center transform scale-100 group-hover:scale-105 transition-transform duration-1000 ease-out"
+                />
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 pt-6">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  rightIcon={<ArrowRight className="h-4 w-4" />}
-                  className="bg-white text-primary border-white hover:bg-slate-100 font-bold shadow-md"
-                >
-                  {slide.ctaPrimary}
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="border-white/30 text-white bg-white/10 hover:bg-white/20 backdrop-blur-xs font-semibold"
-                >
-                  {slide.ctaSecondary}
-                </Button>
+              {/* Banner Content */}
+              <div
+                className={`relative z-10 space-y-3 sm:space-y-4 ${slide.align === "right"
+                  ? "ml-auto mr-6 sm:mr-14 lg:mr-20 text-right items-end flex flex-col max-w-xs sm:max-w-sm lg:max-w-md"
+                  : slide.align === "left"
+                    ? "mr-auto ml-4 sm:ml-10 text-left items-start flex flex-col max-w-xs sm:max-w-sm lg:max-w-md"
+                    : "mx-auto text-center items-center flex flex-col max-w-lg"
+                  }`}
+              >
+                <span className="inline-block px-3.5 py-1 rounded-md bg-white/25 border border-highlight text-highlight text-xs font-semibold shadow-xs">
+                  {slide.badge}
+                </span>
+
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.12] text-primary">
+                  {slide.titleLine1}
+                  <br />
+                  {slide.titleLine2}
+                </h1>
+
+                <p className="text-xs sm:text-sm text-primary font-medium leading-relaxed">
+                  {slide.subtitle}
+                  <span className="font-bold text-highlight">{slide.highlight}</span>
+                </p>
+
+                <div className="pt-2 sm:pt-3">
+                  <button
+                    type="button"
+                    className="bg-primary hover:bg-primary/90 text-white font-semibold text-sm px-7 py-2.5 rounded-lg shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95 border-none"
+                  >
+                    {slide.cta}
+                  </button>
+                </div>
               </div>
             </div>
           ))}
 
-          {/* Slider Pagination Controls */}
-          <div className="absolute bottom-4 right-6 z-20 flex items-center gap-2">
+          {/* Slider Pagination Controls (Dots) */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
             {heroSlides.map((_, i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => setActiveSlide(i)}
-                className={`h-2 rounded-full transition-all cursor-pointer ${
-                  i === activeSlide ? "w-8 bg-white" : "w-2 bg-white/40"
-                }`}
+                className={`h-2 rounded-full transition-all cursor-pointer ${i === activeSlide ? "w-6 bg-primary" : "w-2 bg-slate-300 hover:bg-slate-400"
+                  }`}
                 aria-label={`Go to slide ${i + 1}`}
               />
             ))}
           </div>
         </div>
 
-        {/* Right Column: Featured Vendor Highlight Cards */}
-        <div className="lg:col-span-3 flex flex-col sm:flex-row lg:flex-col gap-4">
-          {/* Top Card: Verified Store Card */}
-          <div className="flex-1 bg-white rounded-2xl border border-slate-200/80 p-4 shadow-xs flex flex-col justify-between">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <span className="text-[11px] font-bold text-secondary uppercase tracking-wider flex items-center gap-1.5">
-                <Award className="h-3.5 w-3.5 text-primary" />
-                Featured Vendor
-              </span>
-              <span className="text-[10px] font-bold text-white bg-primary px-2 py-0.5 rounded-full">
-                VERIFIED
-              </span>
+        {/* Right Column: Deals for you Section */}
+        <div className="lg:col-span-3 flex flex-col gap-3 justify-between">
+          {/* Deals for You Card */}
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-3.5 sm:p-4 shadow-xs flex flex-col justify-between flex-1">
+            <div className="flex items-center justify-between pb-2 mb-1">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+                Deals for you
+              </h3>
+              <Link href="#" className="p-1 text-slate-800 hover:text-primary transition-colors">
+                <ChevronRight className="h-5 w-5" />
+              </Link>
             </div>
 
-            <div className="py-3 space-y-2">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-primary text-white flex items-center justify-center font-bold text-base shadow-xs">
-                  A
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-primary">Apex Tech Store</h4>
-                  <div className="flex items-center gap-1 text-[11px] text-secondary">
-                    <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
-                    <span className="font-semibold text-primary">4.9</span>
-                    <span>(1.2k sales)</span>
+            <div className="grid grid-cols-2 gap-2 sm:gap-2.5 flex-1">
+              {dealsForYou.map((deal) => (
+                <Link
+                  key={deal.id}
+                  href="#"
+                  className="bg-[#f5f5f7] hover:bg-[#ebebeb] rounded-xl p-2 flex flex-col justify-between group transition-colors"
+                >
+                  <div className="w-full h-24 sm:h-28 flex items-center justify-center overflow-hidden rounded-lg">
+                    <img
+                      src={deal.image}
+                      alt={deal.title}
+                      className="max-h-full max-w-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
-                </div>
-              </div>
-              <p className="text-xs text-secondary line-clamp-2">
-                Official distributor for premium gadgets, accessories, and audio gear.
-              </p>
-            </div>
 
-            <Link
-              href="#"
-              className="inline-flex items-center justify-center gap-1.5 w-full py-2 rounded-xl border border-slate-200 text-xs font-bold text-primary hover:bg-slate-50 transition-colors"
-            >
-              <span>Visit Storefront</span>
-              <ArrowRight className="h-3.5 w-3.5" />
-            </Link>
+                  <div className="flex items-center gap-1 mt-1.5 flex-wrap sm:flex-nowrap">
+                    <span className="bg-highlight text-white text-[10px] font-bold px-1.5 py-0.5 rounded-xs shrink-0">
+                      {deal.discount}
+                    </span>
+                    <span className="text-primary text-xs font-semibold truncate leading-none">
+                      {deal.dealType.startsWith("Ends in ") ? (
+                        <>
+                          Ends in{" "}
+                          <span className="text-highlight font-bold">
+                            {deal.dealType.replace("Ends in ", "")}
+                          </span>
+                        </>
+                      ) : (
+                        deal.dealType
+                      )}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
 
-          {/* Bottom Card: Buyer Guarantee Highlight */}
-          <div className="flex-1 bg-primary text-white rounded-2xl p-4 shadow-sm flex flex-col justify-between">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5 text-white" />
-                <h4 className="text-sm font-bold text-white">Vexlora Guarantee</h4>
+          {/* Vexlora Guarantee Banner */}
+          <div className="bg-primary text-white rounded-2xl p-3 sm:p-3.5 shadow-xs flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="h-5 w-5 text-white shrink-0" />
+              <div>
+                <h4 className="text-xs font-bold text-white">Vexlora Guarantee</h4>
+                <p className="text-xs text-white">Escrow buyer protection</p>
               </div>
-              <p className="text-xs text-slate-200 leading-relaxed">
-                Orders are held in secure escrow until delivered and verified by you.
-              </p>
             </div>
-
-            <div className="pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-200 font-medium">
-              <span>• Fast Express Dispatch</span>
-              <span>• 30-Day Returns</span>
+            <div className="text-xs text-white font-medium whitespace-nowrap hidden sm:block">
+              30-Day Returns
             </div>
           </div>
         </div>

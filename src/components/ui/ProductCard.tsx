@@ -60,7 +60,7 @@ export function ProductCard(props: ProductCardProps) {
       {/* Image Box */}
       <div className="relative w-full h-56 sm:h-64 mb-4 flex items-center justify-center p-2 group/image overflow-hidden">
         {discount && (
-          <span className="absolute top-2 left-2 z-10 bg-rose-600 text-white font-bold text-[10px] uppercase px-2 py-0.5 rounded shadow-xs">
+          <span className="absolute top-2 left-2 z-10 bg-highlight text-white font-bold text-[10px] uppercase px-2 py-0.5 rounded shadow-xs">
             {discount}
           </span>
         )}
@@ -71,7 +71,7 @@ export function ProductCard(props: ProductCardProps) {
             alt={name || "Product image"}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-            className="object-contain p-2 transition-transform duration-300 group-hover/image:scale-105"
+            className="object-contain p-2 transition-transform duration-300 cursor-pointer"
           />
         )}
 
@@ -91,12 +91,11 @@ export function ProductCard(props: ProductCardProps) {
                 vendorName: vendor || "Vexlora",
               })
             }
-            className={`p-1.5 transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs ${
-              activeInWishlist ? "text-rose-600" : "text-slate-600 hover:text-rose-600"
-            }`}
+            className={`p-1.5 transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs ${activeInWishlist ? "text-highlight" : "text-slate-600 hover:text-highlight"
+              }`}
             aria-label="Wishlist"
           >
-            <Heart className={`h-4.5 w-4.5 ${activeInWishlist ? "fill-rose-600" : ""}`} />
+            <Heart className={`h-4.5 w-4.5 ${activeInWishlist ? "fill-highlight" : ""}`} />
           </button>
           <button
             type="button"

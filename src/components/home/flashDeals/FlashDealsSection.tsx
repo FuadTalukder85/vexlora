@@ -34,8 +34,8 @@ export function FlashDealsSection() {
       <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-between pb-6 border-b border-slate-200/80 gap-4">
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2.5">
-            <div className="h-10 w-10 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shadow-xs">
-              <Flame className="h-5 w-5 fill-rose-600 text-rose-600" />
+            <div className="h-10 w-10 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-highlight shadow-xs">
+              <Flame className="h-5 w-5 fill-highlight text-highlight" />
             </div>
             <div>
               <h2 className="text-xl sm:text-2xl font-black text-primary tracking-tight">
@@ -55,7 +55,7 @@ export function FlashDealsSection() {
               <span className="text-primary font-sans">:</span>
               <span className="bg-primary px-2 py-0.5 rounded">{formatDigits(timeLeft.minutes)}m</span>
               <span className="text-primary font-sans">:</span>
-              <span className="bg-rose-600 px-2 py-0.5 rounded">{formatDigits(timeLeft.seconds)}s</span>
+              <span className="bg-highlight px-2 py-0.5 rounded">{formatDigits(timeLeft.seconds)}s</span>
             </div>
           </div>
         </div>
