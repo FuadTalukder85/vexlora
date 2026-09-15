@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/lib/query/provider";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,7 +19,9 @@ export const metadata: Metadata = {
   description:
     "Explore curated products from verified independent vendors and artisan creators on the Vexlora multi-vendor e-commerce platform.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/images/vexlora-icon.png",
+    shortcut: "/images/vexlora-icon.png",
+    apple: "/images/vexlora-icon.png",
   },
 };
 
@@ -30,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="min-h-screen flex flex-col bg-white text-slate-900 antialiased">
+      <body className="min-h-screen flex flex-col bg-white text-primary antialiased">
         <QueryProvider>
           {/* Modern Responsive Header / Navbar (Full Width) */}
           <Header />
