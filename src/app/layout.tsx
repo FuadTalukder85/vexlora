@@ -19,7 +19,9 @@ export const metadata: Metadata = {
   description:
     "Explore curated products from verified independent vendors and artisan creators on the Vexlora multi-vendor e-commerce platform.",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/images/vexlora-icon.png",
+    shortcut: "/images/vexlora-icon.png",
+    apple: "/images/vexlora-icon.png",
   },
 };
 

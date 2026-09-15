@@ -1,0 +1,268 @@
+[
+  {
+    "id": "deals-for-you",
+    "title": "Deals for you",
+    "href": "#",
+    "isDealCard": true,
+    "items": [
+      {
+        "id": "d1",
+        "title": "Laptop Keyboard Cover",
+        "discount": "11% off",
+        "dealType": "Limited time deal",
+        "image": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "d2",
+        "title": "Windows 11 Gaming Laptop",
+        "discount": "40% off",
+        "dealType": "Limited time deal",
+        "image": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "d3",
+        "title": "Black Wide-Leg High Waist Jeans",
+        "discount": "44% off",
+        "dealType": "Ends in 08:02:26",
+        "hasTimer": true,
+        "image": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "d4",
+        "title": "Blue Wide-Leg Denim Jeans",
+        "discount": "12% off",
+        "dealType": "Limited Prime deal",
+        "image": "https://images.unsplash.com/photo-1542272604-780c36856f67?auto=format&fit=crop&w=400&q=80"
+      }
+    ]
+  },
+  {
+    "id": "electronics",
+    "title": "Plug in with our electronics",
+    "href": "#",
+    "items": [
+      {
+        "id": "e1",
+        "title": "Headphones",
+        "label": "Headphones",
+        "bgColor": "bg-amber-50/80",
+        "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "e2",
+        "title": "Tablets",
+        "label": "Tablets",
+        "bgColor": "bg-indigo-50/80",
+        "image": "https://images.unsplash.com/photo-1561154464-82e9adf32764?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "e3",
+        "title": "Gaming",
+        "label": "Gaming",
+        "bgColor": "bg-purple-50/80",
+        "image": "https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "e4",
+        "title": "Speakers",
+        "label": "Speakers",
+        "bgColor": "bg-pink-50/80",
+        "image": "https://images.unsplash.com/photo-1545454675-3531b543be5d?auto=format&fit=crop&w=400&q=80"
+      }
+    ]
+  },
+  {
+    "id": "pcs-accessories",
+    "title": "Score the top PCs & Accessories",
+    "href": "#",
+    "items": [
+      {
+        "id": "p1",
+        "title": "Desktops",
+        "label": "Desktops",
+        "bgColor": "bg-teal-50/80",
+        "image": "https://images.unsplash.com/photo-1587831990711-23ca6441447b?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "p2",
+        "title": "Laptops",
+        "label": "Laptops",
+        "bgColor": "bg-cyan-50/80",
+        "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "p3",
+        "title": "Hard Drives",
+        "label": "Hard Drives",
+        "bgColor": "bg-emerald-50/80",
+        "image": "https://images.unsplash.com/photo-1531492746076-161ca9bcad58?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "p4",
+        "title": "PC Accessories",
+        "label": "PC Accessories",
+        "bgColor": "bg-emerald-50/80",
+        "image": "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=400&q=80"
+      }
+    ]
+  },
+  {
+    "id": "fitness",
+    "title": "Gear up to get fit",
+    "href": "#",
+    "items": [
+      {
+        "id": "f1",
+        "title": "Clothing",
+        "label": "Clothing",
+        "bgColor": "bg-amber-100/60",
+        "image": "https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "f2",
+        "title": "Trackers",
+        "label": "Trackers",
+        "bgColor": "bg-amber-100/60",
+        "image": "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "f3",
+        "title": "Equipment",
+        "label": "Equipment",
+        "bgColor": "bg-amber-100/60",
+        "image": "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "f4",
+        "title": "Deals",
+        "label": "Deals",
+        "bgColor": "bg-amber-100/60",
+        "image": "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&w=400&q=80"
+      }
+    ]
+  },
+  {
+    "id": "apparel-under-25",
+    "title": "Apparel under $25",
+    "href": "#",
+    "items": [
+      {
+        "id": "a1",
+        "title": "Women",
+        "label": "Women",
+        "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "a2",
+        "title": "Men",
+        "label": "Men",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "a3",
+        "title": "Girls",
+        "label": "Girls",
+        "image": "https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "a4",
+        "title": "Boys",
+        "label": "Boys",
+        "image": "https://images.unsplash.com/photo-1519238263530-99bdd11df2ea?auto=format&fit=crop&w=400&q=80"
+      }
+    ]
+  },
+  {
+    "id": "home-finds",
+    "title": "Fantastic Finds for Home",
+    "href": "#",
+    "items": [
+      {
+        "id": "h1",
+        "title": "Kitchen",
+        "label": "Kitchen",
+        "image": "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "h2",
+        "title": "Home Decor",
+        "label": "Home Decor",
+        "image": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "h3",
+        "title": "Dining",
+        "label": "Dining",
+        "image": "https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "h4",
+        "title": "Smart Home",
+        "label": "Smart Home",
+        "image": "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=400&q=80"
+      }
+    ]
+  },
+  {
+    "id": "fashion-faves",
+    "title": "Shine brighter with your fashion faves",
+    "href": "#",
+    "items": [
+      {
+        "id": "ff1",
+        "title": "Jewelry",
+        "label": "Jewelry",
+        "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "ff2",
+        "title": "Handbags",
+        "label": "Handbags",
+        "image": "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "ff3",
+        "title": "Footwear",
+        "label": "Footwear",
+        "image": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "ff4",
+        "title": "Beauty",
+        "label": "Beauty",
+        "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=400&q=80"
+      }
+    ]
+  },
+  {
+    "id": "beauty-radiance",
+    "title": "Unveil your radiance",
+    "href": "#",
+    "items": [
+      {
+        "id": "r1",
+        "title": "Hair Care",
+        "label": "Hair Care",
+        "image": "https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "r2",
+        "title": "Fragrances",
+        "label": "Fragrances",
+        "image": "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "r3",
+        "title": "Make-up",
+        "label": "Make-up",
+        "image": "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "r4",
+        "title": "Skin Care",
+        "label": "Skin Care",
+        "image": "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=400&q=80"
+      }
+    ]
+  }
+]

@@ -1,7 +1,13 @@
+import { FlashDealsSection } from "@/components/home/flashDeals/FlashDealsSection";
+import { HeroSection } from "@/components/home/heroSection/HeroSection";
+import { CategoryGridSection } from "@/components/home/categoryGrid/CategoryGridSection";
+
 export default function HomePage() {
   return (
-    <div className="w-full py-16 sm:py-24 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 flex-1 flex items-center justify-center">
-
+    <div className="w-full flex-1 flex flex-col">
+      <HeroSection />
+      <FlashDealsSection />
+      <CategoryGridSection />
     </div>
   );
 }
