@@ -8,17 +8,17 @@
 
 @layer base {
   :root {
+    --primary: #062D54;
+    --secondary: #74777c;
+    --highlight: #E11D48;
     --background: #ffffff;
     --foreground: #062D54;
     --card: #ffffff;
     --card-foreground: #062D54;
     --popover: #ffffff;
     --popover-foreground: #062D54;
-    --primary: #062D54;
     --primary-foreground: #ffffff;
-    --secondary: #90A1B9;
     --secondary-foreground: #062D54;
-    --highlight: #E11D48;
     --muted: #f1f5f9;
     --muted-foreground: #90A1B9;
     --accent: #f8fafc;
