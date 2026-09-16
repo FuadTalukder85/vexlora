@@ -9,14 +9,17 @@ import {
   ShoppingBag,
   User,
   Menu,
-  Sparkles,
   Store,
   HelpCircle,
   Package,
+  LogOut,
+  ChevronDown,
+  ExternalLink,
 } from "lucide-react";
 import { useUIStore } from "@/stores/ui.store";
 import { useWishlistStore } from "@/stores/wishlist.store";
 import { useCartStore } from "@/stores/cart.store";
+import { useAuthStore } from "@/stores/auth.store";
 import { formatCurrency, useIsMounted } from "@/lib/utils";
 import { MobileNav } from "./MobileNav";
 import { Navbar } from "./Navbar";
@@ -27,14 +30,21 @@ export function Header() {
   const cartCount = useCartStore((s) => s.getItemCount());
   const cartSubtotal = useCartStore((s) => s.getSubtotal());
 
+  const {
+    user,
+    isAuthenticated,
+    vendorProfile,
+    logout,
+  } = useAuthStore();
+
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("all");
+  const [userDropdownOpen, setUserDropdownOpen] = React.useState(false);
   const mounted = useIsMounted();
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!searchQuery.trim()) return;
-    // Planned search trigger for future product catalog hook
   };
 
   return (
@@ -42,10 +52,10 @@ export function Header() {
       {/* Mobile Drawer */}
       <MobileNav />
 
-      {/* 1. Top Utility / Announcement Bar (Full Width - NOT STICKY, scrolls away) */}
+      {/* 1. Top Utility / Announcement Bar */}
       <div className="w-full bg-slate-50 border-b border-slate-100 text-xs text-secondary py-1.5 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div className="w-full flex items-center justify-between">
-          {/* Left: Announcement / Trust indicator */}
+          {/* Left: Announcement */}
           <div className="flex items-center gap-2 text-secondary font-medium">
             <span>
               Free nationwide delivery on orders over $50 across multi-vendor stores
@@ -63,7 +73,7 @@ export function Header() {
             </Link>
 
             <Link
-              href="#"
+              href="/vendor-apply"
               className="inline-flex items-center gap-1.5 text-primary hover:opacity-80 transition-opacity font-semibold"
             >
               <Store className="h-3.5 w-3.5 text-primary" />
@@ -95,9 +105,9 @@ export function Header() {
         </div>
       </div>
 
-      {/* STICKY HEADER: Contains 2. Main Navbar Row & 3. Category Navigation Bar */}
+      {/* STICKY HEADER */}
       <header className="w-full bg-white border-b border-slate-200/90 sticky top-0 z-40 shadow-xs">
-        {/* 2. Main Navbar Row (Full Width) */}
+        {/* Main Navbar Row */}
         <div className="w-full py-2.5 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
           <div className="w-full flex items-center justify-between gap-4 lg:gap-8">
             {/* Mobile Menu Button & Brand Logo */}
@@ -129,7 +139,6 @@ export function Header() {
                 onSubmit={handleSearchSubmit}
                 className="w-full relative flex items-center rounded-2xl border border-slate-200 bg-slate-50/70 p-1 focus-within:border-primary focus-within:bg-white focus-within:ring-4 focus-within:ring-primary/10 transition-all duration-200"
               >
-                {/* Category Filter */}
                 <div className="hidden sm:flex items-center pl-3 pr-2 py-1.5 border-r border-slate-200/80">
                   <select
                     value={selectedCategory}
@@ -144,7 +153,6 @@ export function Header() {
                   </select>
                 </div>
 
-                {/* Input */}
                 <div className="relative flex-1 flex items-center">
                   <Search className="absolute left-3.5 h-4 w-4 text-secondary pointer-events-none" />
                   <input
@@ -156,7 +164,6 @@ export function Header() {
                   />
                 </div>
 
-                {/* Submit Button */}
                 <button
                   type="submit"
                   className="h-9 px-5 rounded-xl bg-primary hover:opacity-90 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all duration-150 active:scale-[0.98] cursor-pointer"
@@ -169,24 +176,104 @@ export function Header() {
             {/* Right Action Icons: Account, Wishlist, Cart */}
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               {/* Account Trigger */}
-              <Link
-                href="#"
-                className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-primary transition-colors"
-              >
-                <div className="h-7 w-7 rounded-lg bg-slate-100 flex items-center justify-center text-primary">
-                  <User className="h-4 w-4" />
-                </div>
-                <div className="hidden xl:flex flex-col text-left">
-                  <span className="text-[11px] font-medium text-secondary leading-none">
-                    Sign In / Register
-                  </span>
-                  <span className="text-xs font-bold text-primary leading-tight mt-0.5">
-                    My Account
-                  </span>
-                </div>
-              </Link>
+              {mounted && (isAuthenticated || !!user) ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                    className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-primary transition-colors cursor-pointer"
+                  >
+                    <div className="h-7 w-7 rounded-lg bg-primary text-white flex items-center justify-center font-bold text-xs">
+                      {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
+                    </div>
+                    <div className="hidden xl:flex flex-col text-left">
+                      <span className="text-[11px] font-medium text-secondary leading-none truncate max-w-[120px]">
+                        Hi, {user?.name ? user.name.split(" ")[0] : "Account"}
+                      </span>
+                      <span className="text-xs font-bold text-primary leading-tight mt-0.5">
+                        My Account
+                      </span>
+                    </div>
+                    <ChevronDown className="w-3.5 h-3.5 text-secondary hidden xl:block" />
+                  </button>
 
-              {/* Wishlist Button with Live Counter Badge */}
+                  {userDropdownOpen && (
+                    <>
+                      <div
+                        className="fixed inset-0 z-40"
+                        onClick={() => setUserDropdownOpen(false)}
+                      />
+                      <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                        <div className="px-4 py-2 border-b border-slate-100">
+                          <p className="text-xs font-bold text-primary truncate">{user?.name || "Vexlora User"}</p>
+                          <p className="text-[11px] text-secondary truncate">{user?.email || ""}</p>
+                          <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-semibold uppercase">
+                            Role: {user?.role || "CUSTOMER"}
+                          </span>
+                        </div>
+
+                        <div className="py-1">
+                          <Link
+                            href="/vendor-apply"
+                            onClick={() => setUserDropdownOpen(false)}
+                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-primary font-semibold hover:bg-slate-50 text-left"
+                          >
+                            <Store className="w-4 h-4 text-primary" />
+                            {vendorProfile
+                              ? vendorProfile.status === "APPROVED"
+                                ? "Manage Store Profile"
+                                : "Vendor Application Status"
+                              : "Apply for Vendor Store"}
+                          </Link>
+
+                          {vendorProfile?.status === "APPROVED" && (
+                            <a
+                              href={process.env.NEXT_PUBLIC_VENDOR_URL || "http://localhost:3001"}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-amber-700 font-semibold hover:bg-amber-50 text-left"
+                            >
+                              <ExternalLink className="w-4 h-4 text-amber-600" />
+                              Open Vendor Dashboard
+                            </a>
+                          )}
+                        </div>
+
+                        <div className="pt-1 border-t border-slate-100">
+                          <button
+                            onClick={() => {
+                              setUserDropdownOpen(false);
+                              logout();
+                            }}
+                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-rose-600 font-semibold hover:bg-rose-50 text-left cursor-pointer"
+                          >
+                            <LogOut className="w-4 h-4 text-rose-500" />
+                            Sign Out
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  href="/login"
+                  className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-primary transition-colors"
+                >
+                  <div className="h-7 w-7 rounded-lg bg-slate-100 flex items-center justify-center text-primary">
+                    <User className="h-4 w-4" />
+                  </div>
+                  <div className="hidden xl:flex flex-col text-left">
+                    <span className="text-[11px] font-medium text-secondary leading-none">
+                      Sign In / Register
+                    </span>
+                    <span className="text-xs font-bold text-primary leading-tight mt-0.5">
+                      My Account
+                    </span>
+                  </div>
+                </Link>
+              )}
+
+              {/* Wishlist Button with Counter */}
               <Link
                 href="#"
                 className="relative p-2.5 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-primary transition-colors"
@@ -200,7 +287,7 @@ export function Header() {
                 )}
               </Link>
 
-              {/* Cart Button with Live Counter Badge and Subtotal */}
+              {/* Cart Button */}
               <Link
                 href="#"
                 className="relative flex items-center gap-2.5 p-2 sm:px-3 sm:py-2 rounded-xl bg-primary hover:opacity-90 text-white shadow-sm transition-all duration-150 active:scale-[0.98]"
@@ -226,7 +313,7 @@ export function Header() {
             </div>
           </div>
 
-          {/* Mobile Search Bar Row (visible on small mobile screens) */}
+          {/* Mobile Search Bar Row */}
           <div className="mt-3 md:hidden">
             <form
               onSubmit={handleSearchSubmit}
@@ -244,7 +331,7 @@ export function Header() {
           </div>
         </div>
 
-        {/* 3. Category & Deal Navigation Bar */}
+        {/* Category & Deal Navigation Bar */}
         <Navbar />
       </header>
     </>
