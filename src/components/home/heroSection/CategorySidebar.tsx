@@ -44,7 +44,7 @@ export function CategorySidebar() {
               <Link
                 key={cat.name}
                 href="#"
-                className="flex items-center justify-between p-2.5 rounded-xl text-sm font-normal text-primary hover:bg-slate-50 hover:text-primary transition-all group"
+                className="flex items-center justify-between p-2.5 rounded-xl text-sm font-semibold text-primary hover:bg-slate-50 hover:text-primary transition-all group"
               >
                 <div className="flex items-center gap-2.5">
                   <div className="h-8 w-8 rounded-lg bg-slate-100 group-hover:bg-primary group-hover:text-white flex items-center justify-center text-primary transition-colors">
@@ -54,7 +54,7 @@ export function CategorySidebar() {
                 </div>
                 <div className="flex items-center gap-1">
                   {cat.tag && (
-                    <span className="text-[9px] font-bold text-white bg-highlight px-1.5 py-0.5 rounded">
+                    <span className="text-[9px] font-semibold text-white bg-highlight px-1.5 py-0.5 rounded">
                       {cat.tag}
                     </span>
                   )}
