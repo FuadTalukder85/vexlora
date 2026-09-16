@@ -1,8 +1,10 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from "axios";
 import { ApiError, ApiErrorResponse, ApiResponse } from "./types";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const envApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const API_BASE_URL = envApiUrl.endsWith("/v1")
+  ? envApiUrl
+  : `${envApiUrl.replace(/\/+$/, "")}/v1`;
 
 /**
  * Centralized Axios instance configured for the Vexlora multi-vendor backend
@@ -26,8 +28,8 @@ apiClient.interceptors.request.use(
     // Client-side authentication token attach if token exists in localStorage
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("vexlora_token");
-      if (token && !config.headers.Authorization) {
-        config.headers.Authorization = `Bearer ${token}`;
+      if (token) {
+        config.headers.set("Authorization", `Bearer ${token}`);
       }
     }
 

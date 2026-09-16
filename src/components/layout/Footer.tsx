@@ -20,6 +20,7 @@ import {
   newsletterSchema,
   type NewsletterFormData,
 } from "@/schemas/newsletter.schema";
+import { Input } from "@/components/ui/Input";
 
 export function Footer() {
   const [subscribed, setSubscribed] = React.useState(false);
@@ -127,14 +128,15 @@ export function Footer() {
               </div>
             ) : (
               <form onSubmit={handleSubmit(onSubscribe)} className="space-y-1.5">
-                <div className="flex items-center gap-2">
-                  <div className="relative flex-1">
-                    <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary pointer-events-none" />
-                    <input
+                <div className="flex items-start gap-2">
+                  <div className="flex-1">
+                    <Input
                       type="email"
                       placeholder="Enter your email address..."
+                      leftIcon={<Mail className="h-4 w-4 text-secondary" />}
+                      className="h-11"
+                      error={errors.email?.message}
                       {...register("email")}
-                      className="w-full h-11 pl-10 pr-4 rounded-xl border border-slate-200 bg-white text-xs sm:text-sm text-primary placeholder:text-secondary focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 shadow-xs"
                     />
                   </div>
                   <button
@@ -146,11 +148,6 @@ export function Footer() {
                     <ArrowRight className="h-3.5 w-3.5" />
                   </button>
                 </div>
-                {errors.email && (
-                  <p className="text-xs text-secondary font-medium pl-1">
-                    {errors.email.message}
-                  </p>
-                )}
               </form>
             )}
           </div>

@@ -17,6 +17,7 @@ import {
 import { useUIStore } from "@/stores/ui.store";
 import { useWishlistStore } from "@/stores/wishlist.store";
 import { useCartStore } from "@/stores/cart.store";
+import { useAuthStore } from "@/stores/auth.store";
 import { useIsMounted } from "@/lib/utils";
 
 const categories = [
@@ -32,6 +33,7 @@ export function MobileNav() {
   const { isMobileMenuOpen, setMobileMenuOpen } = useUIStore();
   const wishlistCount = useWishlistStore((s) => s.getCount());
   const cartCount = useCartStore((s) => s.getItemCount());
+  const { user, isAuthenticated, logout } = useAuthStore();
   const mounted = useIsMounted();
 
   // Close drawer on escape key
@@ -130,14 +132,27 @@ export function MobileNav() {
             <span className="text-[11px] font-medium text-secondary">Cart</span>
           </Link>
 
-          <Link
-            href="#"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-slate-200/80 text-center hover:border-primary transition-colors"
-          >
-            <User className="h-4 w-4 text-primary mb-1" />
-            <span className="text-[11px] font-medium text-secondary">Account</span>
-          </Link>
+          {isAuthenticated && user ? (
+            <button
+              onClick={() => {
+                logout();
+                setMobileMenuOpen(false);
+              }}
+              className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-rose-200 text-center hover:bg-rose-50 transition-colors cursor-pointer"
+            >
+              <User className="h-4 w-4 text-rose-500 mb-1" />
+              <span className="text-[11px] font-medium text-rose-600">Sign Out</span>
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-slate-200/80 text-center hover:border-primary transition-colors"
+            >
+              <User className="h-4 w-4 text-primary mb-1" />
+              <span className="text-[11px] font-medium text-secondary">Account</span>
+            </Link>
+          )}
         </div>
 
         {/* Scrollable Navigation List */}
@@ -180,7 +195,7 @@ export function MobileNav() {
                 <span>Track Your Order</span>
               </Link>
               <Link
-                href="#"
+                href="/vendor-apply"
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-3 py-2 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-slate-100 hover:text-primary transition-colors"
               >
