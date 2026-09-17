@@ -51,7 +51,7 @@ export function HeroBannerSlider() {
         type="button"
         onClick={handlePrevSlide}
         aria-label="Previous slide"
-        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-slate-700 shadow-md hover:bg-slate-50 hover:scale-105 active:scale-95 flex items-center justify-center transition-all cursor-pointer border border-slate-100"
+        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-primary shadow-md hover:bg-slate-50 hover:scale-105 active:scale-95 flex items-center justify-center transition-all cursor-pointer border border-slate-100"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
@@ -61,7 +61,7 @@ export function HeroBannerSlider() {
         type="button"
         onClick={handleNextSlide}
         aria-label="Next slide"
-        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-slate-700 shadow-md hover:bg-slate-50 hover:scale-105 active:scale-95 flex items-center justify-center transition-all cursor-pointer border border-slate-100"
+        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-primary shadow-md hover:bg-slate-50 hover:scale-105 active:scale-95 flex items-center justify-center transition-all cursor-pointer border border-slate-100"
       >
         <ChevronRight className="h-5 w-5" />
       </button>
@@ -69,11 +69,10 @@ export function HeroBannerSlider() {
       {heroSlides.map((slide, index) => (
         <div
           key={slide.badge + index}
-          className={`absolute inset-0 p-6 sm:p-10 flex flex-col justify-center transition-opacity duration-700 ${
-            index === activeSlide
-              ? "opacity-100 z-10 pointer-events-auto"
-              : "opacity-0 z-0 pointer-events-none"
-          }`}
+          className={`absolute inset-0 p-6 sm:p-10 flex flex-col justify-center transition-opacity duration-700 ${index === activeSlide
+            ? "opacity-100 z-10 pointer-events-auto"
+            : "opacity-0 z-0 pointer-events-none"
+            }`}
         >
           {/* Background Banner Image */}
           <div className="absolute inset-0 z-0 overflow-hidden">
@@ -86,13 +85,12 @@ export function HeroBannerSlider() {
 
           {/* Banner Content */}
           <div
-            className={`relative z-10 space-y-3 sm:space-y-4 ${
-              slide.align === "right"
-                ? "ml-auto mr-6 sm:mr-14 lg:mr-20 text-right items-end flex flex-col max-w-xs sm:max-w-sm lg:max-w-md"
-                : slide.align === "left"
+            className={`relative z-10 space-y-3 sm:space-y-4 ${slide.align === "right"
+              ? "ml-auto mr-6 sm:mr-14 lg:mr-20 text-right items-end flex flex-col max-w-xs sm:max-w-sm lg:max-w-md"
+              : slide.align === "left"
                 ? "mr-auto ml-4 sm:ml-10 text-left items-start flex flex-col max-w-xs sm:max-w-sm lg:max-w-md"
                 : "mx-auto text-center items-center flex flex-col max-w-lg"
-            }`}
+              }`}
           >
             <span className="inline-block px-3.5 py-1 rounded-md bg-white/25 border border-highlight text-highlight text-xs font-semibold shadow-xs">
               {slide.badge}
@@ -128,9 +126,8 @@ export function HeroBannerSlider() {
             key={i}
             type="button"
             onClick={() => setActiveSlide(i)}
-            className={`h-2 rounded-full transition-all cursor-pointer ${
-              i === activeSlide ? "w-6 bg-primary" : "w-2 bg-slate-300 hover:bg-slate-400"
-            }`}
+            className={`h-2 rounded-full transition-all cursor-pointer ${i === activeSlide ? "w-6 bg-primary" : "w-2 bg-slate-300 hover:bg-secondary"
+              }`}
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}

@@ -91,7 +91,7 @@ export function ProductCard(props: ProductCardProps) {
                 vendorName: vendor || "Vexlora",
               })
             }
-            className={`p-1.5 transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs ${activeInWishlist ? "text-highlight" : "text-slate-600 hover:text-highlight"
+            className={`p-1.5 transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs ${activeInWishlist ? "text-highlight" : "text-primary hover:text-highlight"
               }`}
             aria-label="Wishlist"
           >
@@ -99,14 +99,14 @@ export function ProductCard(props: ProductCardProps) {
           </button>
           <button
             type="button"
-            className="p-1.5 text-slate-600 hover:text-primary transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs"
+            className="p-1.5 text-primary hover:text-primary transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs"
             aria-label="Quick View"
           >
             <Eye className="h-4.5 w-4.5" />
           </button>
           <button
             type="button"
-            className="p-1.5 text-slate-600 hover:text-primary transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs"
+            className="p-1.5 text-primary hover:text-primary transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs"
             aria-label="Compare"
           >
             <BarChart2 className="h-4.5 w-4.5" />

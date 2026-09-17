@@ -91,7 +91,7 @@ export default function VendorApplyPage() {
       <div className="min-h-[70vh] flex items-center justify-center p-4 bg-slate-50/50">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-xs font-bold text-slate-500">Checking account profile...</p>
+          <p className="text-xs font-bold text-secondary">Checking account profile...</p>
         </div>
       </div>
     );
@@ -109,7 +109,7 @@ export default function VendorApplyPage() {
           <h1 className="text-3xl sm:text-4xl font-extrabold text-primary tracking-tight">
             Grow Your Business on Vexlora
           </h1>
-          <p className="text-sm text-slate-600 max-w-xl mx-auto">
+          <p className="text-sm text-primary max-w-xl mx-auto">
             Join our curated marketplace of verified stores. Reach millions of customers, manage inventory, and receive automated weekly payouts.
           </p>
         </div>
@@ -124,7 +124,7 @@ export default function VendorApplyPage() {
               <h2 className="text-xl font-extrabold text-primary">
                 Sign In to Submit Your Merchant Application
               </h2>
-              <p className="text-xs text-slate-500 max-w-md mx-auto">
+              <p className="text-xs text-secondary max-w-md mx-auto">
                 You need an active Vexlora account to register a store. If you don&apos;t have one yet, creating an account takes less than a minute.
               </p>
             </div>
@@ -157,26 +157,26 @@ export default function VendorApplyPage() {
               <h2 className="text-2xl font-extrabold text-primary">
                 Your Merchant Application is Being Processed
               </h2>
-              <p className="text-xs text-slate-600 max-w-lg mx-auto">
+              <p className="text-xs text-primary max-w-lg mx-auto">
                 Thank you for applying to sell on Vexlora! Our admin team is verifying your business license and trade credentials. Review typically takes 1-2 business days.
               </p>
             </div>
 
-            <div className="p-5 bg-slate-50 border border-slate-200/80 rounded-2xl text-left text-xs text-slate-600 space-y-2 max-w-md mx-auto">
+            <div className="p-5 bg-slate-50 border border-slate-200/80 rounded-2xl text-left text-xs text-primary space-y-2 max-w-md mx-auto">
               <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
-                <span className="font-semibold text-slate-500">Applicant:</span>
+                <span className="font-semibold text-secondary">Applicant:</span>
                 <span className="font-bold text-primary">{user?.name}</span>
               </div>
               <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
-                <span className="font-semibold text-slate-500">Store Name:</span>
+                <span className="font-semibold text-secondary">Store Name:</span>
                 <span className="font-bold text-primary">{vendorProfile.storeName}</span>
               </div>
               <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
-                <span className="font-semibold text-slate-500">Store Identifier:</span>
+                <span className="font-semibold text-secondary">Store Identifier:</span>
                 <span className="font-bold text-primary">{vendorProfile.storeSlug}</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-semibold text-slate-500">Submitted On:</span>
+                <span className="font-semibold text-secondary">Submitted On:</span>
                 <span className="font-bold text-primary">
                   {vendorProfile.createdAt ? new Date(vendorProfile.createdAt).toLocaleDateString() : "Recently"}
                 </span>
@@ -197,7 +197,7 @@ export default function VendorApplyPage() {
               <h2 className="text-2xl font-extrabold text-primary">
                 Store Account Approved!
               </h2>
-              <p className="text-xs text-slate-600 max-w-lg mx-auto">
+              <p className="text-xs text-primary max-w-lg mx-auto">
                 Your store <strong className="text-primary">{vendorProfile.storeName}</strong> is fully verified. Open the Vexlora Merchant Hub to manage catalog, inventory, and customer orders.
               </p>
             </div>
@@ -223,8 +223,8 @@ export default function VendorApplyPage() {
               <UserCheck className="w-5 h-5 text-primary shrink-0" />
               <div className="flex-1">
                 <p className="font-bold text-primary">Applying under verified account:</p>
-                <p className="text-slate-600 font-medium">
-                  {user?.name} &bull; <span className="text-slate-500">{user?.email}</span>
+                <p className="text-primary font-medium">
+                  {user?.name} &bull; <span className="text-secondary">{user?.email}</span>
                 </p>
               </div>
             </div>
@@ -264,7 +264,7 @@ export default function VendorApplyPage() {
                     Store URL Identifier (Slug)
                   </label>
                   <div className="flex items-center text-xs bg-slate-50 border border-slate-200 rounded-xl overflow-hidden focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10">
-                    <span className="px-3.5 py-2.5 text-slate-500 font-semibold border-r border-slate-200 bg-slate-100">
+                    <span className="px-3.5 py-2.5 text-secondary font-semibold border-r border-slate-200 bg-slate-100">
                       vexlora.com/store/
                     </span>
                     <input

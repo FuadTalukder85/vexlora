@@ -39,7 +39,7 @@ export default function ForgotPasswordPage() {
           <h1 className="text-2xl font-extrabold text-primary tracking-tight">
             Reset Your Password
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-secondary">
             Enter your email address and we will send you an OTP code to reset your account password.
           </p>
         </div>
@@ -66,7 +66,7 @@ export default function ForgotPasswordPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            leftIcon={<Mail className="w-4 h-4 text-slate-400" />}
+            leftIcon={<Mail className="w-4 h-4 text-secondary" />}
           />
 
           <button
@@ -79,7 +79,7 @@ export default function ForgotPasswordPage() {
           </button>
         </form>
 
-        <div className="pt-4 border-t border-slate-100 text-center text-xs text-slate-500">
+        <div className="pt-4 border-t border-slate-100 text-center text-xs text-secondary">
           Remembered your password?{" "}
           <Link href="/login" className="font-bold text-primary hover:underline inline-flex items-center gap-1">
             Back to Sign In
