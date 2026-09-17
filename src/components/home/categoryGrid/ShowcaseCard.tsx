@@ -41,7 +41,7 @@ export function ShowcaseCard({
         </h3>
         <Link
           href={href}
-          className="p-1 text-slate-700 hover:text-primary transition-colors shrink-0 ml-2"
+          className="p-1 text-primary hover:text-primary transition-colors shrink-0 ml-2"
           aria-label={`View ${title}`}
         >
           <ChevronRight className="h-5 w-5 text-secondary group-hover:translate-x-0.5 transition-transform" />
@@ -59,23 +59,20 @@ export function ShowcaseCard({
             <Link
               key={item.id}
               href="#"
-              className={`flex flex-col justify-between rounded-xl ${
-                isDealCard
+              className={`flex flex-col justify-between rounded-xl ${isDealCard
                   ? "bg-[#f5f5f7] hover:bg-[#ebebeb] p-2"
                   : "group/item p-1.5 hover:opacity-90"
-              } transition-colors`}
+                } transition-colors`}
             >
               <div
-                className={`w-full h-28 sm:h-32 rounded-xl flex items-center justify-center overflow-hidden p-2 relative ${
-                  item.bgColor || "bg-slate-100/70"
-                }`}
+                className={`w-full h-28 sm:h-32 rounded-xl flex items-center justify-center overflow-hidden p-2 relative ${item.bgColor || "bg-slate-100/70"
+                  }`}
               >
                 <img
                   src={item.image}
                   alt={item.title}
-                  className={`max-h-full max-w-full object-contain ${
-                    isDealCard ? "mix-blend-multiply" : "object-cover w-full h-full rounded-lg"
-                  } transition-transform duration-300 group-hover/item:scale-105`}
+                  className={`max-h-full max-w-full object-contain ${isDealCard ? "mix-blend-multiply" : "object-cover w-full h-full rounded-lg"
+                    } transition-transform duration-300 group-hover/item:scale-105`}
                 />
               </div>
 
