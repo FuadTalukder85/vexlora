@@ -60,7 +60,7 @@ export function DealsForYouSection() {
           <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
             Deals for you
           </h3>
-          <Link href="#" className="p-1 text-slate-800 hover:text-primary transition-colors">
+          <Link href="#" className="p-1 text-primary hover:text-primary transition-colors">
             <ChevronRight className="h-5 w-5" />
           </Link>
         </div>

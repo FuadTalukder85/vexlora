@@ -47,7 +47,7 @@ function RegisterFormContent() {
           <h1 className="text-2xl font-extrabold text-primary tracking-tight">
             Create Vexlora Account
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-secondary">
             Join thousands of shoppers and discover verified products across multi-vendor stores
           </p>
         </div>
@@ -67,7 +67,7 @@ function RegisterFormContent() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Jane Doe"
-            leftIcon={<UserIcon className="w-4 h-4 text-slate-400" />}
+            leftIcon={<UserIcon className="w-4 h-4 text-secondary" />}
           />
 
           <Input
@@ -77,7 +77,7 @@ function RegisterFormContent() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            leftIcon={<Mail className="w-4 h-4 text-slate-400" />}
+            leftIcon={<Mail className="w-4 h-4 text-secondary" />}
           />
 
           <Input
@@ -86,7 +86,7 @@ function RegisterFormContent() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="+1 (555) 019-2834"
-            leftIcon={<Phone className="w-4 h-4 text-slate-400" />}
+            leftIcon={<Phone className="w-4 h-4 text-secondary" />}
           />
 
           <Input
@@ -97,7 +97,7 @@ function RegisterFormContent() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Minimum 6 characters"
-            leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
+            leftIcon={<Lock className="w-4 h-4 text-secondary" />}
           />
 
           <button
@@ -110,7 +110,7 @@ function RegisterFormContent() {
           </button>
         </form>
 
-        <div className="pt-4 border-t border-slate-100 text-center text-xs text-slate-500">
+        <div className="pt-4 border-t border-slate-100 text-center text-xs text-secondary">
           Already have an account?{" "}
           <Link
             href={`/login${redirectUrl !== "/" ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`}

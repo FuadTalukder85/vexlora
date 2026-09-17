@@ -48,10 +48,10 @@ function LoginFormContent() {
             <h1 className="text-xl font-extrabold text-primary">
               You are signed in
             </h1>
-            <p className="text-xs text-slate-500 font-medium">
+            <p className="text-xs text-secondary font-medium">
               Signed in as <strong className="text-primary">{user.name}</strong> ({user.email})
             </p>
-            <span className="inline-block mt-2 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-[10px] font-bold uppercase tracking-wider">
+            <span className="inline-block mt-2 px-3 py-1 rounded-full bg-slate-100 text-primary text-[10px] font-bold uppercase tracking-wider">
               Role: {user.role}
             </span>
           </div>
@@ -92,7 +92,7 @@ function LoginFormContent() {
           <h1 className="text-2xl font-extrabold text-primary tracking-tight">
             Welcome Back to Vexlora
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-secondary">
             Sign in to access your orders, saved items, and personalized shopping
           </p>
         </div>
@@ -112,7 +112,7 @@ function LoginFormContent() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            leftIcon={<Mail className="w-4 h-4 text-slate-400" />}
+            leftIcon={<Mail className="w-4 h-4 text-secondary" />}
           />
 
           <div>
@@ -133,7 +133,7 @@ function LoginFormContent() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
+              leftIcon={<Lock className="w-4 h-4 text-secondary" />}
             />
           </div>
 
@@ -147,7 +147,7 @@ function LoginFormContent() {
           </button>
         </form>
 
-        <div className="pt-4 border-t border-slate-100 text-center text-xs text-slate-500">
+        <div className="pt-4 border-t border-slate-100 text-center text-xs text-secondary">
           New to Vexlora?{" "}
           <Link
             href={`/register${redirectUrl !== "/" ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`}
