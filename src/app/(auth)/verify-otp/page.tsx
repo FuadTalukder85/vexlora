@@ -66,7 +66,7 @@ function VerifyOtpContent() {
           <h1 className="text-2xl font-extrabold text-primary tracking-tight">
             Verify Email Address
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-secondary">
             Enter the 6-digit verification code sent to{" "}
             <strong className="text-primary">{emailParam || "your email"}</strong>
           </p>
@@ -118,7 +118,7 @@ function VerifyOtpContent() {
           </button>
 
           <div>
-            <Link href="/login" className="text-xs text-slate-500 hover:text-primary font-medium">
+            <Link href="/login" className="text-xs text-secondary hover:text-primary font-medium">
               Back to Sign In
             </Link>
           </div>
