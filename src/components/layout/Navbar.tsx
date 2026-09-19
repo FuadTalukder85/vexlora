@@ -10,17 +10,17 @@ export function Navbar() {
       <div className="w-full flex items-center justify-between py-2.5">
         {/* Categories & Links */}
         <nav className="flex items-center gap-6 lg:gap-8 overflow-x-auto text-[14px]">
-          <button
-            type="button"
+          <Link
+            href="/products"
             className="inline-flex items-center gap-1.5 font-bold text-primary hover:opacity-80 transition-colors py-1 cursor-pointer text-[14px]"
           >
             <span>All Categories</span>
             <ChevronDown className="h-3.5 w-3.5 text-secondary" />
-          </button>
+          </Link>
 
           {/* Today's Hot Deals */}
           <Link
-            href="#"
+            href="/products?sortBy=basePrice&sortOrder=asc"
             className="inline-flex items-center gap-1.5 font-semibold text-highlight hover:text-rose-700 transition-colors py-1 text-[14px]"
           >
             <Flame className="h-3.5 w-3.5" />
@@ -28,31 +28,37 @@ export function Navbar() {
           </Link>
 
           <Link
-            href="#"
+            href="/products?category=electronics"
             className="text-secondary hover:text-primary transition-colors py-1"
           >
             Electronics & Tech
           </Link>
           <Link
-            href="#"
+            href="/products?category=laptops-computers"
+            className="text-secondary hover:text-primary transition-colors py-1"
+          >
+            Laptops & Computers
+          </Link>
+          <Link
+            href="/products?category=fashion-apparel"
             className="text-secondary hover:text-primary transition-colors py-1"
           >
             Fashion & Apparel
           </Link>
           <Link
-            href="#"
+            href="/products?category=home-kitchen"
             className="text-secondary hover:text-primary transition-colors py-1"
           >
             Home & Kitchen
           </Link>
           <Link
-            href="#"
+            href="/products?category=beauty-welness"
             className="text-secondary hover:text-primary transition-colors py-1"
           >
             Beauty & Wellness
           </Link>
           <Link
-            href="#"
+            href="/products"
             className="text-secondary hover:text-primary transition-colors py-1"
           >
             Verified Stores
