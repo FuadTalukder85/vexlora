@@ -3,6 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Search,
   Heart,
@@ -25,6 +26,7 @@ import { MobileNav } from "./MobileNav";
 import { Navbar } from "./Navbar";
 
 export function Header() {
+  const router = useRouter();
   const { toggleMobileMenu, activeCurrency, setCurrency } = useUIStore();
   const wishlistCount = useWishlistStore((s) => s.getCount());
   const cartCount = useCartStore((s) => s.getItemCount());
@@ -44,7 +46,13 @@ export function Header() {
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!searchQuery.trim()) return;
+    const query = searchQuery.trim();
+    const params = new URLSearchParams();
+    if (query) params.set("q", query);
+    if (selectedCategory && selectedCategory !== "all") {
+      params.set("category", selectedCategory);
+    }
+    router.push(`/products${params.toString() ? `?${params.toString()}` : ""}`);
   };
 
   return (
@@ -147,9 +155,10 @@ export function Header() {
                   >
                     <option value="all">All Categories</option>
                     <option value="electronics">Electronics</option>
-                    <option value="fashion">Fashion</option>
-                    <option value="home">Home & Living</option>
-                    <option value="beauty">Beauty</option>
+                    <option value="laptops-computers">Laptops & Computers</option>
+                    <option value="fashion-apparel">Fashion & Apparel</option>
+                    <option value="home-kitchen">Home & Kitchen</option>
+                    <option value="beauty-welness">Beauty & Wellness</option>
                   </select>
                 </div>
 

@@ -21,12 +21,11 @@ import { useAuthStore } from "@/stores/auth.store";
 import { useIsMounted } from "@/lib/utils";
 
 const categories = [
-  { name: "Electronics & Tech", href: "#", count: "1,240 items" },
-  { name: "Fashion & Apparel", href: "#", count: "3,890 items" },
-  { name: "Home & Living", href: "#", count: "980 items" },
-  { name: "Beauty & Personal Care", href: "#", count: "640 items" },
-  { name: "Sports & Outdoors", href: "#", count: "420 items" },
-  { name: "Artisans & Handmade", href: "#", count: "210 items" },
+  { name: "Electronics & Gadgets", href: "/products?category=electronics", count: "500k+ items" },
+  { name: "Laptops & Computers", href: "/products?category=laptops-computers", count: "500k+ items" },
+  { name: "Fashion & Apparel", href: "/products?category=fashion-apparel", count: "Popular" },
+  { name: "Home & Kitchen", href: "/products?category=home-kitchen", count: "Trending" },
+  { name: "Beauty & Wellness", href: "/products?category=beauty-welness", count: "Verified" },
 ];
 
 export function MobileNav() {
