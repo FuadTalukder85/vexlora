@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Star, Heart, Eye, BarChart2 } from "lucide-react";
 import { useCartStore } from "@/stores/cart.store";
 import { useWishlistStore } from "@/stores/wishlist.store";
+import { useUIStore } from "@/stores/ui.store";
 import { formatCurrency } from "@/lib/utils";
 
 export interface ProductCardProps {
@@ -38,6 +39,7 @@ export function ProductCard(props: ProductCardProps) {
   const addItem = useCartStore((s) => s.addItem);
   const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
   const isInWishlist = useWishlistStore((s) => s.isInWishlist);
+  const setCartDrawerOpen = useUIStore((s) => s.setCartDrawerOpen);
 
   const activeInWishlist = id ? isInWishlist(id) : false;
 
@@ -53,6 +55,7 @@ export function ProductCard(props: ProductCardProps) {
       price,
       image,
     });
+    setCartDrawerOpen(true);
   };
 
   return (

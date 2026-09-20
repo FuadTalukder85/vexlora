@@ -2,6 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 import { User, VendorProfile, CreateVendorProfilePayload } from "@/types/auth";
 import { apiClient, http } from "@/lib/api/client";
+import { useCartStore } from "@/stores/cart.store";
 
 const AUTH_BASE_URL =
   process.env.NEXT_PUBLIC_AUTH_URL || "http://localhost:5000/api/auth";
@@ -166,9 +167,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         });
       }
 
-      // Refresh in background
+      // Refresh in background and merge guest cart
       try {
         await get().fetchMe();
+        await useCartStore.getState().mergeGuestCart();
       } catch {
         // Non-blocking
       }
@@ -306,6 +308,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
       try {
         await get().fetchMe();
+        await useCartStore.getState().mergeGuestCart();
       } catch {
         // Non-blocking
       }

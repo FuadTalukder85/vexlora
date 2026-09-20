@@ -19,6 +19,16 @@ export const apiClient: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
+export function getCartSessionId(): string {
+  if (typeof window === "undefined") return "";
+  let sessionId = localStorage.getItem("vexlora_cart_session_id");
+  if (!sessionId) {
+    sessionId = `sess_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    localStorage.setItem("vexlora_cart_session_id", sessionId);
+  }
+  return sessionId;
+}
+
 // Request Interceptor
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
@@ -30,6 +40,12 @@ apiClient.interceptors.request.use(
       const token = localStorage.getItem("vexlora_token");
       if (token) {
         config.headers.set("Authorization", `Bearer ${token}`);
+      }
+
+      // Guest cart session ID header
+      const sessionId = getCartSessionId();
+      if (sessionId) {
+        config.headers.set("x-session-id", sessionId);
       }
     }
 

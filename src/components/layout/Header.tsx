@@ -27,7 +27,7 @@ import { Navbar } from "./Navbar";
 
 export function Header() {
   const router = useRouter();
-  const { toggleMobileMenu, activeCurrency, setCurrency } = useUIStore();
+  const { toggleMobileMenu, activeCurrency, setCurrency, setCartDrawerOpen } = useUIStore();
   const wishlistCount = useWishlistStore((s) => s.getCount());
   const cartCount = useCartStore((s) => s.getItemCount());
   const cartSubtotal = useCartStore((s) => s.getSubtotal());
@@ -297,10 +297,11 @@ export function Header() {
               </Link>
 
               {/* Cart Button */}
-              <Link
-                href="#"
-                className="relative flex items-center gap-2.5 p-2 sm:px-3 sm:py-2 rounded-xl bg-primary hover:opacity-90 text-white shadow-sm transition-all duration-150 active:scale-[0.98]"
-                aria-label="View Shopping Cart"
+              <button
+                type="button"
+                onClick={() => setCartDrawerOpen(true)}
+                className="relative flex items-center gap-2.5 p-2 sm:px-3 sm:py-2 rounded-xl bg-primary hover:opacity-90 text-white shadow-sm transition-all duration-150 active:scale-[0.98] cursor-pointer"
+                aria-label="Open Shopping Cart Drawer"
               >
                 <div className="relative">
                   <ShoppingBag className="h-5 w-5 text-white" />
@@ -318,7 +319,7 @@ export function Header() {
                     {mounted ? formatCurrency(cartSubtotal) : "$0.00"}
                   </span>
                 </div>
-              </Link>
+              </button>
             </div>
           </div>
 

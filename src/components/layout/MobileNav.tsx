@@ -29,7 +29,7 @@ const categories = [
 ];
 
 export function MobileNav() {
-  const { isMobileMenuOpen, setMobileMenuOpen } = useUIStore();
+  const { isMobileMenuOpen, setMobileMenuOpen, setCartDrawerOpen } = useUIStore();
   const wishlistCount = useWishlistStore((s) => s.getCount());
   const cartCount = useCartStore((s) => s.getItemCount());
   const { user, isAuthenticated, logout } = useAuthStore();
@@ -115,10 +115,13 @@ export function MobileNav() {
             <span className="text-[11px] font-medium text-secondary">Wishlist</span>
           </Link>
 
-          <Link
-            href="#"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-slate-200/80 text-center hover:border-primary transition-colors"
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setCartDrawerOpen(true);
+            }}
+            className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-slate-200/80 text-center hover:border-primary transition-colors cursor-pointer"
           >
             <div className="relative">
               <ShoppingBag className="h-4 w-4 text-primary mb-1" />
@@ -129,7 +132,7 @@ export function MobileNav() {
               )}
             </div>
             <span className="text-[11px] font-medium text-secondary">Cart</span>
-          </Link>
+          </button>
 
           {isAuthenticated && user ? (
             <button
