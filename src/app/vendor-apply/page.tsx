@@ -204,7 +204,7 @@ export default function VendorApplyPage() {
 
             <div className="pt-2">
               <a
-                href={process.env.NEXT_PUBLIC_VENDOR_URL || "http://localhost:3001"}
+                href={process.env.NEXT_PUBLIC_VENDOR_URL || "#"}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-primary hover:bg-primary/95 text-white text-xs font-bold transition-all shadow-md"

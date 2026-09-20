@@ -19,6 +19,7 @@ import { useWishlistStore } from "@/stores/wishlist.store";
 import { useCartStore } from "@/stores/cart.store";
 import { useAuthStore } from "@/stores/auth.store";
 import { useIsMounted } from "@/lib/utils";
+import { toast } from "sonner";
 
 const categories = [
   { name: "Electronics & Gadgets", href: "/products?category=electronics", count: "500k+ items" },
@@ -29,7 +30,7 @@ const categories = [
 ];
 
 export function MobileNav() {
-  const { isMobileMenuOpen, setMobileMenuOpen } = useUIStore();
+  const { isMobileMenuOpen, setMobileMenuOpen, setCartDrawerOpen } = useUIStore();
   const wishlistCount = useWishlistStore((s) => s.getCount());
   const cartCount = useCartStore((s) => s.getItemCount());
   const { user, isAuthenticated, logout } = useAuthStore();
@@ -100,7 +101,7 @@ export function MobileNav() {
         {/* Quick Actions Row */}
         <div className="grid grid-cols-3 gap-2 px-6 py-4 border-b border-slate-100 bg-slate-50/50">
           <Link
-            href="#"
+            href="/wishlist"
             onClick={() => setMobileMenuOpen(false)}
             className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-slate-200/80 text-center hover:border-primary transition-colors"
           >
@@ -115,10 +116,13 @@ export function MobileNav() {
             <span className="text-[11px] font-medium text-secondary">Wishlist</span>
           </Link>
 
-          <Link
-            href="#"
-            onClick={() => setMobileMenuOpen(false)}
-            className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-slate-200/80 text-center hover:border-primary transition-colors"
+          <button
+            type="button"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setCartDrawerOpen(true);
+            }}
+            className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-slate-200/80 text-center hover:border-primary transition-colors cursor-pointer"
           >
             <div className="relative">
               <ShoppingBag className="h-4 w-4 text-primary mb-1" />
@@ -129,13 +133,14 @@ export function MobileNav() {
               )}
             </div>
             <span className="text-[11px] font-medium text-secondary">Cart</span>
-          </Link>
+          </button>
 
           {isAuthenticated && user ? (
             <button
-              onClick={() => {
-                logout();
+              onClick={async () => {
                 setMobileMenuOpen(false);
+                await logout();
+                toast.success("Signed out successfully");
               }}
               className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-rose-200 text-center hover:bg-rose-50 transition-colors cursor-pointer"
             >

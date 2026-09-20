@@ -52,4 +52,9 @@ export const queryKeys = {
   coupons: {
     validate: (code: string) => ["coupons", "validate", code] as const,
   },
+
+  // Cart
+  cart: {
+    all: ["cart"] as const,
+  },
 } as const;

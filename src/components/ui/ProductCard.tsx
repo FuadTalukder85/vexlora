@@ -6,10 +6,12 @@ import Image from "next/image";
 import { Star, Heart, Eye, BarChart2 } from "lucide-react";
 import { useCartStore } from "@/stores/cart.store";
 import { useWishlistStore } from "@/stores/wishlist.store";
+import { useUIStore } from "@/stores/ui.store";
 import { formatCurrency } from "@/lib/utils";
 
 export interface ProductCardProps {
   id?: string;
+  slug?: string;
   name?: string;
   price?: number;
   originalPrice?: number;
@@ -20,6 +22,7 @@ export interface ProductCardProps {
   image?: string;
   product?: {
     id: string;
+    slug?: string;
     name: string;
     price: number;
     originalPrice?: number;
@@ -33,11 +36,13 @@ export interface ProductCardProps {
 
 export function ProductCard(props: ProductCardProps) {
   const item = props.product || props;
-  const { id, name, price, originalPrice, vendor, rating, reviews, discount, image } = item;
+  const { id, slug, name, price, originalPrice, vendor, rating, reviews, discount, image } = item;
+  const productHref = `/products/${slug || id || ""}`;
 
   const addItem = useCartStore((s) => s.addItem);
   const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
   const isInWishlist = useWishlistStore((s) => s.isInWishlist);
+  const setCartDrawerOpen = useUIStore((s) => s.setCartDrawerOpen);
 
   const activeInWishlist = id ? isInWishlist(id) : false;
 
@@ -49,10 +54,11 @@ export function ProductCard(props: ProductCardProps) {
       vendorId: "vendor-1",
       vendorName: vendor || "Vexlora",
       title: name,
-      slug: id,
+      slug: slug || id,
       price,
       image,
     });
+    setCartDrawerOpen(true);
   };
 
   return (
@@ -66,13 +72,15 @@ export function ProductCard(props: ProductCardProps) {
         )}
 
         {image && (
-          <Image
-            src={image}
-            alt={name || "Product image"}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
-            className="object-contain p-2 transition-transform duration-300 cursor-pointer"
-          />
+          <Link href={productHref} className="relative w-full h-full block">
+            <Image
+              src={image}
+              alt={name || "Product image"}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+              className="object-contain p-2 transition-transform duration-300 group-hover/image:scale-105 cursor-pointer"
+            />
+          </Link>
         )}
 
         {/* Action Icons */}
@@ -86,7 +94,7 @@ export function ProductCard(props: ProductCardProps) {
               toggleWishlist({
                 productId: id,
                 title: name,
-                slug: id,
+                slug: slug || id,
                 price,
                 vendorName: vendor || "Vexlora",
               })
@@ -97,13 +105,13 @@ export function ProductCard(props: ProductCardProps) {
           >
             <Heart className={`h-4.5 w-4.5 ${activeInWishlist ? "fill-highlight" : ""}`} />
           </button>
-          <button
-            type="button"
+          <Link
+            href={productHref}
             className="p-1.5 text-primary hover:text-primary transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs"
             aria-label="Quick View"
           >
             <Eye className="h-4.5 w-4.5" />
-          </button>
+          </Link>
           <button
             type="button"
             className="p-1.5 text-primary hover:text-primary transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs"
@@ -134,7 +142,7 @@ export function ProductCard(props: ProductCardProps) {
         )}
 
         <h3 className="text-sm font-bold text-primary group-hover:text-primary/80 transition-colors line-clamp-2 leading-snug">
-          <Link href="#">{name}</Link>
+          <Link href={productHref}>{name}</Link>
         </h3>
 
         {rating !== undefined && (

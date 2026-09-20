@@ -5,14 +5,17 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Mail, Lock, User as UserIcon, Phone, ArrowRight, AlertCircle } from "lucide-react";
 import { useAuthStore } from "@/stores/auth.store";
+import { useIsMounted } from "@/lib/utils";
 import { Input } from "@/components/ui/Input";
+import { toast } from "sonner";
 
 function RegisterFormContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const redirectUrl = searchParams.get("redirect") || "/";
 
-  const { register, isLoading } = useAuthStore();
+  const { register, isAuthenticated, user, isLoading } = useAuthStore();
+  const mounted = useIsMounted();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,19 +23,25 @@ function RegisterFormContent() {
   const [phone, setPhone] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  // Auto-redirect if already signed in
+  React.useEffect(() => {
+    if (mounted && isAuthenticated && user) {
+      router.replace(redirectUrl);
+    }
+  }, [mounted, isAuthenticated, user, redirectUrl, router]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
 
     try {
       await register({ name, email, password, phone: phone || undefined });
+      toast.success("Verification code sent to your email!");
       router.push(`/verify-otp?email=${encodeURIComponent(email)}&redirect=${encodeURIComponent(redirectUrl)}`);
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setErrorMsg(err.message);
-      } else {
-        setErrorMsg("Registration failed. Please try again.");
-      }
+      const msg = err instanceof Error ? err.message : "Registration failed. Please try again.";
+      setErrorMsg(msg);
+      toast.error(msg);
     }
   };
 

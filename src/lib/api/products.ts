@@ -53,6 +53,31 @@ export const getProducts = async (
   return await http.get<Product[]>("/products", queryParams);
 };
 
-export const getProductBySlug = async (slug: string): Promise<ApiResponse<Product>> => {
-  return await http.get<Product>(`/products/${slug}`);
+export const getProductBySlug = async (slugOrId: string): Promise<ApiResponse<Product>> => {
+  try {
+    return await http.get<Product>(`/products/slug/${encodeURIComponent(slugOrId)}`);
+  } catch (err: unknown) {
+    // If slug endpoint returns 404, fallback to /products/:id
+    if (typeof err === "object" && err !== null && "statusCode" in err && (err as { statusCode: number }).statusCode === 404) {
+      return await http.get<Product>(`/products/${encodeURIComponent(slugOrId)}`);
+    }
+    throw err;
+  }
 };
+
+export const getRelatedProducts = async (
+  categoryId?: string | null,
+  excludeProductId?: string,
+  limit: number = 6
+): Promise<ApiResponse<Product[]>> => {
+  const params: Record<string, unknown> = { limit };
+  if (categoryId) {
+    params.categoryId = categoryId;
+  }
+  const res = await http.get<Product[]>("/products", params);
+  if (res.data && excludeProductId) {
+    res.data = res.data.filter((p) => p.id !== excludeProductId);
+  }
+  return res;
+};
+
