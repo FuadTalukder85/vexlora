@@ -23,6 +23,61 @@ export interface ProductVendor {
   storeLogo?: string | null;
 }
 
+export interface ProductReviewCustomer {
+  id: string;
+  name: string;
+  image?: string | null;
+}
+
+export interface ProductReviewReply {
+  id: string;
+  vendorId: string;
+  comment: string;
+  createdAt: string;
+}
+
+export interface ProductReview {
+  id: string;
+  productId: string;
+  customerId: string;
+  subOrderId?: string | null;
+  rating: number;
+  comment?: string | null;
+  images: string[];
+  vendorReply?: string | null;
+  vendorRepliedAt?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  customer?: ProductReviewCustomer;
+  hasVerifiedPurchase?: boolean;
+}
+
+export interface ReviewStats {
+  averageRating: number;
+  totalReviews: number;
+  ratingDistribution: Record<number, number>;
+  ratingPercentages: Record<number, number>;
+  verifiedPurchaseCount: number;
+  withImagesCount: number;
+}
+
+export interface CanReviewResult {
+  canReview: boolean;
+  alreadyReviewed: boolean;
+  isVerifiedPurchase: boolean;
+  existingReviewId?: string;
+  eligibleSubOrderId?: string;
+  message: string;
+}
+
+export interface CreateReviewPayload {
+  productId: string;
+  rating: number;
+  comment?: string;
+  images?: string[];
+  subOrderId?: string;
+}
+
 export interface Product {
   id: string;
   vendorId: string;
@@ -44,6 +99,10 @@ export interface Product {
   variants?: ProductVariant[];
   category?: ProductCategory | null;
   vendor?: ProductVendor;
+  reviews?: ProductReview[];
+  _count?: {
+    reviews: number;
+  };
 }
 
 export interface ProductSearchParams {
@@ -61,3 +120,4 @@ export interface ProductSearchParams {
   cursor?: string;
   limit?: number;
 }
+
