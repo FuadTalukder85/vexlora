@@ -7,6 +7,7 @@ import { Star, Heart, ShoppingBag, Truck, ShieldCheck, Check } from "lucide-reac
 import { Product } from "@/types/product";
 import { useCartStore } from "@/stores/cart.store";
 import { useWishlistStore } from "@/stores/wishlist.store";
+import { useUIStore } from "@/stores/ui.store";
 import { formatCurrency } from "@/lib/utils";
 
 interface ProductListCardProps {
@@ -19,6 +20,7 @@ export function ProductListCard({ product }: ProductListCardProps) {
   const addItem = useCartStore((s) => s.addItem);
   const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
   const isInWishlist = useWishlistStore((s) => s.isInWishlist);
+  const setCartDrawerOpen = useUIStore((s) => s.setCartDrawerOpen);
 
   const [addedAnimation, setAddedAnimation] = React.useState(false);
 
@@ -47,6 +49,7 @@ export function ProductListCard({ product }: ProductListCardProps) {
 
     setAddedAnimation(true);
     setTimeout(() => setAddedAnimation(false), 1500);
+    setCartDrawerOpen(true);
   };
 
   return (

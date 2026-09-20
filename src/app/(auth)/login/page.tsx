@@ -4,6 +4,7 @@ import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Mail, Lock, LogIn, LogOut, ArrowRight, AlertCircle } from "lucide-react";
+import { toast } from "sonner";
 import { useAuthStore } from "@/stores/auth.store";
 import { useIsMounted } from "@/lib/utils";
 import { Input } from "@/components/ui/Input";
@@ -20,19 +21,25 @@ function LoginFormContent() {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  // Auto-redirect if already signed in
+  React.useEffect(() => {
+    if (mounted && isAuthenticated && user) {
+      router.replace(redirectUrl);
+    }
+  }, [mounted, isAuthenticated, user, redirectUrl, router]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
 
     try {
-      await login(email, password);
+      const res = await login(email, password);
+      toast.success(`Welcome back, ${res.user?.name || "Shopper"}!`);
       router.push(redirectUrl);
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setErrorMsg(err.message);
-      } else {
-        setErrorMsg("Invalid email or password.");
-      }
+      const msg = err instanceof Error ? err.message : "Invalid email or password.";
+      setErrorMsg(msg);
+      toast.error(msg);
     }
   };
 
@@ -69,6 +76,7 @@ function LoginFormContent() {
             <button
               onClick={async () => {
                 await logout();
+                toast.success("Signed out successfully");
               }}
               className="w-full py-3 px-4 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer border border-rose-200"
             >

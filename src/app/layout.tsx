@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/lib/query/provider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { CartDrawer } from "@/components/cart/CartDrawer";
+import { MobileNav } from "@/components/layout/MobileNav";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,6 +40,12 @@ export default function RootLayout({
           {/* Modern Responsive Header / Navbar (Full Width) */}
           <Header />
 
+          {/* Cart Drawer Overlay & Sidebar */}
+          <CartDrawer />
+
+          {/* Mobile Drawer Navigation */}
+          <MobileNav />
+
           {/* Main Content Area (Full Width, with optional 1800px max/min width support) */}
           <main className="flex-1 w-full flex flex-col">
             {children}
@@ -44,6 +53,7 @@ export default function RootLayout({
 
           {/* Modern Responsive Footer (Full Width) */}
           <Footer />
+          <Toaster position="top-right" richColors closeButton />
         </QueryProvider>
       </body>
     </html>

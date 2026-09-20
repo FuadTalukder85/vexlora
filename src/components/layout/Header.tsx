@@ -22,12 +22,13 @@ import { useWishlistStore } from "@/stores/wishlist.store";
 import { useCartStore } from "@/stores/cart.store";
 import { useAuthStore } from "@/stores/auth.store";
 import { formatCurrency, useIsMounted } from "@/lib/utils";
+import { toast } from "sonner";
 import { MobileNav } from "./MobileNav";
 import { Navbar } from "./Navbar";
 
 export function Header() {
   const router = useRouter();
-  const { toggleMobileMenu, activeCurrency, setCurrency } = useUIStore();
+  const { toggleMobileMenu, activeCurrency, setCurrency, setCartDrawerOpen } = useUIStore();
   const wishlistCount = useWishlistStore((s) => s.getCount());
   const cartCount = useCartStore((s) => s.getItemCount());
   const cartSubtotal = useCartStore((s) => s.getSubtotal());
@@ -236,7 +237,7 @@ export function Header() {
 
                           {vendorProfile?.status === "APPROVED" && (
                             <a
-                              href={process.env.NEXT_PUBLIC_VENDOR_URL || "http://localhost:3001"}
+                              href={process.env.NEXT_PUBLIC_VENDOR_URL || "#"}
                               target="_blank"
                               rel="noreferrer"
                               className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-amber-700 font-semibold hover:bg-amber-50 text-left"
@@ -249,9 +250,10 @@ export function Header() {
 
                         <div className="pt-1 border-t border-slate-100">
                           <button
-                            onClick={() => {
+                            onClick={async () => {
                               setUserDropdownOpen(false);
-                              logout();
+                              await logout();
+                              toast.success("Signed out successfully");
                             }}
                             className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-rose-600 font-semibold hover:bg-rose-50 text-left cursor-pointer"
                           >
@@ -284,7 +286,7 @@ export function Header() {
 
               {/* Wishlist Button with Counter */}
               <Link
-                href="#"
+                href="/wishlist"
                 className="relative p-2.5 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-primary transition-colors"
                 aria-label="View Wishlist"
               >
@@ -297,10 +299,11 @@ export function Header() {
               </Link>
 
               {/* Cart Button */}
-              <Link
-                href="#"
-                className="relative flex items-center gap-2.5 p-2 sm:px-3 sm:py-2 rounded-xl bg-primary hover:opacity-90 text-white shadow-sm transition-all duration-150 active:scale-[0.98]"
-                aria-label="View Shopping Cart"
+              <button
+                type="button"
+                onClick={() => setCartDrawerOpen(true)}
+                className="relative flex items-center gap-2.5 p-2 sm:px-3 sm:py-2 rounded-xl bg-primary hover:opacity-90 text-white shadow-sm transition-all duration-150 active:scale-[0.98] cursor-pointer"
+                aria-label="Open Shopping Cart Drawer"
               >
                 <div className="relative">
                   <ShoppingBag className="h-5 w-5 text-white" />
@@ -318,7 +321,7 @@ export function Header() {
                     {mounted ? formatCurrency(cartSubtotal) : "$0.00"}
                   </span>
                 </div>
-              </Link>
+              </button>
             </div>
           </div>
 
