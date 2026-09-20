@@ -19,6 +19,7 @@ import { useWishlistStore } from "@/stores/wishlist.store";
 import { useCartStore } from "@/stores/cart.store";
 import { useAuthStore } from "@/stores/auth.store";
 import { useIsMounted } from "@/lib/utils";
+import { toast } from "sonner";
 
 const categories = [
   { name: "Electronics & Gadgets", href: "/products?category=electronics", count: "500k+ items" },
@@ -136,9 +137,10 @@ export function MobileNav() {
 
           {isAuthenticated && user ? (
             <button
-              onClick={() => {
-                logout();
+              onClick={async () => {
                 setMobileMenuOpen(false);
+                await logout();
+                toast.success("Signed out successfully");
               }}
               className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-rose-200 text-center hover:bg-rose-50 transition-colors cursor-pointer"
             >

@@ -4,6 +4,7 @@ import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ShieldCheck, ArrowRight, AlertCircle, CheckCircle2 } from "lucide-react";
+import { toast } from "sonner";
 import { useAuthStore } from "@/stores/auth.store";
 import { Input } from "@/components/ui/Input";
 
@@ -26,21 +27,21 @@ function VerifyOtpContent() {
 
     if (!emailParam) {
       setErrorMsg("Email parameter is missing.");
+      toast.error("Email parameter is missing.");
       return;
     }
 
     try {
       await verifyOtp(emailParam, otp);
       setSuccessMsg("Email successfully verified! Redirecting...");
+      toast.success("Account verified successfully! Welcome to Vexlora.");
       setTimeout(() => {
         router.push(redirectUrl);
       }, 1000);
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        setErrorMsg(err.message);
-      } else {
-        setErrorMsg("Invalid OTP verification code.");
-      }
+      const msg = err instanceof Error ? err.message : "Invalid OTP verification code.";
+      setErrorMsg(msg);
+      toast.error(msg);
     }
   };
 
@@ -51,8 +52,11 @@ function VerifyOtpContent() {
     try {
       await sendOtp(emailParam, "email-verification");
       setSuccessMsg(`A new OTP code has been sent to ${emailParam}`);
+      toast.success("New OTP code sent to your email!");
     } catch (err: unknown) {
-      if (err instanceof Error) setErrorMsg(err.message);
+      const msg = err instanceof Error ? err.message : "Failed to resend code";
+      setErrorMsg(msg);
+      toast.error(msg);
     }
   };
 
@@ -118,7 +122,10 @@ function VerifyOtpContent() {
           </button>
 
           <div>
-            <Link href="/login" className="text-xs text-secondary hover:text-primary font-medium">
+            <Link
+              href={`/login${redirectUrl !== "/" ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`}
+              className="text-xs text-secondary hover:text-primary font-medium"
+            >
               Back to Sign In
             </Link>
           </div>

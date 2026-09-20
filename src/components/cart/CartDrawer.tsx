@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useUIStore } from "@/stores/ui.store";
 import { useCartStore } from "@/stores/cart.store";
+import { useAuthStore } from "@/stores/auth.store";
 import { formatCurrency, useIsMounted } from "@/lib/utils";
 
 const FREE_SHIPPING_THRESHOLD = 100; // Free shipping threshold in USD
@@ -25,6 +26,7 @@ const FREE_SHIPPING_THRESHOLD = 100; // Free shipping threshold in USD
 export function CartDrawer() {
   const router = useRouter();
   const { isCartDrawerOpen, setCartDrawerOpen } = useUIStore();
+  const { isAuthenticated } = useAuthStore();
   const {
     items,
     fetchCart,
@@ -102,7 +104,11 @@ export function CartDrawer() {
 
   const handleCheckout = () => {
     setCartDrawerOpen(false);
-    router.push("/cart");
+    if (!isAuthenticated) {
+      router.push("/login?redirect=/checkout");
+      return;
+    }
+    router.push("/checkout");
   };
 
   const handleViewCart = () => {

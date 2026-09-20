@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from "axios";
 import { ApiError, ApiErrorResponse, ApiResponse } from "./types";
 
-const envApiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+const envApiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
 const API_BASE_URL = envApiUrl.endsWith("/v1")
   ? envApiUrl
   : `${envApiUrl.replace(/\/+$/, "")}/v1`;

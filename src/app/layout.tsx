@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/lib/query/provider";
@@ -52,6 +53,7 @@ export default function RootLayout({
 
           {/* Modern Responsive Footer (Full Width) */}
           <Footer />
+          <Toaster position="top-right" richColors closeButton />
         </QueryProvider>
       </body>
     </html>

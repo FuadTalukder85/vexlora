@@ -38,6 +38,7 @@ interface CartState {
   updateQuantity: (itemId: string, quantity: number) => Promise<void>;
   toggleSaveForLater: (itemId: string, savedForLater: boolean) => Promise<void>;
   clearCart: () => Promise<void>;
+  resetCartState: () => void;
   mergeGuestCart: () => Promise<void>;
 
   // Selection for Checkout (Amazon / Lazada style)
@@ -220,6 +221,22 @@ export const useCartStore = create<CartState>()(
         } catch {
           await get().fetchCart();
         }
+      },
+
+      resetCartState: () => {
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("vexlora_cart_session_id");
+          localStorage.removeItem("vexlora-cart");
+        }
+        set({
+          items: [],
+          vendorGroups: [],
+          savedForLater: [],
+          summary: null,
+          selectedItemIds: [],
+          isLoading: false,
+          isSyncing: false,
+        });
       },
 
       mergeGuestCart: async () => {

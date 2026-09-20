@@ -22,6 +22,7 @@ import { useWishlistStore } from "@/stores/wishlist.store";
 import { useCartStore } from "@/stores/cart.store";
 import { useAuthStore } from "@/stores/auth.store";
 import { formatCurrency, useIsMounted } from "@/lib/utils";
+import { toast } from "sonner";
 import { MobileNav } from "./MobileNav";
 import { Navbar } from "./Navbar";
 
@@ -236,7 +237,7 @@ export function Header() {
 
                           {vendorProfile?.status === "APPROVED" && (
                             <a
-                              href={process.env.NEXT_PUBLIC_VENDOR_URL || "http://localhost:3001"}
+                              href={process.env.NEXT_PUBLIC_VENDOR_URL || "#"}
                               target="_blank"
                               rel="noreferrer"
                               className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-amber-700 font-semibold hover:bg-amber-50 text-left"
@@ -249,9 +250,10 @@ export function Header() {
 
                         <div className="pt-1 border-t border-slate-100">
                           <button
-                            onClick={() => {
+                            onClick={async () => {
                               setUserDropdownOpen(false);
-                              logout();
+                              await logout();
+                              toast.success("Signed out successfully");
                             }}
                             className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-rose-600 font-semibold hover:bg-rose-50 text-left cursor-pointer"
                           >
