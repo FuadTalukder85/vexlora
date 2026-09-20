@@ -101,7 +101,7 @@ export function MobileNav() {
         {/* Quick Actions Row */}
         <div className="grid grid-cols-3 gap-2 px-6 py-4 border-b border-slate-100 bg-slate-50/50">
           <Link
-            href="#"
+            href="/wishlist"
             onClick={() => setMobileMenuOpen(false)}
             className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-slate-200/80 text-center hover:border-primary transition-colors"
           >

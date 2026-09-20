@@ -286,7 +286,7 @@ export function Header() {
 
               {/* Wishlist Button with Counter */}
               <Link
-                href="#"
+                href="/wishlist"
                 className="relative p-2.5 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-primary transition-colors"
                 aria-label="View Wishlist"
               >
