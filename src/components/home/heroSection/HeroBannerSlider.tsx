@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -45,13 +45,13 @@ export function HeroBannerSlider() {
   }, [heroSlides.length]);
 
   return (
-    <div className="lg:col-span-6 relative rounded-2xl overflow-hidden shadow-sm border border-slate-200/80 min-h-[380px] lg:min-h-[420px] flex flex-col justify-between group bg-white">
+    <div className="lg:col-span-6 relative rounded-2xl overflow-hidden shadow-sm border border-border min-h-[380px] lg:min-h-[420px] flex flex-col justify-between group bg-white">
       {/* Previous Slide Button */}
       <button
         type="button"
         onClick={handlePrevSlide}
         aria-label="Previous slide"
-        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-primary shadow-md hover:bg-slate-50 hover:scale-105 active:scale-95 flex items-center justify-center transition-all cursor-pointer border border-slate-100"
+        className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-primary shadow-md hover:bg-muted hover:scale-105 active:scale-95 flex items-center justify-center transition-all cursor-pointer border border-border"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
@@ -61,7 +61,7 @@ export function HeroBannerSlider() {
         type="button"
         onClick={handleNextSlide}
         aria-label="Next slide"
-        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-primary shadow-md hover:bg-slate-50 hover:scale-105 active:scale-95 flex items-center justify-center transition-all cursor-pointer border border-slate-100"
+        className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-primary shadow-md hover:bg-muted hover:scale-105 active:scale-95 flex items-center justify-center transition-all cursor-pointer border border-border"
       >
         <ChevronRight className="h-5 w-5" />
       </button>
@@ -126,7 +126,7 @@ export function HeroBannerSlider() {
             key={i}
             type="button"
             onClick={() => setActiveSlide(i)}
-            className={`h-2 rounded-full transition-all cursor-pointer ${i === activeSlide ? "w-6 bg-primary" : "w-2 bg-slate-300 hover:bg-secondary"
+            className={`h-2 rounded-full transition-all cursor-pointer ${i === activeSlide ? "w-6 bg-primary" : "w-2 bg-secondary/40 hover:bg-secondary"
               }`}
             aria-label={`Go to slide ${i + 1}`}
           />

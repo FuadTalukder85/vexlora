@@ -51,7 +51,7 @@ export default function SingleProductPage() {
   if (isError || !product) {
     return (
       <div className="w-full min-h-[70vh] flex flex-col items-center justify-center p-6 text-center space-y-4">
-        <div className="w-16 h-16 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center">
+        <div className="w-16 h-16 rounded-full bg-highlight/10 text-highlight flex items-center justify-center">
           <AlertCircle className="w-8 h-8" />
         </div>
         <h2 className="text-xl sm:text-2xl font-black text-primary">Product Not Found</h2>
@@ -62,7 +62,7 @@ export default function SingleProductPage() {
           <button
             type="button"
             onClick={() => router.back()}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 text-xs font-bold text-slate-700 bg-white transition-colors cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-border hover:border-border text-xs font-bold text-secondary bg-white transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Go Back</span>
@@ -84,30 +84,30 @@ export default function SingleProductPage() {
     product.discountPrice && Number(product.discountPrice) < Number(product.basePrice);
   const discountBadge = hasDiscount
     ? `${Math.round(
-        ((Number(product.basePrice) - Number(product.discountPrice)) /
-          Number(product.basePrice)) *
-          100
-      )}% OFF`
+      ((Number(product.basePrice) - Number(product.discountPrice)) /
+        Number(product.basePrice)) *
+      100
+    )}% OFF`
     : null;
 
   const isOutOfStock =
     (selectedVariant ? selectedVariant.stock : product.totalStock) <= 0;
 
   return (
-    <div className="w-full min-h-screen bg-slate-50/50 py-6 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 space-y-8 pb-24 lg:pb-12">
+    <div className="w-full min-h-screen bg-muted/50 py-6 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 space-y-8 pb-24 lg:pb-12">
       {/* 1. Breadcrumb Trail */}
       <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-secondary font-medium flex-wrap">
         <Link href="/" className="hover:text-primary transition-colors flex items-center gap-1">
           <Home className="w-3.5 h-3.5" />
           <span>Home</span>
         </Link>
-        <ChevronRight className="w-3 h-3 text-slate-300 shrink-0" />
+        <ChevronRight className="w-3 h-3 text-secondary/60 shrink-0" />
         <Link href="/products" className="hover:text-primary transition-colors">
           Products
         </Link>
         {product.category && (
           <>
-            <ChevronRight className="w-3 h-3 text-slate-300 shrink-0" />
+            <ChevronRight className="w-3 h-3 text-secondary/60 shrink-0" />
             <Link
               href={`/products?category=${product.category.slug}`}
               className="hover:text-primary transition-colors truncate max-w-xs"
@@ -116,16 +116,16 @@ export default function SingleProductPage() {
             </Link>
           </>
         )}
-        <ChevronRight className="w-3 h-3 text-slate-300 shrink-0" />
+        <ChevronRight className="w-3 h-3 text-secondary/60 shrink-0" />
         <span className="text-primary font-bold truncate max-w-sm sm:max-w-md">
           {product.title}
         </span>
       </nav>
 
       {/* 2. Main Hero Product Section (Gallery + Info + Buy Box) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         {/* Left: Product Gallery (5 Columns) */}
-        <div className="lg:col-span-5 bg-white p-4 sm:p-6 rounded-2xl border border-slate-200/90 shadow-sm sticky top-24">
+        <div className="lg:col-span-5 bg-white flex flex-col h-full">
           <ProductGallery
             images={product.images || []}
             title={product.title}
@@ -136,7 +136,7 @@ export default function SingleProductPage() {
         </div>
 
         {/* Center: Main Product Info (4 Columns) */}
-        <div className="lg:col-span-4 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/90 shadow-sm space-y-6">
+        <div className="lg:col-span-4 bg-white p-5 sm:p-6 rounded-2xl border border-border shadow-sm space-y-6 flex flex-col h-full">
           <ProductInfo
             product={product}
             selectedVariant={selectedVariant}
@@ -146,7 +146,7 @@ export default function SingleProductPage() {
         </div>
 
         {/* Right: Buy Box & Urgency / Delivery (3 Columns) */}
-        <div className="lg:col-span-3 sticky top-24">
+        <div className="lg:col-span-3 self-start sticky top-24">
           <ProductBuyBox
             product={product}
             selectedVariant={selectedVariant}

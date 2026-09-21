@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, Suspense } from "react";
 import Link from "next/link";
@@ -45,8 +45,8 @@ function LoginFormContent() {
 
   if (mounted && isAuthenticated && user) {
     return (
-      <div className="min-h-[80vh] flex flex-col justify-center items-center px-4 py-12 bg-slate-50/50">
-        <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-slate-200/80 p-8 space-y-6 text-center">
+      <div className="min-h-[80vh] flex flex-col justify-center items-center px-4 py-12 bg-muted/50">
+        <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-border p-8 space-y-6 text-center">
           <div className="w-16 h-16 rounded-2xl bg-primary text-white flex items-center justify-center font-extrabold text-2xl mx-auto shadow-md">
             {user.name?.charAt(0).toUpperCase() || "V"}
           </div>
@@ -58,7 +58,7 @@ function LoginFormContent() {
             <p className="text-xs text-secondary font-medium">
               Signed in as <strong className="text-primary">{user.name}</strong> ({user.email})
             </p>
-            <span className="inline-block mt-2 px-3 py-1 rounded-full bg-slate-100 text-primary text-[10px] font-bold uppercase tracking-wider">
+            <span className="inline-block mt-2 px-3 py-1 rounded-full bg-muted text-primary text-[10px] font-bold uppercase tracking-wider">
               Role: {user.role}
             </span>
           </div>
@@ -78,9 +78,9 @@ function LoginFormContent() {
                 await logout();
                 toast.success("Signed out successfully");
               }}
-              className="w-full py-3 px-4 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer border border-rose-200"
+              className="w-full py-3 px-4 rounded-xl bg-highlight/10 hover:bg-highlight/10 text-highlight text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer border border-highlight/30"
             >
-              <LogOut className="w-4 h-4 text-rose-500" />
+              <LogOut className="w-4 h-4 text-highlight" />
               Sign Out from Vexlora
             </button>
           </div>
@@ -90,8 +90,8 @@ function LoginFormContent() {
   }
 
   return (
-    <div className="min-h-[80vh] flex flex-col justify-center items-center px-4 py-12 bg-slate-50/50">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-slate-200/80 p-8 space-y-6">
+    <div className="min-h-[80vh] flex flex-col justify-center items-center px-4 py-12 bg-muted/50">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-border p-8 space-y-6">
         {/* Brand Header */}
         <div className="text-center space-y-2">
           <div className="inline-flex w-12 h-12 rounded-2xl bg-primary text-white items-center justify-center font-extrabold text-2xl shadow-md mb-1">
@@ -106,8 +106,8 @@ function LoginFormContent() {
         </div>
 
         {errorMsg && (
-          <div className="flex items-start gap-2.5 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs animate-in slide-in-from-top-1">
-            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-500" />
+          <div className="flex items-start gap-2.5 p-3.5 rounded-2xl bg-highlight/10 border border-highlight/30 text-highlight text-xs animate-in slide-in-from-top-1">
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-highlight" />
             <div className="flex-1 font-medium">{errorMsg}</div>
           </div>
         )}
@@ -155,7 +155,7 @@ function LoginFormContent() {
           </button>
         </form>
 
-        <div className="pt-4 border-t border-slate-100 text-center text-xs text-secondary">
+        <div className="pt-4 border-t border-border text-center text-xs text-secondary">
           New to Vexlora?{" "}
           <Link
             href={`/register${redirectUrl !== "/" ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`}

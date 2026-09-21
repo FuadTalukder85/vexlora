@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import showcaseGridData from "./showcaseGrid.json";
@@ -24,7 +24,7 @@ export function CategoryGridSection() {
   const cards = showcaseGridData as ShowcaseCardProps[];
 
   return (
-    <section className="w-full py-8 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 bg-slate-50/50">
+    <section className="w-full py-8 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 bg-muted/50">
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {cards.map((card) => (
           <ShowcaseCard

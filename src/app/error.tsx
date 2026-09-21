@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { AlertCircle, RotateCcw, Home } from "lucide-react";
@@ -19,8 +19,8 @@ export default function GlobalError({
 
   return (
     <div className="w-full flex-1 flex flex-col items-center justify-center py-20 px-4">
-      <div className="max-w-md w-full text-center space-y-6 p-8 rounded-3xl bg-white border border-slate-200/90 shadow-lg shadow-slate-200/50">
-        <div className="h-14 w-14 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-primary mx-auto">
+      <div className="max-w-md w-full text-center space-y-6 p-8 rounded-3xl bg-white border border-border shadow-lg shadow-slate-200/50">
+        <div className="h-14 w-14 rounded-2xl bg-muted border border-border flex items-center justify-center text-primary mx-auto">
           <AlertCircle className="h-7 w-7" />
         </div>
 

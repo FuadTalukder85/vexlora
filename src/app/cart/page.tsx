@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
@@ -91,7 +91,7 @@ export default function CartPage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-slate-50/50">
+      <div className="min-h-[60vh] flex items-center justify-center bg-muted/50">
         <div className="h-8 w-8 border-3 border-primary border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -102,7 +102,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/60 py-8 lg:py-12">
+    <div className="min-h-screen bg-muted/60 py-8 lg:py-12">
       <div className="layout-container px-4 sm:px-6 lg:px-8">
         {/* Page Title & Actions */}
         <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -110,7 +110,7 @@ export default function CartPage() {
             <h1 className="text-2xl sm:text-3xl font-extrabold text-primary">
               Shopping Cart
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+            <p className="text-xs sm:text-sm text-secondary mt-0.5">
               Manage selected products, vendor packages, and discounts
             </p>
           </div>
@@ -119,7 +119,7 @@ export default function CartPage() {
             <button
               type="button"
               onClick={clearCart}
-              className="text-xs font-semibold text-rose-600 hover:text-rose-700 flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
+              className="text-xs font-semibold text-highlight hover:text-highlight flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
             >
               <Trash2 className="h-3.5 w-3.5" />
               <span>Clear Cart</span>

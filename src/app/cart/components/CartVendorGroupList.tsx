@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import { Store } from "lucide-react";
 import { CartItem } from "@/stores/cart.store";
 import { ApiVendorGroup } from "@/lib/api/cart";
@@ -36,20 +36,20 @@ export function CartVendorGroupList({
     <div className="space-y-6">
       {/* Global Select All Bar */}
       {activeItems.length > 0 && (
-        <div className="bg-white rounded-2xl border border-slate-200/80 px-6 py-4 flex items-center justify-between shadow-2xs">
+        <div className="bg-white rounded-2xl border border-border px-6 py-4 flex items-center justify-between shadow-2xs">
           <label className="flex items-center gap-3 cursor-pointer select-none">
             <input
               type="checkbox"
               checked={isAllSelected}
               onChange={(e) => onSelectAll(e.target.checked)}
-              className="h-4 w-4 rounded-md border-slate-300 text-primary focus:ring-primary accent-primary cursor-pointer"
+              className="h-4 w-4 rounded-md border-border text-primary focus:ring-primary accent-primary cursor-pointer"
             />
             <span className="text-sm font-bold text-primary">
               Select all items ({activeItems.length})
             </span>
           </label>
 
-          <span className="text-xs font-medium text-slate-500">
+          <span className="text-xs font-medium text-secondary">
             {selectedCount} of {activeItems.length} selected
           </span>
         </div>
@@ -93,16 +93,16 @@ export function CartVendorGroupList({
           return (
             <div
               key={group.vendorId}
-              className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-2xs"
+              className="bg-white rounded-2xl border border-border overflow-hidden shadow-2xs"
             >
               {/* Vendor Header */}
-              <div className="bg-slate-50/70 px-6 py-3.5 border-b border-slate-200/80 flex items-center justify-between">
+              <div className="bg-muted/70 px-6 py-3.5 border-b border-border flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
                     checked={allGroupSelected}
                     onChange={() => onToggleSelectVendor(group.vendorId)}
-                    className="h-4 w-4 rounded-md border-slate-300 text-primary focus:ring-primary accent-primary cursor-pointer"
+                    className="h-4 w-4 rounded-md border-border text-primary focus:ring-primary accent-primary cursor-pointer"
                     aria-label={`Select all items from ${group.storeName}`}
                   />
                   <div className="flex items-center gap-2">
@@ -113,7 +113,7 @@ export function CartVendorGroupList({
                   </div>
                 </div>
 
-                <span className="text-xs font-semibold text-slate-500">
+                <span className="text-xs font-semibold text-secondary">
                   Package Subtotal: {formatCurrency(group.subtotal)}
                 </span>
               </div>
@@ -137,7 +137,7 @@ export function CartVendorGroupList({
         })
       ) : (
         /* Fallback list if vendor grouping not yet loaded */
-        <div className="bg-white rounded-2xl border border-slate-200/80 p-6 divide-y divide-slate-100">
+        <div className="bg-white rounded-2xl border border-border p-6 divide-y divide-slate-100">
           {activeItems.map((item) => (
             <CartItemRow
               key={item.id}

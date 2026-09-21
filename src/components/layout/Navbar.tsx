@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import { ChevronDown, ShieldCheck, Flame } from "lucide-react";
 
 export function Navbar() {
   return (
-    <div className="hidden md:block w-full border-t border-slate-100 bg-white text-[14px] font-medium text-secondary px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+    <div className="hidden md:block w-full border-t border-border bg-white text-[14px] font-medium text-secondary px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
       <div className="w-full flex items-center justify-between py-2.5">
         {/* Categories & Links */}
         <nav className="flex items-center gap-6 lg:gap-8 overflow-x-auto text-[14px]">
@@ -21,7 +21,7 @@ export function Navbar() {
           {/* Today's Hot Deals */}
           <Link
             href="/products?sortBy=basePrice&sortOrder=asc"
-            className="inline-flex items-center gap-1.5 font-semibold text-highlight hover:text-rose-700 transition-colors py-1 text-[14px]"
+            className="inline-flex items-center gap-1.5 font-semibold text-highlight hover:text-highlight transition-colors py-1 text-[14px]"
           >
             <Flame className="h-3.5 w-3.5" />
             <span>Today&apos;s Hot Deals</span>

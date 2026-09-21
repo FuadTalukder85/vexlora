@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -55,9 +55,9 @@ export function DealsForYouSection() {
   return (
     <div className="lg:col-span-3 flex flex-col gap-3 justify-between">
       {/* Deals for You Card */}
-      <div className="bg-white rounded-2xl border border-slate-200/90 p-3.5 sm:p-4 shadow-xs flex flex-col justify-between flex-1">
+      <div className="bg-white rounded-2xl border border-border p-3.5 sm:p-4 shadow-xs flex flex-col justify-between flex-1">
         <div className="flex items-center justify-between pb-2 mb-1">
-          <h3 className="text-base sm:text-lg font-bold text-slate-900 tracking-tight">
+          <h3 className="text-base sm:text-lg font-bold text-primary tracking-tight">
             Deals for you
           </h3>
           <Link href="#" className="p-1 text-primary hover:text-primary transition-colors">

@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
@@ -33,13 +33,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       primary:
         "bg-primary text-white hover:opacity-90 shadow-sm",
       secondary:
-        "bg-secondary text-white hover:opacity-90 border border-slate-200/80",
+        "bg-secondary text-white hover:opacity-90 border border-border",
       outline:
-        "border border-slate-200 bg-white text-primary hover:bg-slate-50",
+        "border border-border bg-white text-primary hover:bg-muted",
       ghost:
-        "text-secondary hover:text-primary hover:bg-slate-100/80",
+        "text-secondary hover:text-primary hover:bg-muted",
       danger:
-        "bg-highlight text-white hover:bg-rose-700 shadow-sm hover:shadow-rose-100",
+        "bg-highlight text-white hover:opacity-90 shadow-sm",
     };
 
     const sizes = {

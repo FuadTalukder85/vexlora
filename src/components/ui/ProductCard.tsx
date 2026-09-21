@@ -41,10 +41,11 @@ export function ProductCard(props: ProductCardProps) {
 
   const addItem = useCartStore((s) => s.addItem);
   const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
-  const isInWishlist = useWishlistStore((s) => s.isInWishlist);
   const setCartDrawerOpen = useUIStore((s) => s.setCartDrawerOpen);
 
-  const activeInWishlist = id ? isInWishlist(id) : false;
+  const activeInWishlist = useWishlistStore((s) =>
+    s.items.some((w) => (id && w.productId === id) || (slug && w.slug === slug))
+  );
 
   const handleAddToCart = () => {
     if (!id || !name || price === undefined || !image) return;

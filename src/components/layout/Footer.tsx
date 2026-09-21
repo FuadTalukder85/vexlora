@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Image from "next/image";
@@ -43,12 +43,12 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full bg-slate-50 border-t border-slate-200/90 text-secondary mt-auto">
+    <footer className="w-full bg-muted border-t border-border text-secondary mt-auto">
       {/* 1. Value Proposition Highlights (Full Width) */}
-      <div className="w-full border-b border-slate-200/80 bg-white py-8 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+      <div className="w-full border-b border-border bg-white py-8 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-slate-50/70 border border-slate-100">
-            <div className="h-11 w-11 rounded-xl bg-slate-100 flex items-center justify-center text-primary shrink-0">
+          <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-muted/70 border border-border">
+            <div className="h-11 w-11 rounded-xl bg-muted flex items-center justify-center text-primary shrink-0">
               <Truck className="h-5 w-5" />
             </div>
             <div>
@@ -61,8 +61,8 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-slate-50/70 border border-slate-100">
-            <div className="h-11 w-11 rounded-xl bg-slate-100 flex items-center justify-center text-primary shrink-0">
+          <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-muted/70 border border-border">
+            <div className="h-11 w-11 rounded-xl bg-muted flex items-center justify-center text-primary shrink-0">
               <ShieldCheck className="h-5 w-5" />
             </div>
             <div>
@@ -75,8 +75,8 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-slate-50/70 border border-slate-100">
-            <div className="h-11 w-11 rounded-xl bg-slate-100 flex items-center justify-center text-primary shrink-0">
+          <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-muted/70 border border-border">
+            <div className="h-11 w-11 rounded-xl bg-muted flex items-center justify-center text-primary shrink-0">
               <RotateCcw className="h-5 w-5" />
             </div>
             <div>
@@ -89,8 +89,8 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-slate-50/70 border border-slate-100">
-            <div className="h-11 w-11 rounded-xl bg-slate-100 flex items-center justify-center text-primary shrink-0">
+          <div className="flex items-center gap-3.5 p-3 rounded-2xl bg-muted/70 border border-border">
+            <div className="h-11 w-11 rounded-xl bg-muted flex items-center justify-center text-primary shrink-0">
               <Headphones className="h-5 w-5" />
             </div>
             <div>
@@ -106,7 +106,7 @@ export function Footer() {
       </div>
 
       {/* 2. Newsletter Subscription Strip (Full Width) */}
-      <div className="w-full border-b border-slate-200/80 bg-gradient-to-b from-white to-slate-50/50 py-10 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+      <div className="w-full border-b border-border bg-gradient-to-b from-white to-slate-50/50 py-10 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-6">
           <div className="max-w-xl text-center lg:text-left">
             <span className="text-xs font-bold text-secondary uppercase tracking-wider">
@@ -122,7 +122,7 @@ export function Footer() {
 
           <div className="w-full lg:w-auto min-w-[320px] sm:min-w-[420px]">
             {subscribed ? (
-              <div className="flex items-center gap-2 p-3.5 rounded-2xl bg-slate-100 border border-slate-200 text-primary text-xs font-medium">
+              <div className="flex items-center gap-2 p-3.5 rounded-2xl bg-muted border border-border text-primary text-xs font-medium">
                 <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
                 <span>Thank you for subscribing! Check your inbox for your welcome discount code.</span>
               </div>
@@ -317,7 +317,7 @@ export function Footer() {
       </div>
 
       {/* 4. Bottom Copyright & Trust Strip (Full Width) */}
-      <div className="w-full border-t border-slate-200/90 bg-white py-6 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+      <div className="w-full border-t border-border bg-white py-6 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-[14px] text-secondary">
           <div>
             <p>© 2026 Vexlora Inc. All rights reserved. Production Multi-Vendor E-Commerce Platform.</p>
@@ -325,7 +325,7 @@ export function Footer() {
 
           {/* Payment & Security Indicators */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 text-[11px] font-semibold text-secondary bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200/80">
+            <div className="flex items-center gap-1 text-[11px] font-semibold text-secondary bg-muted px-2.5 py-1 rounded-lg border border-border">
               <CreditCard className="h-3.5 w-3.5 text-primary" />
               <span>Encrypted Checkout</span>
             </div>

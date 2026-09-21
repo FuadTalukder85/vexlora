@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import { Banknote, CreditCard } from "lucide-react";
 import { toast } from "sonner";
 import { StripePaymentSection } from "./StripePaymentForm";
@@ -28,8 +28,8 @@ export function PaymentMethodSection({
   stripeSubmitRef,
 }: PaymentMethodSectionProps) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-2xs">
-      <div className="flex items-center gap-2.5 pb-4 border-b border-slate-100 mb-4">
+    <div className="bg-white rounded-2xl border border-border p-6 shadow-2xs">
+      <div className="flex items-center gap-2.5 pb-4 border-b border-border mb-4">
         <div className="h-7 w-7 rounded-lg bg-primary text-white flex items-center justify-center font-bold text-xs">
           2
         </div>
@@ -44,7 +44,7 @@ export function PaymentMethodSection({
           className={`flex items-center justify-between p-4 rounded-xl border-2 transition-all cursor-pointer ${
             paymentMethod === "cod"
               ? "border-primary bg-primary/5 shadow-2xs"
-              : "border-slate-200/80 hover:border-slate-300"
+              : "border-border hover:border-border"
           }`}
         >
           <div className="flex items-center gap-3">
@@ -75,7 +75,7 @@ export function PaymentMethodSection({
           className={`p-4 rounded-xl border-2 transition-all ${
             paymentMethod === "stripe"
               ? "border-primary bg-primary/5 shadow-2xs"
-              : "border-slate-200/80 hover:border-slate-300"
+              : "border-border hover:border-border"
           }`}
         >
           <label className="flex items-center justify-between cursor-pointer">
@@ -104,8 +104,8 @@ export function PaymentMethodSection({
 
           {/* Embedded Stripe Elements Form */}
           {paymentMethod === "stripe" && (
-            <div className="mt-4 pt-4 border-t border-slate-200/70">
-              <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs">
+            <div className="mt-4 pt-4 border-t border-border/70">
+              <div className="bg-white p-4 rounded-xl border border-border shadow-2xs">
                 <StripePaymentSection
                   amount={finalTotal}
                   publishableKey={stripePublishableKey || process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY}

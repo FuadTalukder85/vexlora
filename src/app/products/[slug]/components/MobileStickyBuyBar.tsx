@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Image from "next/image";
@@ -33,7 +33,12 @@ export function MobileStickyBuyBar({ product, selectedVariant }: MobileStickyBuy
     ? Number(discountPrice)
     : Number(basePrice);
 
-  const activeImage = selectedVariant?.image || images[0] || "/images/placeholder-product.png";
+  const rawVariantImg = selectedVariant?.image?.trim();
+  const validVariantImg = rawVariantImg && !rawVariantImg.startsWith("blob:") ? rawVariantImg : null;
+  const activeImage =
+    validVariantImg ||
+    images.find((img) => img && !img.startsWith("blob:")) ||
+    "/images/placeholder-product.png";
 
   const handleAddToCart = async () => {
     if (isOutOfStock) return;
@@ -80,10 +85,10 @@ export function MobileStickyBuyBar({ product, selectedVariant }: MobileStickyBuy
   };
 
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/90 py-2.5 px-4 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex items-center justify-between gap-3">
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-border py-2.5 px-4 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] flex items-center justify-between gap-3">
       {/* Product snapshot */}
       <div className="flex items-center gap-2.5 min-w-0">
-        <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-slate-50 border border-slate-200 shrink-0">
+        <div className="relative w-10 h-10 rounded-lg overflow-hidden bg-muted border border-border shrink-0">
           <Image
             src={activeImage}
             alt={title}
@@ -98,7 +103,7 @@ export function MobileStickyBuyBar({ product, selectedVariant }: MobileStickyBuy
           </span>
           <span className="text-[10px] text-secondary truncate block">
             {isOutOfStock ? (
-              <span className="text-rose-600 font-bold">Out of stock</span>
+              <span className="text-highlight font-bold">Out of stock</span>
             ) : (
               <span>{selectedVariant?.sku ? `Variant: ${selectedVariant.sku}` : "In stock"}</span>
             )}

@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import { X, Loader2 } from "lucide-react";
 import { CreateAddressPayload } from "@/lib/api/addresses";
 
@@ -22,9 +22,9 @@ export function AddressModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary/40 backdrop-blur-xs animate-in fade-in">
       <div className="w-full max-w-md bg-white rounded-2xl p-6 shadow-2xl space-y-4">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div className="flex items-center justify-between pb-3 border-b border-border">
           <h3 className="text-base font-bold text-primary">
             Add New Delivery Address
           </h3>
@@ -49,7 +49,7 @@ export function AddressModal({
                 setNewAddress({ ...newAddress, label: e.target.value })
               }
               placeholder="e.g. Home, Office, Apartment"
-              className="w-full rounded-xl border border-slate-200 px-3 py-2 text-primary focus:border-primary focus:outline-none"
+              className="w-full rounded-xl border border-border px-3 py-2 text-primary focus:border-primary focus:outline-none"
             />
           </div>
 
@@ -65,7 +65,7 @@ export function AddressModal({
                 setNewAddress({ ...newAddress, street: e.target.value })
               }
               placeholder="Street name, house number, building"
-              className="w-full rounded-xl border border-slate-200 px-3 py-2 text-primary focus:border-primary focus:outline-none"
+              className="w-full rounded-xl border border-border px-3 py-2 text-primary focus:border-primary focus:outline-none"
             />
           </div>
 
@@ -82,7 +82,7 @@ export function AddressModal({
                   setNewAddress({ ...newAddress, city: e.target.value })
                 }
                 placeholder="City"
-                className="w-full rounded-xl border border-slate-200 px-3 py-2 text-primary focus:border-primary focus:outline-none"
+                className="w-full rounded-xl border border-border px-3 py-2 text-primary focus:border-primary focus:outline-none"
               />
             </div>
             <div>
@@ -97,7 +97,7 @@ export function AddressModal({
                   setNewAddress({ ...newAddress, zip: e.target.value })
                 }
                 placeholder="Zip code"
-                className="w-full rounded-xl border border-slate-200 px-3 py-2 text-primary focus:border-primary focus:outline-none"
+                className="w-full rounded-xl border border-border px-3 py-2 text-primary focus:border-primary focus:outline-none"
               />
             </div>
           </div>
@@ -113,7 +113,7 @@ export function AddressModal({
                 setNewAddress({ ...newAddress, phone: e.target.value })
               }
               placeholder="+1 (555) 000-0000"
-              className="w-full rounded-xl border border-slate-200 px-3 py-2 text-primary focus:border-primary focus:outline-none"
+              className="w-full rounded-xl border border-border px-3 py-2 text-primary focus:border-primary focus:outline-none"
             />
           </div>
 
@@ -121,7 +121,7 @@ export function AddressModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl border border-slate-200 text-secondary hover:bg-slate-50 font-semibold cursor-pointer"
+              className="px-4 py-2 rounded-xl border border-border text-secondary hover:bg-muted font-semibold cursor-pointer"
             >
               Cancel
             </button>

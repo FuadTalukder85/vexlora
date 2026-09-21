@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import { Plus, MapPin, CheckCircle2 } from "lucide-react";
 import { Address } from "@/lib/api/addresses";
 
@@ -16,8 +16,8 @@ export function ShippingAddressSection({
   onOpenAddAddress,
 }: ShippingAddressSectionProps) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-2xs">
-      <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+    <div className="bg-white rounded-2xl border border-border p-6 shadow-2xs">
+      <div className="flex items-center justify-between pb-4 border-b border-border mb-4">
         <div className="flex items-center gap-2.5">
           <div className="h-7 w-7 rounded-lg bg-primary text-white flex items-center justify-center font-bold text-xs">
             1
@@ -38,7 +38,7 @@ export function ShippingAddressSection({
       </div>
 
       {addresses.length === 0 ? (
-        <div className="text-center py-6 border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+        <div className="text-center py-6 border-2 border-dashed border-border rounded-xl bg-muted/50">
           <MapPin className="h-8 w-8 text-secondary mx-auto mb-2 opacity-50" />
           <p className="text-xs text-secondary mb-3 font-medium">
             No shipping addresses found on your account.
@@ -62,7 +62,7 @@ export function ShippingAddressSection({
                 className={`relative p-4 rounded-xl border-2 transition-all cursor-pointer ${
                   isSelected
                     ? "border-primary bg-primary/5 shadow-2xs"
-                    : "border-slate-200/80 bg-white hover:border-slate-300"
+                    : "border-border bg-white hover:border-border"
                 }`}
               >
                 <div className="flex items-start justify-between">
@@ -71,7 +71,7 @@ export function ShippingAddressSection({
                       {addr.label || "Address"}
                     </span>
                     {addr.isDefault && (
-                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-slate-100 text-secondary">
+                      <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded bg-muted text-secondary">
                         Default
                       </span>
                     )}

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Image from "next/image";
@@ -65,7 +65,7 @@ export function MobileNav() {
     <div className="fixed inset-0 z-50 flex lg:hidden">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 bg-primary/40 backdrop-blur-xs transition-opacity"
         onClick={() => setMobileMenuOpen(false)}
         aria-hidden="true"
       />
@@ -73,7 +73,7 @@ export function MobileNav() {
       {/* Slide-over Panel */}
       <div className="relative flex w-full max-w-xs flex-1 flex-col bg-white pt-5 pb-6 shadow-2xl">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 pb-4 border-b border-slate-100">
+        <div className="flex items-center justify-between px-6 pb-4 border-b border-border">
           <Link
             href="/"
             onClick={() => setMobileMenuOpen(false)}
@@ -91,7 +91,7 @@ export function MobileNav() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(false)}
-            className="h-9 w-9 rounded-lg flex items-center justify-center text-secondary hover:bg-slate-100 transition-colors"
+            className="h-9 w-9 rounded-lg flex items-center justify-center text-secondary hover:bg-muted transition-colors"
             aria-label="Close menu"
           >
             <X className="h-5 w-5" />
@@ -99,11 +99,11 @@ export function MobileNav() {
         </div>
 
         {/* Quick Actions Row */}
-        <div className="grid grid-cols-3 gap-2 px-6 py-4 border-b border-slate-100 bg-slate-50/50">
+        <div className="grid grid-cols-3 gap-2 px-6 py-4 border-b border-border bg-muted/50">
           <Link
             href="/wishlist"
             onClick={() => setMobileMenuOpen(false)}
-            className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-slate-200/80 text-center hover:border-primary transition-colors"
+            className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-border text-center hover:border-primary transition-colors"
           >
             <div className="relative">
               <Heart className="h-4 w-4 text-primary mb-1" />
@@ -122,7 +122,7 @@ export function MobileNav() {
               setMobileMenuOpen(false);
               setCartDrawerOpen(true);
             }}
-            className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-slate-200/80 text-center hover:border-primary transition-colors cursor-pointer"
+            className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-border text-center hover:border-primary transition-colors cursor-pointer"
           >
             <div className="relative">
               <ShoppingBag className="h-4 w-4 text-primary mb-1" />
@@ -142,16 +142,16 @@ export function MobileNav() {
                 await logout();
                 toast.success("Signed out successfully");
               }}
-              className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-rose-200 text-center hover:bg-rose-50 transition-colors cursor-pointer"
+              className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-highlight/30 text-center hover:bg-highlight/10 transition-colors cursor-pointer"
             >
-              <User className="h-4 w-4 text-rose-500 mb-1" />
-              <span className="text-[11px] font-medium text-rose-600">Sign Out</span>
+              <User className="h-4 w-4 text-highlight mb-1" />
+              <span className="text-[11px] font-medium text-highlight">Sign Out</span>
             </button>
           ) : (
             <Link
               href="/login"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-slate-200/80 text-center hover:border-primary transition-colors"
+              className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-border text-center hover:border-primary transition-colors"
             >
               <User className="h-4 w-4 text-primary mb-1" />
               <span className="text-[11px] font-medium text-secondary">Account</span>
@@ -172,7 +172,7 @@ export function MobileNav() {
                   key={category.name}
                   href={category.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between py-2.5 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-slate-100 hover:text-primary transition-colors"
+                  className="flex items-center justify-between py-2.5 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-muted hover:text-primary transition-colors"
                 >
                   <span>{category.name}</span>
                   <div className="flex items-center gap-1.5 text-xs text-secondary">
@@ -193,7 +193,7 @@ export function MobileNav() {
               <Link
                 href="#"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 py-2 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-slate-100 hover:text-primary transition-colors"
+                className="flex items-center gap-3 py-2 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-muted hover:text-primary transition-colors"
               >
                 <Package className="h-4 w-4 text-secondary" />
                 <span>Track Your Order</span>
@@ -201,7 +201,7 @@ export function MobileNav() {
               <Link
                 href="/vendor-apply"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 py-2 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-slate-100 hover:text-primary transition-colors"
+                className="flex items-center gap-3 py-2 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-muted hover:text-primary transition-colors"
               >
                 <Store className="h-4 w-4 text-secondary" />
                 <span>Sell on Vexlora</span>
@@ -209,7 +209,7 @@ export function MobileNav() {
               <Link
                 href="#"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-3 py-2 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-slate-100 hover:text-primary transition-colors"
+                className="flex items-center gap-3 py-2 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-muted hover:text-primary transition-colors"
               >
                 <HelpCircle className="h-4 w-4 text-secondary" />
                 <span>Help & Support</span>
@@ -219,7 +219,7 @@ export function MobileNav() {
         </div>
 
         {/* Footer */}
-        <div className="px-6 pt-4 border-t border-slate-100 bg-slate-50/50">
+        <div className="px-6 pt-4 border-t border-border bg-muted/50">
           <p className="text-xs text-secondary text-center">
             Multi-Vendor E-Commerce Platform
           </p>

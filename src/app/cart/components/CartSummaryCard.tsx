@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import {
   CheckCircle2,
   Star,
@@ -41,8 +41,8 @@ export function CartSummaryCard({
   return (
     <div className="space-y-5 lg:sticky lg:top-24">
       {/* Free Shipping Tier Card */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-2xs">
-        <div className="text-center mb-2 text-xs font-medium text-slate-700">
+      <div className="bg-white rounded-2xl border border-border p-5 shadow-2xs">
+        <div className="text-center mb-2 text-xs font-medium text-secondary">
           {remainingForFreeShipping > 0 ? (
             <>
               Buy{" "}
@@ -61,7 +61,7 @@ export function CartSummaryCard({
         </div>
 
         {/* Progress Bar with Star */}
-        <div className="relative h-2 w-full rounded-full bg-slate-100 overflow-visible my-3">
+        <div className="relative h-2 w-full rounded-full bg-muted overflow-visible my-3">
           <div
             className="h-full rounded-full bg-primary transition-all duration-300"
             style={{ width: `${freeShippingProgress}%` }}
@@ -78,8 +78,8 @@ export function CartSummaryCard({
       </div>
 
       {/* Order Summary Details Card */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-2xs space-y-5">
-        <h3 className="text-lg font-bold text-primary pb-3 border-b border-slate-100">
+      <div className="bg-white rounded-2xl border border-border p-6 shadow-2xs space-y-5">
+        <h3 className="text-lg font-bold text-primary pb-3 border-b border-border">
           Order Summary
         </h3>
 
@@ -105,7 +105,7 @@ export function CartSummaryCard({
             </div>
           )}
 
-          <div className="pt-3 border-t border-slate-100 flex justify-between items-baseline">
+          <div className="pt-3 border-t border-border flex justify-between items-baseline">
             <span className="text-base font-bold text-primary">Total:</span>
             <span className="text-2xl font-black text-primary">
               {formatCurrency(
@@ -119,24 +119,24 @@ export function CartSummaryCard({
         <form onSubmit={onApplyCoupon} className="pt-2">
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary" />
               <input
                 type="text"
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value)}
                 placeholder="Coupon code (e.g. SAVE10)"
-                className="w-full rounded-xl border border-slate-200 pl-9 pr-3 py-2 text-xs text-primary uppercase placeholder:normal-case focus:border-primary focus:outline-none"
+                className="w-full rounded-xl border border-border pl-9 pr-3 py-2 text-xs text-primary uppercase placeholder:normal-case focus:border-primary focus:outline-none"
               />
             </div>
             <button
               type="submit"
-              className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-primary font-bold text-xs transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-muted hover:bg-muted text-primary font-bold text-xs transition-colors cursor-pointer"
             >
               Apply
             </button>
           </div>
           {couponError && (
-            <p className="text-[11px] text-rose-500 font-medium mt-1">
+            <p className="text-[11px] text-highlight font-medium mt-1">
               {couponError}
             </p>
           )}
@@ -158,7 +158,7 @@ export function CartSummaryCard({
         </button>
 
         {/* Marketplace Guarantees */}
-        <div className="space-y-2.5 pt-4 border-t border-slate-100 text-xs text-slate-500">
+        <div className="space-y-2.5 pt-4 border-t border-border text-xs text-secondary">
           <div className="flex items-center gap-2">
             <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
             <span>100% Buyer Protection & Money Back Guarantee</span>

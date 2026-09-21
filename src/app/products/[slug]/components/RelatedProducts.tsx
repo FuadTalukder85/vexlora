@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { ProductCard } from "@/components/ui/ProductCard";
@@ -41,10 +41,10 @@ export function RelatedProducts({ categoryId, currentProductId }: RelatedProduct
       {isLoading ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 animate-pulse">
           {[...Array(4)].map((_, i) => (
-            <div key={i} className="bg-white rounded-2xl border border-slate-100 p-4 space-y-3">
-              <div className="w-full h-48 bg-slate-100 rounded-xl" />
-              <div className="h-4 w-3/4 bg-slate-100 rounded" />
-              <div className="h-4 w-1/2 bg-slate-100 rounded" />
+            <div key={i} className="bg-white rounded-2xl border border-border p-4 space-y-3">
+              <div className="w-full h-48 bg-muted rounded-xl" />
+              <div className="h-4 w-3/4 bg-muted rounded" />
+              <div className="h-4 w-1/2 bg-muted rounded" />
             </div>
           ))}
         </div>
