@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -20,7 +20,7 @@ export function Navbar() {
 
           {/* Today's Hot Deals */}
           <Link
-            href="/products?sortBy=basePrice&sortOrder=asc"
+            href="/deals"
             className="inline-flex items-center gap-1.5 font-semibold text-highlight hover:text-highlight transition-colors py-1 text-[14px]"
           >
             <Flame className="h-3.5 w-3.5" />
