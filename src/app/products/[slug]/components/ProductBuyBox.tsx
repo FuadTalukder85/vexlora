@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
@@ -6,8 +6,6 @@ import Link from "next/link";
 import {
   ShoppingCart,
   Zap,
-  Heart,
-  Share2,
   Truck,
   RotateCcw,
   ShieldCheck,
@@ -21,7 +19,6 @@ import {
 import { toast } from "sonner";
 import { Product, ProductVariant } from "@/types/product";
 import { useCartStore } from "@/stores/cart.store";
-import { useWishlistStore } from "@/stores/wishlist.store";
 import { useUIStore } from "@/stores/ui.store";
 import { formatCurrency } from "@/lib/utils";
 
@@ -34,8 +31,6 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
   const router = useRouter();
   const addItem = useCartStore((s) => s.addItem);
   const setCartDrawerOpen = useUIStore((s) => s.setCartDrawerOpen);
-  const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
-  const isInWishlist = useWishlistStore((s) => s.isInWishlist);
 
   const [quantity, setQuantity] = React.useState<number>(1);
   const [isAddingToCart, setIsAddingToCart] = React.useState(false);
@@ -60,9 +55,6 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
     validVariantImg ||
     images.find((img) => img && !img.startsWith("blob:")) ||
     "/images/placeholder-product.png";
-
-  const isFavorited = isInWishlist(id);
-
 
   // Delivery estimation calculations
   const deliveryDates = React.useMemo(() => {
@@ -146,33 +138,6 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
     } catch {
       toast.error("Could not proceed to checkout. Please try again.");
       setIsBuyingNow(false);
-    }
-  };
-
-  const handleWishlistToggle = () => {
-    toggleWishlist({
-      productId: id,
-      title,
-      slug,
-      price: activePrice,
-      image: activeImage,
-      vendorName: vendor?.storeName,
-    });
-    if (!isFavorited) {
-      toast.success("Saved to your wishlist!");
-    } else {
-      toast.info("Removed from your wishlist.");
-    }
-  };
-
-  const handleShare = async () => {
-    try {
-      if (typeof window !== "undefined") {
-        await navigator.clipboard.writeText(window.location.href);
-        toast.success("Product link copied to clipboard!");
-      }
-    } catch {
-      toast.error("Unable to copy link.");
     }
   };
 
@@ -274,30 +239,7 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
         </button>
       </div>
 
-      {/* 5. Wishlist & Share Quick Actions */}
-      <div className="grid grid-cols-2 gap-2 pt-1">
-        <button
-          type="button"
-          onClick={handleWishlistToggle}
-          className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
-            isFavorited
-              ? "border-highlight/30 bg-highlight/10 text-highlight"
-              : "border-border hover:border-border text-secondary bg-white"
-          }`}
-        >
-          <Heart className={`w-3.5 h-3.5 ${isFavorited ? "fill-rose-600" : ""}`} />
-          <span>{isFavorited ? "Saved" : "Wishlist"}</span>
-        </button>
 
-        <button
-          type="button"
-          onClick={handleShare}
-          className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-border hover:border-border text-secondary bg-white text-xs font-bold transition-all cursor-pointer"
-        >
-          <Share2 className="w-3.5 h-3.5" />
-          <span>Share</span>
-        </button>
-      </div>
 
       {/* 6. Shipping & Delivery Estimator Box */}
       <div className="pt-4 border-t border-border space-y-3 text-xs">

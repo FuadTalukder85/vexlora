@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Image from "next/image";
@@ -19,7 +19,6 @@ export function ProductListCard({ product }: ProductListCardProps) {
 
   const addItem = useCartStore((s) => s.addItem);
   const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
-  const isInWishlist = useWishlistStore((s) => s.isInWishlist);
   const setCartDrawerOpen = useUIStore((s) => s.setCartDrawerOpen);
 
   const [addedAnimation, setAddedAnimation] = React.useState(false);
@@ -29,7 +28,9 @@ export function ProductListCard({ product }: ProductListCardProps) {
   const numRating = Number(ratingAvg || 0);
   const primaryImage = images && images.length > 0 ? images[0] : "/images/placeholder.png";
   const vendorName = vendor?.storeName || "Verified Merchant";
-  const activeInWishlist = isInWishlist(id);
+  const activeInWishlist = useWishlistStore((s) =>
+    s.items.some((w) => (id && w.productId === id) || (slug && w.slug === slug))
+  );
 
   const discountPercent = originalPrice && originalPrice > numPrice
     ? Math.round(((originalPrice - numPrice) / originalPrice) * 100)

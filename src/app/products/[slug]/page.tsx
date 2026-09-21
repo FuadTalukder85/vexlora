@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -84,10 +84,10 @@ export default function SingleProductPage() {
     product.discountPrice && Number(product.discountPrice) < Number(product.basePrice);
   const discountBadge = hasDiscount
     ? `${Math.round(
-        ((Number(product.basePrice) - Number(product.discountPrice)) /
-          Number(product.basePrice)) *
-          100
-      )}% OFF`
+      ((Number(product.basePrice) - Number(product.discountPrice)) /
+        Number(product.basePrice)) *
+      100
+    )}% OFF`
     : null;
 
   const isOutOfStock =
@@ -123,9 +123,9 @@ export default function SingleProductPage() {
       </nav>
 
       {/* 2. Main Hero Product Section (Gallery + Info + Buy Box) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         {/* Left: Product Gallery (5 Columns) */}
-        <div className="lg:col-span-5 bg-white p-4 sm:p-6 rounded-2xl border border-border shadow-sm sticky top-24">
+        <div className="lg:col-span-5 bg-white flex flex-col h-full">
           <ProductGallery
             images={product.images || []}
             title={product.title}
@@ -136,7 +136,7 @@ export default function SingleProductPage() {
         </div>
 
         {/* Center: Main Product Info (4 Columns) */}
-        <div className="lg:col-span-4 bg-white p-5 sm:p-6 rounded-2xl border border-border shadow-sm space-y-6">
+        <div className="lg:col-span-4 bg-white p-5 sm:p-6 rounded-2xl border border-border shadow-sm space-y-6 flex flex-col h-full">
           <ProductInfo
             product={product}
             selectedVariant={selectedVariant}
@@ -146,7 +146,7 @@ export default function SingleProductPage() {
         </div>
 
         {/* Right: Buy Box & Urgency / Delivery (3 Columns) */}
-        <div className="lg:col-span-3 sticky top-24">
+        <div className="lg:col-span-3 self-start sticky top-24">
           <ProductBuyBox
             product={product}
             selectedVariant={selectedVariant}

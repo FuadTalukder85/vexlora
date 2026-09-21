@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import { createPortal } from "react-dom";
@@ -116,10 +116,10 @@ export function ProductGallery({
   };
 
   return (
-    <div className="w-full flex flex-col-reverse sm:flex-row gap-4 items-start select-none">
+    <div className="w-full h-full flex flex-col-reverse sm:flex-row gap-4 items-stretch select-none">
       {/* 1. Thumbnail List (Vertical on sm+, horizontal below) */}
       {allImages.length > 1 && (
-        <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto max-h-[500px] py-1 px-1 no-scrollbar w-full sm:w-20 shrink-0">
+        <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto max-h-[500px] lg:max-h-full py-1 px-1 no-scrollbar w-full sm:w-24 shrink-0">
           {allImages.map((img, idx) => (
             <button
               key={`${img}-${idx}`}
@@ -145,7 +145,7 @@ export function ProductGallery({
       )}
 
       {/* 2. Main Large Image Display Box (Pure white background, no gray overlay) */}
-      <div className="relative flex-1 w-full aspect-square bg-white border border-border rounded-2xl overflow-hidden group shadow-2xs">
+      <div className="relative flex-1 w-full h-full min-h-[360px] bg-white border border-border rounded-2xl overflow-hidden group shadow-2xs flex flex-col">
         {/* Badges Overlay */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start pointer-events-none">
           {discountBadge && (
@@ -186,14 +186,13 @@ export function ProductGallery({
             fill
             priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-            className={`object-contain p-2 transition-transform duration-200 ease-out will-change-transform ${
-              isZooming ? "scale-175" : "scale-100"
-            }`}
+            className={`object-contain p-2 transition-transform duration-200 ease-out will-change-transform ${isZooming ? "scale-175" : "scale-100"
+              }`}
             style={
               isZooming
                 ? {
-                    transformOrigin: `${zoomCoords.x}% ${zoomCoords.y}%`,
-                  }
+                  transformOrigin: `${zoomCoords.x}% ${zoomCoords.y}%`,
+                }
                 : undefined
             }
           />
@@ -291,14 +290,13 @@ export function ProductGallery({
                 alt={title}
                 fill
                 sizes="100vw"
-                className={`object-contain p-4 transition-transform duration-200 ease-out will-change-transform ${
-                  isLightboxZooming ? "scale-160" : "scale-100"
-                }`}
+                className={`object-contain p-4 transition-transform duration-200 ease-out will-change-transform ${isLightboxZooming ? "scale-160" : "scale-100"
+                  }`}
                 style={
                   isLightboxZooming
                     ? {
-                        transformOrigin: `${lightboxZoomCoords.x}% ${lightboxZoomCoords.y}%`,
-                      }
+                      transformOrigin: `${lightboxZoomCoords.x}% ${lightboxZoomCoords.y}%`,
+                    }
                     : undefined
                 }
                 priority
@@ -343,11 +341,10 @@ export function ProductGallery({
                     key={`${img}-${idx}`}
                     type="button"
                     onClick={() => setUserSelectedIdx(idx)}
-                    className={`relative w-14 h-14 rounded-xl overflow-hidden border-2 transition-all cursor-pointer bg-white shadow-sm ${
-                      activeIndex === idx
-                        ? "border-primary scale-110 shadow-md ring-2 ring-primary/20"
-                        : "border-border opacity-70 hover:opacity-100 hover:border-border"
-                    }`}
+                    className={`relative w-14 h-14 rounded-xl overflow-hidden border-2 transition-all cursor-pointer bg-white shadow-sm ${activeIndex === idx
+                      ? "border-primary scale-110 shadow-md ring-2 ring-primary/20"
+                      : "border-border opacity-70 hover:opacity-100 hover:border-border"
+                      }`}
                   >
                     <Image
                       src={img}

@@ -1,9 +1,11 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Link from "next/link";
-import { Star, ShieldCheck, Tag, Check, Store } from "lucide-react";
+import { Star, ShieldCheck, Tag, Check, Heart, Share2 } from "lucide-react";
+import { toast } from "sonner";
 import { Product, ProductVariant } from "@/types/product";
+import { useWishlistStore } from "@/stores/wishlist.store";
 import { formatCurrency } from "@/lib/utils";
 import {
   extractAttributeDimensions,
@@ -41,6 +43,23 @@ export function ProductInfo({
     tags,
   } = product;
 
+  const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
+  const isFavorited = useWishlistStore((s) =>
+    s.items.some(
+      (item) =>
+        (product.id && item.productId === product.id) ||
+        ((product as unknown as { _id?: string })._id && item.productId === (product as unknown as { _id?: string })._id) ||
+        (product.slug && item.slug === product.slug)
+    )
+  );
+
+  const rawVariantImg = selectedVariant?.image?.trim();
+  const validVariantImg = rawVariantImg && !rawVariantImg.startsWith("blob:") ? rawVariantImg : null;
+  const activeImage =
+    validVariantImg ||
+    (product.images && product.images.find((img) => img && !img.startsWith("blob:"))) ||
+    "/images/placeholder-product.png";
+
   // Active price calculation
   const activePrice = selectedVariant
     ? selectedVariant.price
@@ -66,6 +85,33 @@ export function ProductInfo({
       ? originalPrice - activePrice
       : 0;
 
+  const handleWishlistToggle = () => {
+    toggleWishlist({
+      productId: product.id,
+      title: product.title,
+      slug: product.slug,
+      price: activePrice,
+      image: activeImage,
+      vendorName: product.vendor?.storeName,
+    });
+    if (!isFavorited) {
+      toast.success("Saved to your wishlist!");
+    } else {
+      toast.info("Removed from your wishlist.");
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      if (typeof window !== "undefined") {
+        await navigator.clipboard.writeText(window.location.href);
+        toast.success("Product link copied to clipboard!");
+      }
+    } catch {
+      toast.error("Unable to copy link.");
+    }
+  };
+
   // Extract all dynamic attribute dimensions across variants (e.g. Color, Size, RAM, SSD, Material)
   const attributeDimensions = React.useMemo(() => {
     return extractAttributeDimensions(variants);
@@ -88,29 +134,61 @@ export function ProductInfo({
 
   return (
     <div className="flex flex-col space-y-5">
-      {/* 1. Category & Brand Bar */}
-      <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-        {brand && (
-          <span className="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold">
-            {brand}
-          </span>
-        )}
-        {category && (
-          <Link
-            href={`/products?category=${category.slug}`}
-            className="text-secondary hover:text-primary transition-colors flex items-center gap-1"
+      {/* 1. Category & Brand Bar + Quick Action Buttons (Wishlist & Share) */}
+      <div className="flex items-center justify-between gap-2 text-xs font-semibold">
+        <div className="flex flex-wrap items-center gap-2">
+          {brand && (
+            <span className="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold">
+              {brand}
+            </span>
+          )}
+          {category && (
+            <Link
+              href={`/products?category=${category.slug}`}
+              className="text-secondary hover:text-primary transition-colors flex items-center gap-1"
+            >
+              <span>in</span>
+              <span className="underline underline-offset-2">{category.name}</span>
+            </Link>
+          )}
+        </div>
+
+        {/* Top Right: Wishlist & Share Quick Actions */}
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button
+            type="button"
+            onClick={handleWishlistToggle}
+            aria-label={isFavorited ? "Remove from wishlist" : "Add to wishlist"}
+            title={isFavorited ? "Saved in your Wishlist (Click to remove)" : "Add to Wishlist"}
+            className={`flex items-center gap-1.5 py-1.5 px-3 rounded-xl border text-xs font-bold transition-all duration-200 cursor-pointer ${
+              isFavorited
+                ? "border-highlight/50 bg-highlight/15 text-highlight ring-2 ring-highlight/20 shadow-xs"
+                : "border-border hover:border-border text-secondary hover:text-primary bg-white hover:bg-muted/40"
+            }`}
           >
-            <span>in</span>
-            <span className="underline underline-offset-2">{category.name}</span>
-          </Link>
-        )}
-        {vendor && (
-          <div className="flex items-center gap-1 text-secondary ml-auto text-[11px]">
-            <Store className="w-3.5 h-3.5 text-primary" />
-            <span>Store:</span>
-            <span className="font-bold text-primary">{vendor.storeName}</span>
-          </div>
-        )}
+            <Heart
+              className={`w-3.5 h-3.5 transition-all duration-200 ${
+                isFavorited
+                  ? "fill-highlight text-highlight scale-110"
+                  : "text-secondary hover:text-primary"
+              }`}
+            />
+            <span className={isFavorited ? "text-highlight font-black" : "text-secondary hover:text-primary"}>
+              {isFavorited ? "In Wishlist" : "Wishlist"}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleShare}
+            aria-label="Share product"
+            title="Share product"
+            className="flex items-center gap-1.5 py-1.5 px-3 rounded-xl border border-border hover:border-border text-secondary hover:text-primary bg-white hover:bg-muted/40 text-xs font-bold transition-all cursor-pointer"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+            <span>Share</span>
+          </button>
+        </div>
       </div>
 
       {/* 2. Product Title (H1) */}
