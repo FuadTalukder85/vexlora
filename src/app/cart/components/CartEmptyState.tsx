@@ -1,11 +1,11 @@
-import * as React from "react";
+﻿import * as React from "react";
 import Link from "next/link";
 import { ShoppingBag, ArrowRight } from "lucide-react";
 
 export function CartEmptyState() {
   return (
-    <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-slate-50/50">
-      <div className="h-28 w-28 rounded-3xl bg-slate-100 flex items-center justify-center mb-6 text-primary shadow-sm">
+    <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 bg-muted/50">
+      <div className="h-28 w-28 rounded-3xl bg-muted flex items-center justify-center mb-6 text-primary shadow-sm">
         <ShoppingBag className="h-14 w-14" />
       </div>
       <h1 className="text-2xl sm:text-3xl font-bold text-primary">

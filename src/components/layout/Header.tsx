@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Image from "next/image";
@@ -62,7 +62,7 @@ export function Header() {
       <MobileNav />
 
       {/* 1. Top Utility / Announcement Bar */}
-      <div className="w-full bg-slate-50 border-b border-slate-100 text-xs text-secondary py-1.5 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
+      <div className="w-full bg-muted border-b border-border text-xs text-secondary py-1.5 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
         <div className="w-full flex items-center justify-between">
           {/* Left: Announcement */}
           <div className="flex items-center gap-2 text-secondary font-medium">
@@ -98,7 +98,7 @@ export function Header() {
             </Link>
 
             {/* Currency Selector */}
-            <div className="flex items-center gap-1 pl-2 border-l border-slate-200">
+            <div className="flex items-center gap-1 pl-2 border-l border-border">
               <select
                 value={activeCurrency}
                 onChange={(e) => setCurrency(e.target.value)}
@@ -115,7 +115,7 @@ export function Header() {
       </div>
 
       {/* STICKY HEADER */}
-      <header className="w-full bg-white border-b border-slate-200/90 sticky top-0 z-40 shadow-xs">
+      <header className="w-full bg-white border-b border-border sticky top-0 z-40 shadow-xs">
         {/* Main Navbar Row */}
         <div className="w-full py-2.5 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
           <div className="w-full flex items-center justify-between gap-4 lg:gap-8">
@@ -124,7 +124,7 @@ export function Header() {
               <button
                 type="button"
                 onClick={toggleMobileMenu}
-                className="lg:hidden h-10 w-10 rounded-xl border border-slate-200 bg-white flex items-center justify-center text-primary hover:bg-slate-50 transition-colors"
+                className="lg:hidden h-10 w-10 rounded-xl border border-border bg-white flex items-center justify-center text-primary hover:bg-muted transition-colors"
                 aria-label="Open mobile menu"
               >
                 <Menu className="h-5 w-5" />
@@ -146,9 +146,9 @@ export function Header() {
             <div className="hidden md:flex flex-1 max-w-3xl mx-4">
               <form
                 onSubmit={handleSearchSubmit}
-                className="w-full relative flex items-center rounded-2xl border border-slate-200 bg-slate-50/70 p-1 focus-within:border-primary focus-within:bg-white focus-within:ring-4 focus-within:ring-primary/10 transition-all duration-200"
+                className="w-full relative flex items-center rounded-2xl border border-border bg-muted/70 p-1 focus-within:border-primary focus-within:bg-white focus-within:ring-4 focus-within:ring-primary/10 transition-all duration-200"
               >
-                <div className="hidden sm:flex items-center pl-3 pr-2 py-1.5 border-r border-slate-200/80">
+                <div className="hidden sm:flex items-center pl-3 pr-2 py-1.5 border-r border-border">
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
@@ -190,7 +190,7 @@ export function Header() {
                 <div className="relative">
                   <button
                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-primary transition-colors cursor-pointer"
+                    className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl border border-border bg-white hover:bg-muted text-primary transition-colors cursor-pointer"
                   >
                     <div className="h-7 w-7 rounded-lg bg-primary text-white flex items-center justify-center font-bold text-xs">
                       {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
@@ -212,11 +212,11 @@ export function Header() {
                         className="fixed inset-0 z-40"
                         onClick={() => setUserDropdownOpen(false)}
                       />
-                      <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                        <div className="px-4 py-2 border-b border-slate-100">
+                      <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-border py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                        <div className="px-4 py-2 border-b border-border">
                           <p className="text-xs font-bold text-primary truncate">{user?.name || "Vexlora User"}</p>
                           <p className="text-[11px] text-secondary truncate">{user?.email || ""}</p>
-                          <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-slate-100 text-primary text-[10px] font-semibold uppercase">
+                          <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-muted text-primary text-[10px] font-semibold uppercase">
                             Role: {user?.role || "CUSTOMER"}
                           </span>
                         </div>
@@ -225,7 +225,7 @@ export function Header() {
                           <Link
                             href="/vendor-apply"
                             onClick={() => setUserDropdownOpen(false)}
-                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-primary font-semibold hover:bg-slate-50 text-left"
+                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-primary font-semibold hover:bg-muted text-left"
                           >
                             <Store className="w-4 h-4 text-primary" />
                             {vendorProfile
@@ -248,16 +248,16 @@ export function Header() {
                           )}
                         </div>
 
-                        <div className="pt-1 border-t border-slate-100">
+                        <div className="pt-1 border-t border-border">
                           <button
                             onClick={async () => {
                               setUserDropdownOpen(false);
                               await logout();
                               toast.success("Signed out successfully");
                             }}
-                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-rose-600 font-semibold hover:bg-rose-50 text-left cursor-pointer"
+                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-highlight font-semibold hover:bg-highlight/10 text-left cursor-pointer"
                           >
-                            <LogOut className="w-4 h-4 text-rose-500" />
+                            <LogOut className="w-4 h-4 text-highlight" />
                             Sign Out
                           </button>
                         </div>
@@ -268,9 +268,9 @@ export function Header() {
               ) : (
                 <Link
                   href="/login"
-                  className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-primary transition-colors"
+                  className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl border border-border bg-white hover:bg-muted text-primary transition-colors"
                 >
-                  <div className="h-7 w-7 rounded-lg bg-slate-100 flex items-center justify-center text-primary">
+                  <div className="h-7 w-7 rounded-lg bg-muted flex items-center justify-center text-primary">
                     <User className="h-4 w-4" />
                   </div>
                   <div className="hidden xl:flex flex-col text-left">
@@ -287,7 +287,7 @@ export function Header() {
               {/* Wishlist Button with Counter */}
               <Link
                 href="/wishlist"
-                className="relative p-2.5 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 text-primary transition-colors"
+                className="relative p-2.5 rounded-xl border border-border bg-white hover:bg-muted text-primary transition-colors"
                 aria-label="View Wishlist"
               >
                 <Heart className="h-5 w-5 text-primary" />
@@ -329,7 +329,7 @@ export function Header() {
           <div className="mt-3 md:hidden">
             <form
               onSubmit={handleSearchSubmit}
-              className="w-full relative flex items-center rounded-xl border border-slate-200 bg-slate-50 p-1 focus-within:border-primary focus-within:bg-white"
+              className="w-full relative flex items-center rounded-xl border border-border bg-muted p-1 focus-within:border-primary focus-within:bg-white"
             >
               <Search className="absolute left-3.5 h-4 w-4 text-secondary pointer-events-none" />
               <input

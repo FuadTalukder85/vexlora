@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { toast } from "sonner";
@@ -222,7 +222,7 @@ export default function CheckoutPage() {
 
   if (!mounted || isInitialChecking || !isAuthenticated) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-slate-50/50">
+      <div className="min-h-[60vh] flex items-center justify-center bg-muted/50">
         <div className="h-8 w-8 border-3 border-primary border-t-transparent rounded-full animate-spin" />
       </div>
     );
@@ -233,7 +233,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/60 py-8 lg:py-12">
+    <div className="min-h-screen bg-muted/60 py-8 lg:py-12">
       <div className="layout-container px-4 sm:px-6 lg:px-8">
         {/* Checkout Header / Breadcrumb */}
         <div className="mb-8">

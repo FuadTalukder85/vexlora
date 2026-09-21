@@ -2,9 +2,20 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Star, ShieldCheck, Tag, Check, Store } from "lucide-react";
+import { Star, ShieldCheck, Tag, Check, Heart, Share2 } from "lucide-react";
+import { toast } from "sonner";
 import { Product, ProductVariant } from "@/types/product";
+import { useWishlistStore } from "@/stores/wishlist.store";
 import { formatCurrency } from "@/lib/utils";
+import {
+  extractAttributeDimensions,
+  isOptionCombinationValid,
+  isOptionInStock,
+  resolveVariantSelection,
+  isColorAttribute,
+  normalizeAttr,
+  AttributeDimension,
+} from "@/lib/variants/variantEngine";
 
 interface ProductInfoProps {
   product: Product;
@@ -32,6 +43,23 @@ export function ProductInfo({
     tags,
   } = product;
 
+  const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
+  const isFavorited = useWishlistStore((s) =>
+    s.items.some(
+      (item) =>
+        (product.id && item.productId === product.id) ||
+        ((product as unknown as { _id?: string })._id && item.productId === (product as unknown as { _id?: string })._id) ||
+        (product.slug && item.slug === product.slug)
+    )
+  );
+
+  const rawVariantImg = selectedVariant?.image?.trim();
+  const validVariantImg = rawVariantImg && !rawVariantImg.startsWith("blob:") ? rawVariantImg : null;
+  const activeImage =
+    validVariantImg ||
+    (product.images && product.images.find((img) => img && !img.startsWith("blob:"))) ||
+    "/images/placeholder-product.png";
+
   // Active price calculation
   const activePrice = selectedVariant
     ? selectedVariant.price
@@ -57,44 +85,48 @@ export function ProductInfo({
       ? originalPrice - activePrice
       : 0;
 
-  // Extract all attribute keys across variants (e.g. 'Color', 'Size')
-  const attributeKeys = React.useMemo(() => {
-    if (!variants || variants.length === 0) return [];
-    const keys = new Set<string>();
-    variants.forEach((v) => {
-      if (v.attributes) {
-        Object.keys(v.attributes).forEach((k) => keys.add(k));
-      }
+  const handleWishlistToggle = () => {
+    toggleWishlist({
+      productId: product.id,
+      title: product.title,
+      slug: product.slug,
+      price: activePrice,
+      image: activeImage,
+      vendorName: product.vendor?.storeName,
     });
-    return Array.from(keys);
+    if (!isFavorited) {
+      toast.success("Saved to your wishlist!");
+    } else {
+      toast.info("Removed from your wishlist.");
+    }
+  };
+
+  const handleShare = async () => {
+    try {
+      if (typeof window !== "undefined") {
+        await navigator.clipboard.writeText(window.location.href);
+        toast.success("Product link copied to clipboard!");
+      }
+    } catch {
+      toast.error("Unable to copy link.");
+    }
+  };
+
+  // Extract all dynamic attribute dimensions across variants (e.g. Color, Size, RAM, SSD, Material)
+  const attributeDimensions = React.useMemo(() => {
+    return extractAttributeDimensions(variants);
   }, [variants]);
 
   // Current selected attributes state
   const selectedAttributes = selectedVariant?.attributes || {};
 
-  // Handle choosing a specific attribute value
+  // Handle choosing a specific attribute value with matrix resolution
   const handleSelectAttribute = (key: string, value: string | number) => {
     if (!variants || variants.length === 0) return;
 
-    // Look for variant with this attribute updated
-    const targetAttrs = { ...selectedAttributes, [key]: value };
-    const matchingVariant = variants.find((v) => {
-      if (!v.attributes) return false;
-      return Object.entries(targetAttrs).every(
-        ([k, val]) => String(v.attributes?.[k]).toLowerCase() === String(val).toLowerCase()
-      );
-    });
-
-    if (matchingVariant) {
-      onVariantChange(matchingVariant);
-    } else {
-      // Fallback: pick any variant that has this chosen attribute value
-      const fallback = variants.find(
-        (v) => String(v.attributes?.[key]).toLowerCase() === String(value).toLowerCase()
-      );
-      if (fallback) {
-        onVariantChange(fallback);
-      }
+    const resolved = resolveVariantSelection(variants, selectedAttributes, key, value);
+    if (resolved) {
+      onVariantChange(resolved);
     }
   };
 
@@ -102,29 +134,61 @@ export function ProductInfo({
 
   return (
     <div className="flex flex-col space-y-5">
-      {/* 1. Category & Brand Bar */}
-      <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-        {brand && (
-          <span className="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold">
-            {brand}
-          </span>
-        )}
-        {category && (
-          <Link
-            href={`/products?category=${category.slug}`}
-            className="text-secondary hover:text-primary transition-colors flex items-center gap-1"
+      {/* 1. Category & Brand Bar + Quick Action Buttons (Wishlist & Share) */}
+      <div className="flex items-center justify-between gap-2 text-xs font-semibold">
+        <div className="flex flex-wrap items-center gap-2">
+          {brand && (
+            <span className="bg-primary/10 text-primary px-2.5 py-0.5 rounded-full uppercase tracking-wider font-bold">
+              {brand}
+            </span>
+          )}
+          {category && (
+            <Link
+              href={`/products?category=${category.slug}`}
+              className="text-secondary hover:text-primary transition-colors flex items-center gap-1"
+            >
+              <span>in</span>
+              <span className="underline underline-offset-2">{category.name}</span>
+            </Link>
+          )}
+        </div>
+
+        {/* Top Right: Wishlist & Share Quick Actions */}
+        <div className="flex items-center gap-1.5 shrink-0">
+          <button
+            type="button"
+            onClick={handleWishlistToggle}
+            aria-label={isFavorited ? "Remove from wishlist" : "Add to wishlist"}
+            title={isFavorited ? "Saved in your Wishlist (Click to remove)" : "Add to Wishlist"}
+            className={`flex items-center gap-1.5 py-1.5 px-3 rounded-xl border text-xs font-bold transition-all duration-200 cursor-pointer ${
+              isFavorited
+                ? "border-highlight/50 bg-highlight/15 text-highlight ring-2 ring-highlight/20 shadow-xs"
+                : "border-border hover:border-border text-secondary hover:text-primary bg-white hover:bg-muted/40"
+            }`}
           >
-            <span>in</span>
-            <span className="underline underline-offset-2">{category.name}</span>
-          </Link>
-        )}
-        {vendor && (
-          <div className="flex items-center gap-1 text-slate-500 ml-auto text-[11px]">
-            <Store className="w-3.5 h-3.5 text-primary" />
-            <span>Store:</span>
-            <span className="font-bold text-primary">{vendor.storeName}</span>
-          </div>
-        )}
+            <Heart
+              className={`w-3.5 h-3.5 transition-all duration-200 ${
+                isFavorited
+                  ? "fill-highlight text-highlight scale-110"
+                  : "text-secondary hover:text-primary"
+              }`}
+            />
+            <span className={isFavorited ? "text-highlight font-black" : "text-secondary hover:text-primary"}>
+              {isFavorited ? "In Wishlist" : "Wishlist"}
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleShare}
+            aria-label="Share product"
+            title="Share product"
+            className="flex items-center gap-1.5 py-1.5 px-3 rounded-xl border border-border hover:border-border text-secondary hover:text-primary bg-white hover:bg-muted/40 text-xs font-bold transition-all cursor-pointer"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+            <span>Share</span>
+          </button>
+        </div>
       </div>
 
       {/* 2. Product Title (H1) */}
@@ -133,7 +197,7 @@ export function ProductInfo({
       </h1>
 
       {/* 3. Rating Summary & Reviews Link */}
-      <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm border-b border-slate-100 pb-4">
+      <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm border-b border-border pb-4">
         <div className="flex items-center gap-1.5">
           <div className="flex items-center text-amber-400 gap-0.5">
             {[1, 2, 3, 4, 5].map((star) => (
@@ -144,7 +208,7 @@ export function ProductInfo({
                     ? "fill-amber-400 text-amber-400"
                     : parsedRating >= star - 0.5
                     ? "fill-amber-400/50 text-amber-400"
-                    : "text-slate-200 fill-slate-100"
+                    : "text-secondary/40 fill-slate-100"
                 }`}
               />
             ))}
@@ -154,7 +218,7 @@ export function ProductInfo({
           </span>
         </div>
 
-        <span className="text-slate-300">|</span>
+        <span className="text-secondary/60">|</span>
 
         <button
           type="button"
@@ -164,7 +228,7 @@ export function ProductInfo({
           {ratingCount.toLocaleString()} {ratingCount === 1 ? "review" : "customer reviews"}
         </button>
 
-        <span className="text-slate-300">|</span>
+        <span className="text-secondary/60">|</span>
 
         <div className="flex items-center gap-1 text-emerald-600 font-semibold text-xs">
           <ShieldCheck className="w-4 h-4 text-emerald-600" />
@@ -173,7 +237,7 @@ export function ProductInfo({
       </div>
 
       {/* 4. Pricing Box */}
-      <div className="bg-slate-50/80 rounded-2xl p-4 sm:p-5 border border-slate-100/90 space-y-2">
+      <div className="bg-muted/80 rounded-2xl p-4 sm:p-5 border border-border/90 space-y-2">
         <div className="flex items-baseline gap-3 flex-wrap">
           <span className="text-2xl sm:text-3xl lg:text-4xl font-black text-primary tracking-tight">
             {formatCurrency(activePrice)}
@@ -181,7 +245,7 @@ export function ProductInfo({
 
           {originalPrice && originalPrice > activePrice && (
             <>
-              <span className="text-base sm:text-lg font-semibold text-slate-400 line-through">
+              <span className="text-base sm:text-lg font-semibold text-secondary line-through">
                 {formatCurrency(originalPrice)}
               </span>
               {discountPercent && (
@@ -204,40 +268,46 @@ export function ProductInfo({
         </div>
       </div>
 
-      {/* 5. Dynamic Variant Selection (Colors, Sizes, Models) */}
+      {/* 5. Dynamic Variant Selection (Any attributes: Color, Size, RAM, SSD, Material, etc.) */}
       {variants && variants.length > 0 && (
-        <div className="space-y-4 pt-1 border-t border-slate-100">
-          {attributeKeys.length > 0 ? (
-            attributeKeys.map((attrKey) => {
-              // Extract unique values for this attribute
-              const uniqueValues = Array.from(
-                new Set(
-                  variants
-                    .map((v) => v.attributes?.[attrKey])
-                    .filter((val): val is string | number => val !== undefined && val !== null)
-                )
-              );
-
+        <div className="space-y-4 pt-2 border-t border-border">
+          {attributeDimensions.length > 0 ? (
+            attributeDimensions.map(({ name: attrKey, values: uniqueValues }: AttributeDimension) => {
               const currentVal = selectedAttributes[attrKey];
-              const isColorType = attrKey.toLowerCase().includes("color") || attrKey.toLowerCase().includes("colour");
+              const isColorType = isColorAttribute(attrKey);
 
               return (
                 <div key={attrKey} className="space-y-2">
                   <div className="flex items-center justify-between text-xs font-bold">
-                    <span className="text-primary capitalize">{attrKey}:</span>
-                    <span className="text-secondary font-medium">{currentVal || "Select an option"}</span>
+                    <span className="text-primary capitalize flex items-center gap-1.5">
+                      <span>{attrKey}:</span>
+                      {currentVal && (
+                        <span className="text-primary font-extrabold">{String(currentVal)}</span>
+                      )}
+                    </span>
+                    {!currentVal && (
+                      <span className="text-amber-600 font-medium text-[11px]">Required</span>
+                    )}
                   </div>
 
                   <div className="flex flex-wrap gap-2">
-                    {uniqueValues.map((val) => {
+                    {uniqueValues.map((val: string) => {
                       const isSelected =
-                        String(currentVal).toLowerCase() === String(val).toLowerCase();
+                        normalizeAttr(currentVal) === normalizeAttr(val);
 
-                      // Check if any variant with this value is in stock
-                      const matchingVariants = variants.filter(
-                        (v) => String(v.attributes?.[attrKey]).toLowerCase() === String(val).toLowerCase()
+                      const isValidCombo = isOptionCombinationValid(
+                        variants,
+                        selectedAttributes,
+                        attrKey,
+                        val
                       );
-                      const isOptionInStock = matchingVariants.some((v) => v.stock > 0);
+
+                      const isOptionStocked = isOptionInStock(
+                        variants,
+                        selectedAttributes,
+                        attrKey,
+                        val
+                      );
 
                       if (isColorType) {
                         return (
@@ -245,20 +315,31 @@ export function ProductInfo({
                             key={String(val)}
                             type="button"
                             onClick={() => handleSelectAttribute(attrKey, val)}
+                            title={
+                              !isOptionStocked
+                                ? `${String(val)} (Out of stock)`
+                                : !isValidCombo
+                                ? `${String(val)} (Changes other options)`
+                                : String(val)
+                            }
                             className={`group relative flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
                               isSelected
-                                ? "border-primary bg-primary/5 text-primary ring-2 ring-primary/20 shadow-xs"
-                                : "border-slate-200 hover:border-slate-300 text-slate-700 bg-white"
-                            } ${!isOptionInStock ? "opacity-50 line-through" : ""}`}
+                                ? "border-primary bg-primary/5 text-primary ring-2 ring-primary/25 shadow-xs font-bold"
+                                : isValidCombo
+                                ? "border-border hover:border-border text-secondary bg-white hover:bg-muted"
+                                : "border-dashed border-border text-secondary bg-muted/50 hover:border-border"
+                            } ${!isOptionStocked ? "opacity-60" : ""}`}
                           >
                             <span
-                              className="w-3.5 h-3.5 rounded-full border border-black/15 shrink-0"
+                              className="w-3.5 h-3.5 rounded-full border border-black/15 shrink-0 shadow-2xs"
                               style={{
                                 backgroundColor: String(val).toLowerCase(),
                               }}
                             />
-                            <span>{String(val)}</span>
-                            {isSelected && <Check className="w-3 h-3 text-primary ml-1" />}
+                            <span className={!isOptionStocked ? "line-through" : ""}>
+                              {String(val)}
+                            </span>
+                            {isSelected && <Check className="w-3 h-3 text-primary ml-0.5" />}
                           </button>
                         );
                       }
@@ -268,13 +349,24 @@ export function ProductInfo({
                           key={String(val)}
                           type="button"
                           onClick={() => handleSelectAttribute(attrKey, val)}
-                          className={`min-w-[44px] px-3.5 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
+                          title={
+                            !isOptionStocked
+                              ? `${String(val)} (Out of stock)`
+                              : !isValidCombo
+                              ? `${String(val)} (Changes other options)`
+                              : String(val)
+                          }
+                          className={`min-w-[44px] px-3.5 py-2 rounded-xl text-xs transition-all cursor-pointer flex items-center justify-center gap-1.5 border ${
                             isSelected
-                              ? "border-primary bg-primary text-white shadow-xs"
-                              : "border-slate-200 hover:border-slate-400 text-primary bg-white"
-                          } ${!isOptionInStock ? "opacity-40 line-through bg-slate-50" : ""}`}
+                              ? "border-primary bg-primary text-white font-bold shadow-xs ring-2 ring-primary/20"
+                              : isValidCombo
+                              ? "border-border hover:border-border text-primary bg-white hover:bg-muted font-medium"
+                              : "border-dashed border-border text-secondary bg-muted/60 hover:border-border font-normal"
+                          } ${!isOptionStocked ? "opacity-60" : ""}`}
                         >
-                          <span>{String(val)}</span>
+                          <span className={!isOptionStocked ? "line-through" : ""}>
+                            {String(val)}
+                          </span>
                         </button>
                       );
                     })}
@@ -283,7 +375,7 @@ export function ProductInfo({
               );
             })
           ) : (
-            /* Variant list without named attributes */
+            /* Direct Variant list when attributes are not named in key-value structure */
             <div className="space-y-2">
               <span className="text-xs font-bold text-primary">Available Options:</span>
               <div className="flex flex-wrap gap-2">
@@ -294,8 +386,8 @@ export function ProductInfo({
                     onClick={() => onVariantChange(v)}
                     className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
                       selectedVariant?.id === v.id
-                        ? "border-primary bg-primary text-white"
-                        : "border-slate-200 hover:border-slate-300 text-primary bg-white"
+                        ? "border-primary bg-primary text-white ring-2 ring-primary/20"
+                        : "border-border hover:border-border text-primary bg-white"
                     } ${v.stock <= 0 ? "opacity-50 line-through" : ""}`}
                   >
                     {v.sku} - {formatCurrency(v.price)}
@@ -305,10 +397,27 @@ export function ProductInfo({
             </div>
           )}
 
-          {/* Active SKU and Variant stock identifier */}
+          {/* Active SKU and Real-Time Stock Status */}
           {selectedVariant && (
-            <div className="text-[11px] text-slate-500 font-mono">
-              SKU: <span className="font-semibold text-slate-700">{selectedVariant.sku}</span>
+            <div className="flex items-center justify-between pt-1 text-[11px] text-secondary">
+              <div className="font-mono">
+                SKU: <span className="font-bold text-secondary">{selectedVariant.sku}</span>
+              </div>
+              <div>
+                {selectedVariant.stock > 0 ? (
+                  selectedVariant.stock <= 5 ? (
+                    <span className="text-amber-600 font-bold">
+                      Only {selectedVariant.stock} left in stock!
+                    </span>
+                  ) : (
+                    <span className="text-emerald-600 font-semibold">
+                      In Stock ({selectedVariant.stock} units)
+                    </span>
+                  )
+                ) : (
+                  <span className="text-highlight font-bold">Currently Out of Stock</span>
+                )}
+              </div>
             </div>
           )}
         </div>
@@ -320,9 +429,9 @@ export function ProductInfo({
           {tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-1 bg-slate-100 text-slate-600 font-semibold text-[11px] px-2.5 py-1 rounded-lg"
+              className="inline-flex items-center gap-1 bg-muted text-secondary font-semibold text-[11px] px-2.5 py-1 rounded-lg"
             >
-              <Tag className="w-3 h-3 text-slate-400" />
+              <Tag className="w-3 h-3 text-secondary" />
               {tag}
             </span>
           ))}

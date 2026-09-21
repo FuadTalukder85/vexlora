@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -12,9 +12,9 @@ export function Badge({
   ...props
 }: BadgeProps) {
   const variants = {
-    default: "bg-slate-100 text-primary border-slate-200",
-    secondary: "bg-slate-100 text-secondary border-slate-200",
-    outline: "bg-transparent text-primary border-slate-200",
+    default: "bg-muted text-primary border-border",
+    secondary: "bg-muted text-secondary border-border",
+    outline: "bg-transparent text-primary border-border",
     success: "bg-emerald-50 text-emerald-700 border-emerald-200/60",
     warning: "bg-amber-50 text-amber-700 border-amber-200/60",
   };

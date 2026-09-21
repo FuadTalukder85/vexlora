@@ -20,17 +20,33 @@ export function ProductGallery({
   selectedVariantImage,
   isOutOfStock,
 }: ProductGalleryProps) {
-  // Combine product images with variant image if not already present
-  const allImages = React.useMemo(() => {
-    const list = images && images.length > 0 ? [...images] : ["/images/placeholder-product.png"];
-    if (selectedVariantImage && !list.includes(selectedVariantImage)) {
-      return [selectedVariantImage, ...list];
+  // Base gallery images uploaded for the product (filtering out invalid blob: URLs)
+  const galleryImages = React.useMemo(() => {
+    const list = images && images.length > 0 ? images.filter((img) => img && !img.startsWith("blob:")) : [];
+    return list.length > 0 ? list : ["/images/placeholder-product.png"];
+  }, [images]);
+
+  // Valid variant image (ignoring blob: temporary URLs)
+  const validVariantImage = React.useMemo(() => {
+    if (selectedVariantImage && typeof selectedVariantImage === "string") {
+      const trimmed = selectedVariantImage.trim();
+      if (trimmed && !trimmed.startsWith("blob:")) {
+        return trimmed;
+      }
     }
-    return list;
-  }, [images, selectedVariantImage]);
+    return null;
+  }, [selectedVariantImage]);
+
+  // Combine product images with valid variant image if not already present
+  const allImages = React.useMemo(() => {
+    if (validVariantImage && !galleryImages.includes(validVariantImage)) {
+      return [...galleryImages, validVariantImage];
+    }
+    return galleryImages;
+  }, [galleryImages, validVariantImage]);
 
   const [userSelectedIdx, setUserSelectedIdx] = React.useState<number | null>(null);
-  const [prevVariantImg, setPrevVariantImg] = React.useState<string | null | undefined>(selectedVariantImage);
+  const [prevVariantImg, setPrevVariantImg] = React.useState<string | null | undefined>(validVariantImage);
   const [isZooming, setIsZooming] = React.useState(false);
   const [zoomCoords, setZoomCoords] = React.useState({ x: 50, y: 50 });
   const [isLightboxOpen, setIsLightboxOpen] = React.useState(false);
@@ -100,10 +116,10 @@ export function ProductGallery({
   };
 
   return (
-    <div className="w-full flex flex-col-reverse sm:flex-row gap-4 items-start select-none">
+    <div className="w-full h-full flex flex-col-reverse sm:flex-row gap-4 items-stretch select-none">
       {/* 1. Thumbnail List (Vertical on sm+, horizontal below) */}
       {allImages.length > 1 && (
-        <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto max-h-[500px] py-1 px-1 no-scrollbar w-full sm:w-20 shrink-0">
+        <div className="flex sm:flex-col gap-3 overflow-x-auto sm:overflow-y-auto max-h-[500px] lg:max-h-full py-1 px-1 no-scrollbar w-full sm:w-24 shrink-0">
           {allImages.map((img, idx) => (
             <button
               key={`${img}-${idx}`}
@@ -113,7 +129,7 @@ export function ProductGallery({
               aria-label={`View image ${idx + 1}`}
               className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer bg-white flex items-center justify-center shrink-0 ${activeIndex === idx
                 ? "border-primary shadow-sm scale-102 ring-2 ring-primary/20"
-                : "border-slate-100 hover:border-slate-300 opacity-70 hover:opacity-100"
+                : "border-border hover:border-border opacity-70 hover:opacity-100"
                 }`}
             >
               <Image
@@ -128,8 +144,8 @@ export function ProductGallery({
         </div>
       )}
 
-      {/* 2. Main Large Image Display Box (Lighter clean background) */}
-      <div className="relative flex-1 w-full aspect-square bg-slate-900/40 border border-slate-100 rounded-2xl overflow-hidden group">
+      {/* 2. Main Large Image Display Box (Pure white background, no gray overlay) */}
+      <div className="relative flex-1 w-full h-full min-h-[360px] bg-white border border-border rounded-2xl overflow-hidden group shadow-2xs flex flex-col">
         {/* Badges Overlay */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start pointer-events-none">
           {discountBadge && (
@@ -139,7 +155,7 @@ export function ProductGallery({
             </span>
           )}
           {isOutOfStock && (
-            <span className="bg-slate-800 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider">
+            <span className="bg-primary text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider">
               Out of Stock
             </span>
           )}
@@ -149,7 +165,7 @@ export function ProductGallery({
         <button
           type="button"
           onClick={() => setIsLightboxOpen(true)}
-          className="absolute top-3 right-3 z-20 p-2.5 rounded-xl bg-white/95 hover:bg-white text-primary shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer flex items-center gap-1 text-xs font-bold"
+          className="absolute top-3 right-3 z-20 p-2.5 rounded-xl bg-white/95 hover:bg-white text-primary shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer flex items-center gap-1 text-xs font-bold border border-border/60"
           title="Fullscreen preview"
           aria-label="Fullscreen preview"
         >
@@ -158,7 +174,7 @@ export function ProductGallery({
 
         {/* Interactive Image Container with Fluid Hover Magnifier Zoom */}
         <div
-          className="relative w-full h-full flex items-center justify-center cursor-zoom-in overflow-hidden p-6"
+          className="relative w-full h-full flex items-center justify-center cursor-zoom-in overflow-hidden p-2 sm:p-4 bg-white"
           onMouseEnter={() => setIsZooming(true)}
           onMouseLeave={() => setIsZooming(false)}
           onMouseMove={handleMouseMove}
@@ -170,7 +186,7 @@ export function ProductGallery({
             fill
             priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-            className={`object-contain p-4 transition-transform duration-200 ease-out will-change-transform ${isZooming ? "scale-175" : "scale-100"
+            className={`object-contain p-2 transition-transform duration-200 ease-out will-change-transform ${isZooming ? "scale-175" : "scale-100"
               }`}
             style={
               isZooming
@@ -227,19 +243,19 @@ export function ProductGallery({
         )}
       </div>
 
-      {/* 3. Fullscreen Lightbox Modal (Same bg-slate-900/30 as Modal.tsx) */}
+      {/* 3. Fullscreen Lightbox Modal (Same bg-primary/30 as Modal.tsx) */}
       {isMounted &&
         isLightboxOpen &&
         createPortal(
           <div
             role="dialog"
             aria-modal="true"
-            className="fixed inset-0 z-[99999] bg-slate-900/30 backdrop-blur-xs flex items-center justify-center p-4 sm:p-8 select-none animate-in fade-in duration-200"
+            className="fixed inset-0 z-[99999] bg-primary/30 backdrop-blur-xs flex items-center justify-center p-4 sm:p-8 select-none animate-in fade-in duration-200"
             onClick={() => setIsLightboxOpen(false)}
           >
             {/* Top Bar with Title and Close Button */}
             <div
-              className="absolute top-0 inset-x-0 p-4 sm:p-6 flex items-center justify-between text-primary bg-white/70 backdrop-blur-md border-b border-slate-200/50 shadow-xs z-[100000]"
+              className="absolute top-0 inset-x-0 p-4 sm:p-6 flex items-center justify-between text-primary bg-white/70 backdrop-blur-md border-b border-border/50 shadow-xs z-[100000]"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="min-w-0 pr-4">
@@ -254,7 +270,7 @@ export function ProductGallery({
               <button
                 type="button"
                 onClick={() => setIsLightboxOpen(false)}
-                className="p-2.5 rounded-full bg-white hover:bg-slate-100 text-primary transition-all cursor-pointer shadow-sm hover:scale-105 shrink-0 border border-slate-200/80"
+                className="p-2.5 rounded-full bg-white hover:bg-muted text-primary transition-all cursor-pointer shadow-sm hover:scale-105 shrink-0 border border-border"
                 aria-label="Close fullscreen"
               >
                 <X className="w-5 h-5" />
@@ -263,7 +279,7 @@ export function ProductGallery({
 
             {/* Main Fullscreen Image Container with Interactive Zoom on Hover */}
             <div
-              className="relative w-full max-w-4xl h-[70vh] sm:h-[76vh] flex items-center justify-center p-6 overflow-hidden rounded-2xl cursor-zoom-in bg-white/90 backdrop-blur-sm border border-slate-200/80 shadow-2xl mt-8"
+              className="relative w-full max-w-4xl h-[70vh] sm:h-[76vh] flex items-center justify-center p-6 overflow-hidden rounded-2xl cursor-zoom-in bg-white/90 backdrop-blur-sm border border-border shadow-2xl mt-8"
               onClick={(e) => e.stopPropagation()}
               onMouseEnter={() => setIsLightboxZooming(true)}
               onMouseLeave={() => setIsLightboxZooming(false)}
@@ -274,14 +290,13 @@ export function ProductGallery({
                 alt={title}
                 fill
                 sizes="100vw"
-                className={`object-contain p-4 transition-transform duration-200 ease-out will-change-transform ${
-                  isLightboxZooming ? "scale-160" : "scale-100"
-                }`}
+                className={`object-contain p-4 transition-transform duration-200 ease-out will-change-transform ${isLightboxZooming ? "scale-160" : "scale-100"
+                  }`}
                 style={
                   isLightboxZooming
                     ? {
-                        transformOrigin: `${lightboxZoomCoords.x}% ${lightboxZoomCoords.y}%`,
-                      }
+                      transformOrigin: `${lightboxZoomCoords.x}% ${lightboxZoomCoords.y}%`,
+                    }
                     : undefined
                 }
                 priority
@@ -295,7 +310,7 @@ export function ProductGallery({
                       e.stopPropagation();
                       handlePrev();
                     }}
-                    className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 hover:bg-white text-primary transition-all hover:scale-110 cursor-pointer shadow-md border border-slate-200 z-[100000]"
+                    className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 hover:bg-white text-primary transition-all hover:scale-110 cursor-pointer shadow-md border border-border z-[100000]"
                     aria-label="Previous image"
                   >
                     <ChevronLeft className="w-5 h-5" />
@@ -306,7 +321,7 @@ export function ProductGallery({
                       e.stopPropagation();
                       handleNext();
                     }}
-                    className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 hover:bg-white text-primary transition-all hover:scale-110 cursor-pointer shadow-md border border-slate-200 z-[100000]"
+                    className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 hover:bg-white text-primary transition-all hover:scale-110 cursor-pointer shadow-md border border-border z-[100000]"
                     aria-label="Next image"
                   >
                     <ChevronRight className="w-5 h-5" />
@@ -326,11 +341,10 @@ export function ProductGallery({
                     key={`${img}-${idx}`}
                     type="button"
                     onClick={() => setUserSelectedIdx(idx)}
-                    className={`relative w-14 h-14 rounded-xl overflow-hidden border-2 transition-all cursor-pointer bg-white shadow-sm ${
-                      activeIndex === idx
-                        ? "border-primary scale-110 shadow-md ring-2 ring-primary/20"
-                        : "border-slate-200 opacity-70 hover:opacity-100 hover:border-slate-300"
-                    }`}
+                    className={`relative w-14 h-14 rounded-xl overflow-hidden border-2 transition-all cursor-pointer bg-white shadow-sm ${activeIndex === idx
+                      ? "border-primary scale-110 shadow-md ring-2 ring-primary/20"
+                      : "border-border opacity-70 hover:opacity-100 hover:border-border"
+                      }`}
                   >
                     <Image
                       src={img}

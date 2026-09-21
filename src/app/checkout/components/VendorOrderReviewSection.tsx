@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import Image from "next/image";
 import { Store, ShoppingBag } from "lucide-react";
 import { ApiVendorGroup } from "@/lib/api/cart";
@@ -16,8 +16,8 @@ export function VendorOrderReviewSection({
   selectedCount,
 }: VendorOrderReviewSectionProps) {
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-2xs">
-      <div className="flex items-center gap-2.5 pb-4 border-b border-slate-100 mb-4">
+    <div className="bg-white rounded-2xl border border-border p-6 shadow-2xs">
+      <div className="flex items-center gap-2.5 pb-4 border-b border-border mb-4">
         <div className="h-7 w-7 rounded-lg bg-primary text-white flex items-center justify-center font-bold text-xs">
           3
         </div>
@@ -35,9 +35,9 @@ export function VendorOrderReviewSection({
         return (
           <div
             key={group.vendorId}
-            className="mb-4 last:mb-0 border border-slate-100 rounded-xl overflow-hidden"
+            className="mb-4 last:mb-0 border border-border rounded-xl overflow-hidden"
           >
-            <div className="bg-slate-50 px-4 py-2.5 flex items-center justify-between border-b border-slate-100">
+            <div className="bg-muted px-4 py-2.5 flex items-center justify-between border-b border-border">
               <div className="flex items-center gap-2 text-xs font-bold text-primary">
                 <Store className="h-3.5 w-3.5" />
                 <span>Package fulfilled by: {group.storeName}</span>
@@ -51,7 +51,7 @@ export function VendorOrderReviewSection({
               {groupSelectedItems.map((item) => (
                 <div key={item.id} className="py-3 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="relative h-14 w-14 shrink-0 rounded-lg bg-slate-50 border border-slate-100 overflow-hidden">
+                    <div className="relative h-14 w-14 shrink-0 rounded-lg bg-muted border border-border overflow-hidden">
                       {item.image ? (
                         <Image
                           src={item.image}
@@ -61,7 +61,7 @@ export function VendorOrderReviewSection({
                           className="object-contain p-1"
                         />
                       ) : (
-                        <ShoppingBag className="h-6 w-6 text-slate-300" />
+                        <ShoppingBag className="h-6 w-6 text-secondary/60" />
                       )}
                     </div>
                     <div>

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -88,7 +88,7 @@ export default function VendorApplyPage() {
 
   if (isInitialChecking) {
     return (
-      <div className="min-h-[70vh] flex items-center justify-center p-4 bg-slate-50/50">
+      <div className="min-h-[70vh] flex items-center justify-center p-4 bg-muted/50">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
           <p className="text-xs font-bold text-secondary">Checking account profile...</p>
@@ -98,7 +98,7 @@ export default function VendorApplyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-muted/50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto space-y-8">
         {/* Hero Header */}
         <div className="text-center space-y-3">
@@ -116,7 +116,7 @@ export default function VendorApplyPage() {
 
         {/* Status Views */}
         {!isAuthenticated && (
-          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-200/80 text-center space-y-6">
+          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-border text-center space-y-6">
             <div className="w-16 h-16 rounded-3xl bg-indigo-50 text-primary flex items-center justify-center mx-auto">
               <Store className="w-8 h-8" />
             </div>
@@ -137,7 +137,7 @@ export default function VendorApplyPage() {
               </Link>
               <Link
                 href="/register?redirect=/vendor-apply"
-                className="flex-1 py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-primary text-xs font-bold flex items-center justify-center gap-2 transition-all"
+                className="flex-1 py-3 px-4 rounded-xl bg-muted hover:bg-muted text-primary text-xs font-bold flex items-center justify-center gap-2 transition-all"
               >
                 Create Account
               </Link>
@@ -146,7 +146,7 @@ export default function VendorApplyPage() {
         )}
 
         {isAuthenticated && vendorProfile?.status === "PENDING" && (
-          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-200/80 text-center space-y-6">
+          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-border text-center space-y-6">
             <div className="w-16 h-16 rounded-3xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto">
               <Clock className="w-8 h-8" />
             </div>
@@ -162,16 +162,16 @@ export default function VendorApplyPage() {
               </p>
             </div>
 
-            <div className="p-5 bg-slate-50 border border-slate-200/80 rounded-2xl text-left text-xs text-primary space-y-2 max-w-md mx-auto">
-              <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+            <div className="p-5 bg-muted border border-border rounded-2xl text-left text-xs text-primary space-y-2 max-w-md mx-auto">
+              <div className="flex justify-between border-b border-border/60 pb-1.5">
                 <span className="font-semibold text-secondary">Applicant:</span>
                 <span className="font-bold text-primary">{user?.name}</span>
               </div>
-              <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+              <div className="flex justify-between border-b border-border/60 pb-1.5">
                 <span className="font-semibold text-secondary">Store Name:</span>
                 <span className="font-bold text-primary">{vendorProfile.storeName}</span>
               </div>
-              <div className="flex justify-between border-b border-slate-200/60 pb-1.5">
+              <div className="flex justify-between border-b border-border/60 pb-1.5">
                 <span className="font-semibold text-secondary">Store Identifier:</span>
                 <span className="font-bold text-primary">{vendorProfile.storeSlug}</span>
               </div>
@@ -186,7 +186,7 @@ export default function VendorApplyPage() {
         )}
 
         {isAuthenticated && vendorProfile?.status === "APPROVED" && (
-          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-slate-200/80 text-center space-y-6">
+          <div className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-border text-center space-y-6">
             <div className="w-16 h-16 rounded-3xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-8 h-8" />
             </div>
@@ -217,7 +217,7 @@ export default function VendorApplyPage() {
 
         {/* Application Form */}
         {isAuthenticated && (!vendorProfile || (vendorProfile.status !== "PENDING" && vendorProfile.status !== "APPROVED")) && (
-          <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-slate-200/80 space-y-6">
+          <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-xl border border-border space-y-6">
             {/* Account Info Pill */}
             <div className="flex items-center gap-3 p-4 bg-indigo-50/70 border border-indigo-100 rounded-2xl text-xs">
               <UserCheck className="w-5 h-5 text-primary shrink-0" />
@@ -230,8 +230,8 @@ export default function VendorApplyPage() {
             </div>
 
             {error && (
-              <div className="flex items-start gap-2.5 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs">
-                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-500" />
+              <div className="flex items-start gap-2.5 p-3.5 rounded-2xl bg-highlight/10 border border-highlight/30 text-highlight text-xs">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-highlight" />
                 <div className="flex-1 font-medium">{error}</div>
               </div>
             )}
@@ -246,7 +246,7 @@ export default function VendorApplyPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Store Information */}
               <div className="space-y-4">
-                <h3 className="text-xs font-extrabold text-primary uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 pb-2">
+                <h3 className="text-xs font-extrabold text-primary uppercase tracking-wider flex items-center gap-2 border-b border-border pb-2">
                   <Building className="w-4 h-4 text-primary" /> Store Information
                 </h3>
 
@@ -263,8 +263,8 @@ export default function VendorApplyPage() {
                   <label className="block text-xs font-semibold text-primary tracking-wide">
                     Store URL Identifier (Slug)
                   </label>
-                  <div className="flex items-center text-xs bg-slate-50 border border-slate-200 rounded-xl overflow-hidden focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10">
-                    <span className="px-3.5 py-2.5 text-secondary font-semibold border-r border-slate-200 bg-slate-100">
+                  <div className="flex items-center text-xs bg-muted border border-border rounded-xl overflow-hidden focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/10">
+                    <span className="px-3.5 py-2.5 text-secondary font-semibold border-r border-border bg-muted">
                       vexlora.com/store/
                     </span>
                     <input
@@ -286,14 +286,14 @@ export default function VendorApplyPage() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="Overview of your product catalog and brand values..."
-                    className="w-full p-3.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-primary font-medium placeholder:text-secondary"
+                    className="w-full p-3.5 text-sm bg-white border border-border rounded-xl focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 transition-all text-primary font-medium placeholder:text-secondary"
                   />
                 </div>
               </div>
 
               {/* Banking & Settlement Details */}
               <div className="space-y-4 pt-2">
-                <h3 className="text-xs font-extrabold text-primary uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 pb-2">
+                <h3 className="text-xs font-extrabold text-primary uppercase tracking-wider flex items-center gap-2 border-b border-border pb-2">
                   <CreditCard className="w-4 h-4 text-primary" /> Banking & Payout Settlement
                 </h3>
 
@@ -325,7 +325,7 @@ export default function VendorApplyPage() {
 
               {/* Business Verification Document */}
               <div className="space-y-3 pt-2">
-                <h3 className="text-xs font-extrabold text-primary uppercase tracking-wider flex items-center gap-2 border-b border-slate-100 pb-2">
+                <h3 className="text-xs font-extrabold text-primary uppercase tracking-wider flex items-center gap-2 border-b border-border pb-2">
                   <FileText className="w-4 h-4 text-primary" /> Business License & Verification
                 </h3>
 

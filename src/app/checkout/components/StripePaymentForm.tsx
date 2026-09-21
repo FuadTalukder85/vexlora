@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import {
@@ -133,7 +133,7 @@ function CheckoutForm({
   return (
     <div className="space-y-3 pt-2">
       <div className="flex items-center justify-between text-[11px] text-secondary pb-1">
-        <span className="flex items-center gap-1.5 font-medium text-slate-700">
+        <span className="flex items-center gap-1.5 font-medium text-secondary">
           <Lock className="h-3.5 w-3.5 text-primary" />
           <span>256-bit Encrypted Card Payment</span>
         </span>
@@ -145,7 +145,7 @@ function CheckoutForm({
 
       <div className="min-h-[140px] relative">
         {!isElementLoaded && (
-          <div className="absolute inset-0 flex items-center justify-center bg-slate-50/70 rounded-xl">
+          <div className="absolute inset-0 flex items-center justify-center bg-muted/70 rounded-xl">
             <div className="flex items-center gap-2 text-xs text-secondary font-medium">
               <Loader2 className="h-4 w-4 animate-spin text-primary" />
               <span>Loading secure card element...</span>

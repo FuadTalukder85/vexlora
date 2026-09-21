@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Image from "next/image";
@@ -93,16 +93,16 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
   }, [product]);
 
   return (
-    <div id="product-tabs-section" className="w-full bg-white rounded-2xl border border-slate-200/90 shadow-sm overflow-hidden">
+    <div id="product-tabs-section" className="w-full bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
       {/* 1. Tab Navigation Header */}
-      <div className="flex border-b border-slate-200 bg-slate-50/70 overflow-x-auto no-scrollbar">
+      <div className="flex border-b border-border bg-muted/70 overflow-x-auto no-scrollbar">
         <button
           type="button"
           onClick={() => onTabChange("overview")}
           className={`px-5 py-4 text-xs sm:text-sm font-black transition-all border-b-2 cursor-pointer whitespace-nowrap flex items-center gap-2 ${
             activeTab === "overview"
               ? "border-primary text-primary bg-white shadow-2xs"
-              : "border-transparent text-secondary hover:text-primary hover:bg-slate-100/50"
+              : "border-transparent text-secondary hover:text-primary hover:bg-muted/50"
           }`}
         >
           <Layers className="w-4 h-4" />
@@ -115,7 +115,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
           className={`px-5 py-4 text-xs sm:text-sm font-black transition-all border-b-2 cursor-pointer whitespace-nowrap flex items-center gap-2 ${
             activeTab === "specs"
               ? "border-primary text-primary bg-white shadow-2xs"
-              : "border-transparent text-secondary hover:text-primary hover:bg-slate-100/50"
+              : "border-transparent text-secondary hover:text-primary hover:bg-muted/50"
           }`}
         >
           <Package className="w-4 h-4" />
@@ -128,7 +128,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
           className={`px-5 py-4 text-xs sm:text-sm font-black transition-all border-b-2 cursor-pointer whitespace-nowrap flex items-center gap-2 ${
             activeTab === "reviews"
               ? "border-primary text-primary bg-white shadow-2xs"
-              : "border-transparent text-secondary hover:text-primary hover:bg-slate-100/50"
+              : "border-transparent text-secondary hover:text-primary hover:bg-muted/50"
           }`}
         >
           <Star className="w-4 h-4" />
@@ -141,7 +141,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
           className={`px-5 py-4 text-xs sm:text-sm font-black transition-all border-b-2 cursor-pointer whitespace-nowrap flex items-center gap-2 ${
             activeTab === "shipping"
               ? "border-primary text-primary bg-white shadow-2xs"
-              : "border-transparent text-secondary hover:text-primary hover:bg-slate-100/50"
+              : "border-transparent text-secondary hover:text-primary hover:bg-muted/50"
           }`}
         >
           <Truck className="w-4 h-4" />
@@ -157,15 +157,15 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
             {/* Description Body */}
             <div className="prose prose-slate max-w-none">
               <h3 className="text-lg font-bold text-primary mb-3">About this item</h3>
-              <p className="text-slate-700 leading-relaxed text-sm whitespace-pre-line">
+              <p className="text-secondary leading-relaxed text-sm whitespace-pre-line">
                 {product.description ||
                   "Experience supreme quality craftsmanship and modern engineering with this authentic product from Vexlora's verified marketplace. Built to deliver exceptional performance and longevity."}
               </p>
             </div>
 
             {/* Feature Highlights Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-slate-100">
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100/80 space-y-1.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-border">
+              <div className="p-4 rounded-xl bg-muted border border-border/80 space-y-1.5">
                 <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold">
                   <Award className="w-4 h-4" />
                 </div>
@@ -175,7 +175,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100/80 space-y-1.5">
+              <div className="p-4 rounded-xl bg-muted border border-border/80 space-y-1.5">
                 <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold">
                   <Zap className="w-4 h-4" />
                 </div>
@@ -185,7 +185,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100/80 space-y-1.5">
+              <div className="p-4 rounded-xl bg-muted border border-border/80 space-y-1.5">
                 <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold">
                   <RotateCcw className="w-4 h-4" />
                 </div>
@@ -195,7 +195,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl bg-slate-50 border border-slate-100/80 space-y-1.5">
+              <div className="p-4 rounded-xl bg-muted border border-border/80 space-y-1.5">
                 <div className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-bold">
                   <ShieldCheck className="w-4 h-4" />
                 </div>
@@ -218,18 +218,18 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
               </p>
             </div>
 
-            <div className="border border-slate-200 rounded-xl overflow-hidden">
+            <div className="border border-border rounded-xl overflow-hidden">
               <table className="w-full text-xs text-left">
                 <tbody>
                   {specifications.map((spec, idx) => (
                     <tr
                       key={spec.label}
-                      className={idx % 2 === 0 ? "bg-slate-50/50" : "bg-white"}
+                      className={idx % 2 === 0 ? "bg-muted/50" : "bg-white"}
                     >
-                      <td className="py-3 px-4 font-bold text-primary w-1/3 border-b border-slate-100">
+                      <td className="py-3 px-4 font-bold text-primary w-1/3 border-b border-border">
                         {spec.label}
                       </td>
-                      <td className="py-3 px-4 text-slate-700 border-b border-slate-100">
+                      <td className="py-3 px-4 text-secondary border-b border-border">
                         {spec.value}
                       </td>
                     </tr>
@@ -244,9 +244,9 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
         {activeTab === "reviews" && (
           <div className="space-y-8 animate-in fade-in duration-200">
             {/* Rating Analytics Hero */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-slate-50/70 p-6 rounded-2xl border border-slate-100">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-muted/70 p-6 rounded-2xl border border-border">
               {/* Overall Score Box */}
-              <div className="lg:col-span-4 flex flex-col items-center justify-center text-center space-y-2 p-4 border-b lg:border-b-0 lg:border-r border-slate-200">
+              <div className="lg:col-span-4 flex flex-col items-center justify-center text-center space-y-2 p-4 border-b lg:border-b-0 lg:border-r border-border">
                 <span className="text-4xl sm:text-5xl font-black text-primary">
                   {reviewStats.averageRating.toFixed(1)}
                 </span>
@@ -259,7 +259,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                           ? "fill-amber-400 text-amber-400"
                           : reviewStats.averageRating >= star - 0.5
                           ? "fill-amber-400/50 text-amber-400"
-                          : "text-slate-200 fill-slate-100"
+                          : "text-secondary/40 fill-slate-100"
                       }`}
                     />
                   ))}
@@ -292,7 +292,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                         setSelectedRatingFilter(isSelected ? null : star)
                       }
                       className={`w-full flex items-center gap-3 text-xs font-semibold group cursor-pointer p-1 rounded-lg transition-colors ${
-                        isSelected ? "bg-primary/5 ring-1 ring-primary/20" : "hover:bg-slate-100"
+                        isSelected ? "bg-primary/5 ring-1 ring-primary/20" : "hover:bg-muted"
                       }`}
                     >
                       <span className="w-12 text-left font-bold text-primary flex items-center gap-1 shrink-0">
@@ -301,7 +301,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                       </span>
 
                       {/* Progress bar container */}
-                      <div className="flex-1 h-3 bg-slate-200 rounded-full overflow-hidden">
+                      <div className="flex-1 h-3 bg-muted rounded-full overflow-hidden">
                         <div
                           className="h-full bg-amber-400 rounded-full transition-all duration-500"
                           style={{ width: `${percent}%` }}
@@ -311,7 +311,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                       <span className="w-10 text-right text-secondary text-[11px] shrink-0 font-medium">
                         {percent}%
                       </span>
-                      <span className="w-12 text-right text-slate-400 text-[11px] shrink-0 font-medium">
+                      <span className="w-12 text-right text-secondary text-[11px] shrink-0 font-medium">
                         ({count})
                       </span>
                     </button>
@@ -321,7 +321,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
             </div>
 
             {/* Filter & Sort Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-slate-100">
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-2 border-b border-border">
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-xs font-bold text-primary flex items-center gap-1">
                   <Filter className="w-3.5 h-3.5 text-secondary" />
@@ -334,7 +334,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                   className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors cursor-pointer ${
                     selectedRatingFilter === null
                       ? "border-primary bg-primary text-white"
-                      : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+                      : "border-border bg-white text-secondary hover:border-border"
                   }`}
                 >
                   All ({reviewStats.totalReviews})
@@ -348,14 +348,14 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                     className={`px-3 py-1 rounded-full text-xs font-bold border transition-colors cursor-pointer ${
                       selectedRatingFilter === s
                         ? "border-primary bg-primary text-white"
-                        : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+                        : "border-border bg-white text-secondary hover:border-border"
                     }`}
                   >
                     {s} Stars
                   </button>
                 ))}
 
-                <label className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 ml-2 cursor-pointer">
+                <label className="flex items-center gap-1.5 text-xs font-semibold text-secondary ml-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={verifiedOnly}
@@ -372,7 +372,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value as "createdAt" | "rating")}
-                  className="p-1.5 border border-slate-200 rounded-lg text-primary font-bold bg-white text-xs outline-hidden"
+                  className="p-1.5 border border-border rounded-lg text-primary font-bold bg-white text-xs outline-hidden"
                 >
                   <option value="createdAt">Most Recent</option>
                   <option value="rating">Highest Rating</option>
@@ -386,8 +386,8 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                 Loading reviews...
               </div>
             ) : reviews.length === 0 ? (
-              <div className="py-12 text-center space-y-3 bg-slate-50/50 rounded-2xl border border-slate-100">
-                <MessageSquare className="w-8 h-8 text-slate-300 mx-auto" />
+              <div className="py-12 text-center space-y-3 bg-muted/50 rounded-2xl border border-border">
+                <MessageSquare className="w-8 h-8 text-secondary/60 mx-auto" />
                 <h4 className="font-bold text-sm text-primary">No reviews matching this filter</h4>
                 <p className="text-xs text-secondary max-w-sm mx-auto">
                   Be the first to share your thoughts on this product with the Vexlora community!
@@ -422,7 +422,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                               </span>
                             )}
                           </div>
-                          <span className="text-[10px] text-slate-400">
+                          <span className="text-[10px] text-secondary">
                             {new Date(rev.createdAt).toLocaleDateString("en-US", {
                               year: "numeric",
                               month: "short",
@@ -440,7 +440,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                             className={`w-3.5 h-3.5 ${
                               rev.rating >= s
                                 ? "fill-amber-400 text-amber-400"
-                                : "text-slate-200"
+                                : "text-secondary/40"
                             }`}
                           />
                         ))}
@@ -449,7 +449,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
 
                     {/* Review Body */}
                     {rev.comment && (
-                      <p className="text-xs text-slate-700 leading-relaxed">
+                      <p className="text-xs text-secondary leading-relaxed">
                         {rev.comment}
                       </p>
                     )}
@@ -460,7 +460,7 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                         {rev.images.map((img, idx) => (
                           <div
                             key={idx}
-                            className="relative w-16 h-16 rounded-xl overflow-hidden border border-slate-200 bg-slate-50"
+                            className="relative w-16 h-16 rounded-xl overflow-hidden border border-border bg-muted"
                           >
                             <Image
                               src={img}
@@ -476,23 +476,23 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
 
                     {/* Vendor Reply Thread */}
                     {rev.vendorReply && (
-                      <div className="bg-slate-50 rounded-xl p-3.5 border-l-3 border-primary text-xs space-y-1 mt-2">
+                      <div className="bg-muted rounded-xl p-3.5 border-l-3 border-primary text-xs space-y-1 mt-2">
                         <div className="flex items-center gap-1.5 font-bold text-primary">
                           <MessageSquare className="w-3.5 h-3.5 text-primary" />
                           <span>Merchant Response:</span>
                         </div>
-                        <p className="text-slate-600 text-[11px] leading-relaxed">
+                        <p className="text-secondary text-[11px] leading-relaxed">
                           {rev.vendorReply}
                         </p>
                       </div>
                     )}
 
                     {/* Helpful Vote Action */}
-                    <div className="flex items-center gap-4 text-[11px] text-slate-400 pt-1">
+                    <div className="flex items-center gap-4 text-[11px] text-secondary pt-1">
                       <button
                         type="button"
                         onClick={() => toast.success("Thank you for your feedback!")}
-                        className="flex items-center gap-1 text-slate-500 hover:text-primary transition-colors cursor-pointer"
+                        className="flex items-center gap-1 text-secondary hover:text-primary transition-colors cursor-pointer"
                       >
                         <ThumbsUp className="w-3 h-3" />
                         <span>Helpful</span>
@@ -525,12 +525,12 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-3">
+              <div className="p-5 rounded-2xl bg-muted/80 border border-border space-y-3">
                 <div className="flex items-center gap-2 text-primary font-bold text-sm">
                   <Truck className="w-4 h-4 text-primary" />
                   <span>Delivery & Fulfillment</span>
                 </div>
-                <ul className="text-xs text-slate-600 space-y-2 leading-relaxed">
+                <ul className="text-xs text-secondary space-y-2 leading-relaxed">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                     <span><strong>Standard Delivery:</strong> Dispatched in 1-2 business days. Estimated transit 3-5 days.</span>
@@ -546,12 +546,12 @@ export function ProductTabs({ product, activeTab, onTabChange }: ProductTabsProp
                 </ul>
               </div>
 
-              <div className="p-5 rounded-2xl bg-slate-50/80 border border-slate-100 space-y-3">
+              <div className="p-5 rounded-2xl bg-muted/80 border border-border space-y-3">
                 <div className="flex items-center gap-2 text-primary font-bold text-sm">
                   <RotateCcw className="w-4 h-4 text-primary" />
                   <span>14-Day Free Returns</span>
                 </div>
-                <ul className="text-xs text-slate-600 space-y-2 leading-relaxed">
+                <ul className="text-xs text-secondary space-y-2 leading-relaxed">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                     <span>Hassle-free return window within 14 days of receipt for items in original unused packaging.</span>

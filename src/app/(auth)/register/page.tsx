@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, Suspense } from "react";
 import Link from "next/link";
@@ -46,8 +46,8 @@ function RegisterFormContent() {
   };
 
   return (
-    <div className="min-h-[80vh] flex flex-col justify-center items-center px-4 py-12 bg-slate-50/50">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-slate-200/80 p-8 space-y-6">
+    <div className="min-h-[80vh] flex flex-col justify-center items-center px-4 py-12 bg-muted/50">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-border p-8 space-y-6">
         {/* Brand Header */}
         <div className="text-center space-y-2">
           <div className="inline-flex w-12 h-12 rounded-2xl bg-primary text-white items-center justify-center font-extrabold text-2xl shadow-md mb-1">
@@ -62,8 +62,8 @@ function RegisterFormContent() {
         </div>
 
         {errorMsg && (
-          <div className="flex items-start gap-2.5 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs animate-in slide-in-from-top-1">
-            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-500" />
+          <div className="flex items-start gap-2.5 p-3.5 rounded-2xl bg-highlight/10 border border-highlight/30 text-highlight text-xs animate-in slide-in-from-top-1">
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-highlight" />
             <div className="flex-1 font-medium">{errorMsg}</div>
           </div>
         )}
@@ -119,7 +119,7 @@ function RegisterFormContent() {
           </button>
         </form>
 
-        <div className="pt-4 border-t border-slate-100 text-center text-xs text-secondary">
+        <div className="pt-4 border-t border-border text-center text-xs text-secondary">
           Already have an account?{" "}
           <Link
             href={`/login${redirectUrl !== "/" ? `?redirect=${encodeURIComponent(redirectUrl)}` : ""}`}

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { LayoutGrid, List, SlidersHorizontal, X } from "lucide-react";
@@ -95,7 +95,7 @@ export function ProductSortAndControls({
   return (
     <div className="w-full space-y-4">
       {/* Top Bar: Headline, Mobile Filter Trigger, Sort, View Mode */}
-      <div className="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="bg-white p-4 rounded-2xl border border-border shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         {/* Left: Headline & Total */}
         <div>
           <h1 className="text-lg sm:text-xl font-extrabold text-primary tracking-tight">
@@ -122,7 +122,7 @@ export function ProductSortAndControls({
           <button
             type="button"
             onClick={onOpenMobileFilters}
-            className="lg:hidden flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold text-primary hover:bg-slate-100 transition-colors cursor-pointer"
+            className="lg:hidden flex items-center gap-1.5 px-3 py-2 rounded-xl bg-muted border border-border text-xs font-bold text-primary hover:bg-muted transition-colors cursor-pointer"
           >
             <SlidersHorizontal className="w-4 h-4" />
             <span>Filters</span>
@@ -141,7 +141,7 @@ export function ProductSortAndControls({
             <select
               value={currentSortKey}
               onChange={handleSortChange}
-              className="bg-slate-50 border border-slate-200/80 rounded-xl px-3 py-2 text-xs font-bold text-primary focus:outline-none focus:border-primary focus:bg-white cursor-pointer transition-all"
+              className="bg-muted border border-border rounded-xl px-3 py-2 text-xs font-bold text-primary focus:outline-none focus:border-primary focus:bg-white cursor-pointer transition-all"
             >
               {SORT_OPTIONS.map((opt, idx) => (
                 <option key={idx} value={`${opt.sortBy}:${opt.sortOrder}`}>
@@ -152,14 +152,14 @@ export function ProductSortAndControls({
           </div>
 
           {/* Grid / List View Switcher */}
-          <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200/60">
+          <div className="flex items-center bg-muted p-1 rounded-xl border border-border/60">
             <button
               type="button"
               onClick={() => onViewModeChange("grid")}
               className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                 viewMode === "grid"
                   ? "bg-white text-primary shadow-xs font-bold"
-                  : "text-slate-400 hover:text-primary"
+                  : "text-secondary hover:text-primary"
               }`}
               aria-label="Grid View"
             >
@@ -171,7 +171,7 @@ export function ProductSortAndControls({
               className={`p-1.5 rounded-lg transition-all cursor-pointer ${
                 viewMode === "list"
                   ? "bg-white text-primary shadow-xs font-bold"
-                  : "text-slate-400 hover:text-primary"
+                  : "text-secondary hover:text-primary"
               }`}
               aria-label="List View"
             >
@@ -190,7 +190,7 @@ export function ProductSortAndControls({
           {activeFilters.map((filter) => (
             <span
               key={filter.key}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-xs font-semibold text-primary shadow-2xs"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-border text-xs font-semibold text-primary shadow-2xs"
             >
               <span>{filter.label}</span>
               <button

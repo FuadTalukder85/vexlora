@@ -1,12 +1,12 @@
-import * as React from "react";
+﻿import * as React from "react";
 import Link from "next/link";
 import { Heart, ShoppingBag, Flame } from "lucide-react";
 
 export function WishlistEmptyState() {
   return (
-    <div className="w-full min-h-[55vh] flex flex-col items-center justify-center p-8 text-center space-y-5 bg-white rounded-2xl border border-slate-200/90 shadow-xs">
-      <div className="w-20 h-20 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center border border-rose-100/80 shadow-2xs">
-        <Heart className="w-10 h-10 fill-rose-100 text-rose-500" />
+    <div className="w-full min-h-[55vh] flex flex-col items-center justify-center p-8 text-center space-y-5 bg-white rounded-2xl border border-border shadow-xs">
+      <div className="w-20 h-20 rounded-full bg-highlight/10 text-highlight flex items-center justify-center border border-rose-100/80 shadow-2xs">
+        <Heart className="w-10 h-10 fill-rose-100 text-highlight" />
       </div>
 
       <div className="space-y-1.5 max-w-md">
@@ -28,7 +28,7 @@ export function WishlistEmptyState() {
         </Link>
         <Link
           href="/products?sortBy=ratingAvg"
-          className="flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all"
+          className="flex items-center gap-2 px-5 py-3 rounded-xl border border-border hover:border-border bg-white hover:bg-muted text-secondary text-xs font-bold transition-all"
         >
           <Flame className="w-4 h-4 text-amber-500" />
           <span>Top Rated Deals</span>

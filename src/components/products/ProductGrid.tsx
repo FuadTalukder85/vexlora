@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { Search, Loader2, Sparkles, AlertCircle, RotateCcw } from "lucide-react";
@@ -40,13 +40,13 @@ export function ProductGrid({
         {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="bg-white rounded-2xl border border-slate-200/80 p-4 space-y-3 animate-pulse shadow-xs"
+            className="bg-white rounded-2xl border border-border p-4 space-y-3 animate-pulse shadow-xs"
           >
-            <div className="w-full h-48 bg-slate-100 rounded-xl" />
-            <div className="h-3 w-20 bg-slate-200 rounded" />
-            <div className="h-4 w-full bg-slate-200 rounded" />
-            <div className="h-4 w-3/4 bg-slate-100 rounded" />
-            <div className="h-5 w-24 bg-slate-200 rounded pt-2" />
+            <div className="w-full h-48 bg-muted rounded-xl" />
+            <div className="h-3 w-20 bg-muted rounded" />
+            <div className="h-4 w-full bg-muted rounded" />
+            <div className="h-4 w-3/4 bg-muted rounded" />
+            <div className="h-5 w-24 bg-muted rounded pt-2" />
           </div>
         ))}
       </div>
@@ -56,8 +56,8 @@ export function ProductGrid({
   // 2. Empty State (Zero Results)
   if (!isLoading && products.length === 0) {
     return (
-      <div className="bg-white rounded-3xl border border-slate-200/80 p-8 sm:p-14 text-center space-y-5 shadow-xs">
-        <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-center mx-auto text-slate-400">
+      <div className="bg-white rounded-3xl border border-border p-8 sm:p-14 text-center space-y-5 shadow-xs">
+        <div className="w-16 h-16 rounded-2xl bg-muted border border-border flex items-center justify-center mx-auto text-secondary">
           <Search className="w-8 h-8" />
         </div>
 
@@ -75,7 +75,7 @@ export function ProductGrid({
         </div>
 
         {/* Suggestions Box */}
-        <div className="bg-slate-50/80 border border-slate-200/60 rounded-2xl p-4 max-w-sm mx-auto text-left space-y-1.5 text-xs text-secondary">
+        <div className="bg-muted/80 border border-border/60 rounded-2xl p-4 max-w-sm mx-auto text-left space-y-1.5 text-xs text-secondary">
           <span className="font-bold text-primary block">Search Recommendations:</span>
           <p>• Try keywords like &ldquo;Keyboard&rdquo;, &ldquo;Wireless&rdquo;, &ldquo;Asus&rdquo;</p>
           <p>• Broaden your selected price range</p>
@@ -112,7 +112,7 @@ export function ProductGrid({
             return (
               <div
                 key={product.id}
-                className="bg-white rounded-2xl border border-slate-200/80 p-4"
+                className="bg-white rounded-2xl border border-border p-4"
               >
                 <ProductCard
                   id={product.id}
@@ -165,7 +165,7 @@ export function ProductGrid({
         </div>
       ) : (
         products.length > 0 && (
-          <div className="text-center py-6 border-t border-slate-200/60">
+          <div className="text-center py-6 border-t border-border/60">
             <p className="text-xs font-semibold text-secondary">
               You&apos;ve viewed all {products.length.toLocaleString()} matching products
             </p>

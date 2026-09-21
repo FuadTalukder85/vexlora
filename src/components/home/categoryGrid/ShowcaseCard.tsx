@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -33,7 +33,7 @@ export function ShowcaseCard({
   timerString,
 }: ShowcaseCardProps) {
   return (
-    <div key={id} className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 shadow-xs flex flex-col justify-between hover:shadow-sm transition-all group">
+    <div key={id} className="bg-white rounded-2xl border border-border p-4 sm:p-5 shadow-xs flex flex-col justify-between hover:shadow-sm transition-all group">
       {/* Card Header */}
       <div className="flex items-center justify-between pb-3">
         <h3 className="text-base sm:text-lg font-bold text-primary tracking-tight leading-snug group-hover:text-highlight transition-colors line-clamp-2">
@@ -65,7 +65,7 @@ export function ShowcaseCard({
                 } transition-colors`}
             >
               <div
-                className={`w-full h-28 sm:h-32 rounded-xl flex items-center justify-center overflow-hidden p-2 relative ${item.bgColor || "bg-slate-100/70"
+                className={`w-full h-28 sm:h-32 rounded-xl flex items-center justify-center overflow-hidden p-2 relative ${item.bgColor || "bg-muted/70"
                   }`}
               >
                 <img

@@ -19,7 +19,6 @@ export function ProductListCard({ product }: ProductListCardProps) {
 
   const addItem = useCartStore((s) => s.addItem);
   const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
-  const isInWishlist = useWishlistStore((s) => s.isInWishlist);
   const setCartDrawerOpen = useUIStore((s) => s.setCartDrawerOpen);
 
   const [addedAnimation, setAddedAnimation] = React.useState(false);
@@ -29,7 +28,9 @@ export function ProductListCard({ product }: ProductListCardProps) {
   const numRating = Number(ratingAvg || 0);
   const primaryImage = images && images.length > 0 ? images[0] : "/images/placeholder.png";
   const vendorName = vendor?.storeName || "Verified Merchant";
-  const activeInWishlist = isInWishlist(id);
+  const activeInWishlist = useWishlistStore((s) =>
+    s.items.some((w) => (id && w.productId === id) || (slug && w.slug === slug))
+  );
 
   const discountPercent = originalPrice && originalPrice > numPrice
     ? Math.round(((originalPrice - numPrice) / originalPrice) * 100)
@@ -53,9 +54,9 @@ export function ProductListCard({ product }: ProductListCardProps) {
   };
 
   return (
-    <div className="group relative flex flex-col sm:flex-row bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 hover:shadow-lg hover:border-slate-300 transition-all duration-200 gap-5">
+    <div className="group relative flex flex-col sm:flex-row bg-white rounded-2xl border border-border p-4 sm:p-5 hover:shadow-lg hover:border-border transition-all duration-200 gap-5">
       {/* 1. Image Area */}
-      <div className="relative w-full sm:w-56 h-52 sm:h-52 shrink-0 bg-slate-50/80 rounded-xl overflow-hidden flex items-center justify-center p-3">
+      <div className="relative w-full sm:w-56 h-52 sm:h-52 shrink-0 bg-muted/80 rounded-xl overflow-hidden flex items-center justify-center p-3">
         {discountPercent && (
           <span className="absolute top-2.5 left-2.5 z-10 bg-highlight text-white font-extrabold text-[10px] uppercase px-2 py-0.5 rounded-md shadow-xs">
             {discountPercent}% OFF
@@ -84,7 +85,7 @@ export function ProductListCard({ product }: ProductListCardProps) {
             })
           }
           className={`absolute top-2.5 right-2.5 p-2 rounded-full bg-white/90 backdrop-blur-xs shadow-xs transition-colors cursor-pointer ${
-            activeInWishlist ? "text-highlight" : "text-slate-400 hover:text-highlight"
+            activeInWishlist ? "text-highlight" : "text-secondary hover:text-highlight"
           }`}
           aria-label="Wishlist"
         >
@@ -102,7 +103,7 @@ export function ProductListCard({ product }: ProductListCardProps) {
                 {brand}
               </span>
             )}
-            <span className="text-slate-300">•</span>
+            <span className="text-secondary/60">•</span>
             <span className="text-xs font-semibold text-primary/80 flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
               {vendorName}
@@ -121,7 +122,7 @@ export function ProductListCard({ product }: ProductListCardProps) {
                 <Star
                   key={i}
                   className={`h-3.5 w-3.5 ${
-                    i < Math.round(numRating) ? "fill-amber-400 text-amber-400" : "text-slate-200 fill-slate-100"
+                    i < Math.round(numRating) ? "fill-amber-400 text-amber-400" : "text-secondary/40 fill-slate-100"
                   }`}
                 />
               ))}
@@ -138,7 +139,7 @@ export function ProductListCard({ product }: ProductListCardProps) {
               {tags.slice(0, 3).map((tag, idx) => (
                 <span
                   key={idx}
-                  className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600"
+                  className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-muted text-secondary"
                 >
                   #{tag}
                 </span>
@@ -155,16 +156,16 @@ export function ProductListCard({ product }: ProductListCardProps) {
           </span>
           <span>
             {totalStock > 0 ? (
-              <span className="text-slate-600 font-medium">In Stock ({totalStock} units)</span>
+              <span className="text-secondary font-medium">In Stock ({totalStock} units)</span>
             ) : (
-              <span className="text-rose-600 font-medium">Low Stock</span>
+              <span className="text-highlight font-medium">Low Stock</span>
             )}
           </span>
         </div>
       </div>
 
       {/* 3. Right Price & Actions Area */}
-      <div className="sm:w-48 shrink-0 flex flex-col justify-between sm:border-l sm:border-slate-100 sm:pl-5 pt-3 sm:pt-0">
+      <div className="sm:w-48 shrink-0 flex flex-col justify-between sm:border-l sm:border-border sm:pl-5 pt-3 sm:pt-0">
         <div>
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-black text-primary">
