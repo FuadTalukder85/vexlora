@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import React, { useState, Suspense } from "react";
 import Link from "next/link";
@@ -61,8 +61,8 @@ function VerifyOtpContent() {
   };
 
   return (
-    <div className="min-h-[80vh] flex flex-col justify-center items-center px-4 py-12 bg-slate-50/50">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-slate-200/80 p-8 space-y-6">
+    <div className="min-h-[80vh] flex flex-col justify-center items-center px-4 py-12 bg-muted/50">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl border border-border p-8 space-y-6">
         <div className="text-center space-y-2">
           <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-primary flex items-center justify-center mx-auto mb-2">
             <ShieldCheck className="w-8 h-8" />
@@ -77,8 +77,8 @@ function VerifyOtpContent() {
         </div>
 
         {errorMsg && (
-          <div className="flex items-start gap-2.5 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs">
-            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-rose-500" />
+          <div className="flex items-start gap-2.5 p-3.5 rounded-2xl bg-highlight/10 border border-highlight/30 text-highlight text-xs">
+            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-highlight" />
             <div className="flex-1 font-medium">{errorMsg}</div>
           </div>
         )}

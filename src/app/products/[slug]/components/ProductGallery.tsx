@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { createPortal } from "react-dom";
@@ -129,7 +129,7 @@ export function ProductGallery({
               aria-label={`View image ${idx + 1}`}
               className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-all duration-200 cursor-pointer bg-white flex items-center justify-center shrink-0 ${activeIndex === idx
                 ? "border-primary shadow-sm scale-102 ring-2 ring-primary/20"
-                : "border-slate-100 hover:border-slate-300 opacity-70 hover:opacity-100"
+                : "border-border hover:border-border opacity-70 hover:opacity-100"
                 }`}
             >
               <Image
@@ -145,7 +145,7 @@ export function ProductGallery({
       )}
 
       {/* 2. Main Large Image Display Box (Pure white background, no gray overlay) */}
-      <div className="relative flex-1 w-full aspect-square bg-white border border-slate-200/80 rounded-2xl overflow-hidden group shadow-2xs">
+      <div className="relative flex-1 w-full aspect-square bg-white border border-border rounded-2xl overflow-hidden group shadow-2xs">
         {/* Badges Overlay */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start pointer-events-none">
           {discountBadge && (
@@ -155,7 +155,7 @@ export function ProductGallery({
             </span>
           )}
           {isOutOfStock && (
-            <span className="bg-slate-800 text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider">
+            <span className="bg-primary text-white font-bold text-xs px-2.5 py-1 rounded-full shadow-md uppercase tracking-wider">
               Out of Stock
             </span>
           )}
@@ -165,7 +165,7 @@ export function ProductGallery({
         <button
           type="button"
           onClick={() => setIsLightboxOpen(true)}
-          className="absolute top-3 right-3 z-20 p-2.5 rounded-xl bg-white/95 hover:bg-white text-primary shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer flex items-center gap-1 text-xs font-bold border border-slate-200/60"
+          className="absolute top-3 right-3 z-20 p-2.5 rounded-xl bg-white/95 hover:bg-white text-primary shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer flex items-center gap-1 text-xs font-bold border border-border/60"
           title="Fullscreen preview"
           aria-label="Fullscreen preview"
         >
@@ -244,19 +244,19 @@ export function ProductGallery({
         )}
       </div>
 
-      {/* 3. Fullscreen Lightbox Modal (Same bg-slate-900/30 as Modal.tsx) */}
+      {/* 3. Fullscreen Lightbox Modal (Same bg-primary/30 as Modal.tsx) */}
       {isMounted &&
         isLightboxOpen &&
         createPortal(
           <div
             role="dialog"
             aria-modal="true"
-            className="fixed inset-0 z-[99999] bg-slate-900/30 backdrop-blur-xs flex items-center justify-center p-4 sm:p-8 select-none animate-in fade-in duration-200"
+            className="fixed inset-0 z-[99999] bg-primary/30 backdrop-blur-xs flex items-center justify-center p-4 sm:p-8 select-none animate-in fade-in duration-200"
             onClick={() => setIsLightboxOpen(false)}
           >
             {/* Top Bar with Title and Close Button */}
             <div
-              className="absolute top-0 inset-x-0 p-4 sm:p-6 flex items-center justify-between text-primary bg-white/70 backdrop-blur-md border-b border-slate-200/50 shadow-xs z-[100000]"
+              className="absolute top-0 inset-x-0 p-4 sm:p-6 flex items-center justify-between text-primary bg-white/70 backdrop-blur-md border-b border-border/50 shadow-xs z-[100000]"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="min-w-0 pr-4">
@@ -271,7 +271,7 @@ export function ProductGallery({
               <button
                 type="button"
                 onClick={() => setIsLightboxOpen(false)}
-                className="p-2.5 rounded-full bg-white hover:bg-slate-100 text-primary transition-all cursor-pointer shadow-sm hover:scale-105 shrink-0 border border-slate-200/80"
+                className="p-2.5 rounded-full bg-white hover:bg-muted text-primary transition-all cursor-pointer shadow-sm hover:scale-105 shrink-0 border border-border"
                 aria-label="Close fullscreen"
               >
                 <X className="w-5 h-5" />
@@ -280,7 +280,7 @@ export function ProductGallery({
 
             {/* Main Fullscreen Image Container with Interactive Zoom on Hover */}
             <div
-              className="relative w-full max-w-4xl h-[70vh] sm:h-[76vh] flex items-center justify-center p-6 overflow-hidden rounded-2xl cursor-zoom-in bg-white/90 backdrop-blur-sm border border-slate-200/80 shadow-2xl mt-8"
+              className="relative w-full max-w-4xl h-[70vh] sm:h-[76vh] flex items-center justify-center p-6 overflow-hidden rounded-2xl cursor-zoom-in bg-white/90 backdrop-blur-sm border border-border shadow-2xl mt-8"
               onClick={(e) => e.stopPropagation()}
               onMouseEnter={() => setIsLightboxZooming(true)}
               onMouseLeave={() => setIsLightboxZooming(false)}
@@ -312,7 +312,7 @@ export function ProductGallery({
                       e.stopPropagation();
                       handlePrev();
                     }}
-                    className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 hover:bg-white text-primary transition-all hover:scale-110 cursor-pointer shadow-md border border-slate-200 z-[100000]"
+                    className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 hover:bg-white text-primary transition-all hover:scale-110 cursor-pointer shadow-md border border-border z-[100000]"
                     aria-label="Previous image"
                   >
                     <ChevronLeft className="w-5 h-5" />
@@ -323,7 +323,7 @@ export function ProductGallery({
                       e.stopPropagation();
                       handleNext();
                     }}
-                    className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 hover:bg-white text-primary transition-all hover:scale-110 cursor-pointer shadow-md border border-slate-200 z-[100000]"
+                    className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 hover:bg-white text-primary transition-all hover:scale-110 cursor-pointer shadow-md border border-border z-[100000]"
                     aria-label="Next image"
                   >
                     <ChevronRight className="w-5 h-5" />
@@ -346,7 +346,7 @@ export function ProductGallery({
                     className={`relative w-14 h-14 rounded-xl overflow-hidden border-2 transition-all cursor-pointer bg-white shadow-sm ${
                       activeIndex === idx
                         ? "border-primary scale-110 shadow-md ring-2 ring-primary/20"
-                        : "border-slate-200 opacity-70 hover:opacity-100 hover:border-slate-300"
+                        : "border-border opacity-70 hover:opacity-100 hover:border-border"
                     }`}
                   >
                     <Image

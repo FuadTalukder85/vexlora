@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
@@ -177,7 +177,7 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/90 shadow-sm p-5 sm:p-6 space-y-6">
+    <div className="bg-white rounded-2xl border border-border shadow-sm p-5 sm:p-6 space-y-6">
       {/* 1. Pricing Snapshot */}
       <div className="flex items-baseline justify-between">
         <div>
@@ -187,7 +187,7 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
           </span>
         </div>
         {safeQuantity > 1 && (
-          <span className="text-xs text-slate-500 font-medium">
+          <span className="text-xs text-secondary font-medium">
             ({formatCurrency(activePrice)} / each)
           </span>
         )}
@@ -196,7 +196,7 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
       {/* 2. Stock Urgency Meter */}
       <div className="space-y-1.5">
         {isOutOfStock ? (
-          <div className="flex items-center gap-2 text-rose-600 bg-rose-50 p-2.5 rounded-xl text-xs font-bold">
+          <div className="flex items-center gap-2 text-highlight bg-highlight/10 p-2.5 rounded-xl text-xs font-bold">
             <AlertTriangle className="w-4 h-4 shrink-0" />
             <span>Currently Out of Stock. Check back soon.</span>
           </div>
@@ -217,7 +217,7 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
       {!isOutOfStock && (
         <div className="space-y-2">
           <label className="text-xs font-bold text-primary block">Quantity:</label>
-          <div className="flex items-center border border-slate-200 rounded-xl max-w-[140px] bg-slate-50/50 p-1">
+          <div className="flex items-center border border-border rounded-xl max-w-[140px] bg-muted/50 p-1">
             <button
               type="button"
               onClick={() => handleQuantityChange(-1)}
@@ -281,8 +281,8 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
           onClick={handleWishlistToggle}
           className={`flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer ${
             isFavorited
-              ? "border-rose-200 bg-rose-50 text-rose-600"
-              : "border-slate-200 hover:border-slate-300 text-slate-700 bg-white"
+              ? "border-highlight/30 bg-highlight/10 text-highlight"
+              : "border-border hover:border-border text-secondary bg-white"
           }`}
         >
           <Heart className={`w-3.5 h-3.5 ${isFavorited ? "fill-rose-600" : ""}`} />
@@ -292,7 +292,7 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
         <button
           type="button"
           onClick={handleShare}
-          className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-slate-200 hover:border-slate-300 text-slate-700 bg-white text-xs font-bold transition-all cursor-pointer"
+          className="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-border hover:border-border text-secondary bg-white text-xs font-bold transition-all cursor-pointer"
         >
           <Share2 className="w-3.5 h-3.5" />
           <span>Share</span>
@@ -300,18 +300,18 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
       </div>
 
       {/* 6. Shipping & Delivery Estimator Box */}
-      <div className="pt-4 border-t border-slate-100 space-y-3 text-xs">
-        <div className="flex items-start gap-3 text-slate-700">
+      <div className="pt-4 border-t border-border space-y-3 text-xs">
+        <div className="flex items-start gap-3 text-secondary">
           <Truck className="w-4 h-4 text-primary shrink-0 mt-0.5" />
           <div>
             <span className="font-bold text-primary block">Standard Delivery</span>
             <span className="text-secondary text-[11px]">
-              Est. Arrival: <strong className="text-slate-800">{deliveryDates.standard}</strong>
+              Est. Arrival: <strong className="text-primary">{deliveryDates.standard}</strong>
             </span>
           </div>
         </div>
 
-        <div className="flex items-start gap-3 text-slate-700">
+        <div className="flex items-start gap-3 text-secondary">
           <RotateCcw className="w-4 h-4 text-primary shrink-0 mt-0.5" />
           <div>
             <span className="font-bold text-primary block">14-Day Free Returns</span>
@@ -321,7 +321,7 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
           </div>
         </div>
 
-        <div className="flex items-start gap-3 text-slate-700">
+        <div className="flex items-start gap-3 text-secondary">
           <Lock className="w-4 h-4 text-primary shrink-0 mt-0.5" />
           <div>
             <span className="font-bold text-primary block">Secure Transaction</span>
@@ -334,7 +334,7 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
 
       {/* 7. Seller / Vendor Profile Snapshot */}
       {vendor && (
-        <div className="pt-4 border-t border-slate-100 bg-slate-50/70 -mx-5 -mb-5 sm:-mx-6 sm:-mb-6 p-5 sm:p-6 rounded-b-2xl space-y-3">
+        <div className="pt-4 border-t border-border bg-muted/70 -mx-5 -mb-5 sm:-mx-6 sm:-mb-6 p-5 sm:p-6 rounded-b-2xl space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
               <div className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0 border border-primary/20">
@@ -345,7 +345,7 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
                   <span className="font-bold text-xs text-primary">{vendor.storeName}</span>
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
                 </div>
-                <span className="text-[10px] text-slate-500 font-medium">
+                <span className="text-[10px] text-secondary font-medium">
                   Verified Vexlora Partner
                 </span>
               </div>
@@ -353,24 +353,24 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
 
             <Link
               href={`/products?brand=${vendor.storeSlug}`}
-              className="text-primary hover:text-primary/80 font-bold text-xs bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 shadow-2xs hover:shadow-xs transition-all"
+              className="text-primary hover:text-primary/80 font-bold text-xs bg-white px-2.5 py-1.5 rounded-lg border border-border shadow-2xs hover:shadow-xs transition-all"
             >
               Visit Store
             </Link>
           </div>
 
           <div className="grid grid-cols-3 gap-2 text-center text-[10px] pt-1">
-            <div className="bg-white p-1.5 rounded-lg border border-slate-100">
+            <div className="bg-white p-1.5 rounded-lg border border-border">
               <span className="block font-black text-primary">98.4%</span>
-              <span className="text-slate-400">Positive</span>
+              <span className="text-secondary">Positive</span>
             </div>
-            <div className="bg-white p-1.5 rounded-lg border border-slate-100">
+            <div className="bg-white p-1.5 rounded-lg border border-border">
               <span className="block font-black text-primary">&lt; 2 hrs</span>
-              <span className="text-slate-400">Response</span>
+              <span className="text-secondary">Response</span>
             </div>
-            <div className="bg-white p-1.5 rounded-lg border border-slate-100">
+            <div className="bg-white p-1.5 rounded-lg border border-border">
               <span className="block font-black text-primary">99.1%</span>
-              <span className="text-slate-400">On Time</span>
+              <span className="text-secondary">On Time</span>
             </div>
           </div>
         </div>

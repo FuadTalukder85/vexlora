@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -31,10 +31,10 @@ export function FlashDealsSection() {
   return (
     <section className="w-full py-10 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 bg-white">
       {/* 1. Flash Deals Section Header with Live Countdown Timer */}
-      <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-between pb-6 border-b border-slate-200/80 gap-4">
+      <div className="w-full flex flex-col md:flex-row items-start md:items-center justify-between pb-6 border-b border-border gap-4">
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2.5">
-            <div className="h-10 w-10 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center text-highlight shadow-xs">
+            <div className="h-10 w-10 rounded-xl bg-highlight/10 border border-rose-100 flex items-center justify-center text-highlight shadow-xs">
               <Flame className="h-5 w-5 fill-highlight text-highlight" />
             </div>
             <div>
@@ -48,7 +48,7 @@ export function FlashDealsSection() {
           </div>
 
           {/* Countdown Clock Display */}
-          <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200/80 px-3 py-1.5 rounded-xl">
+          <div className="flex items-center gap-1.5 bg-muted border border-border px-3 py-1.5 rounded-xl">
             <span className="text-xs font-bold text-secondary uppercase mr-1">Ends In:</span>
             <div className="flex items-center gap-1 font-mono text-xs font-bold text-white">
               <span className="bg-primary px-2 py-0.5 rounded">{formatDigits(timeLeft.hours)}h</span>

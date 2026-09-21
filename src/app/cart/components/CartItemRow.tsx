@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -44,12 +44,12 @@ export function CartItemRow({
         checked={isSelected}
         disabled={item.isOutOfStock || item.isUnavailable}
         onChange={() => onToggleSelect(item.id)}
-        className="h-4 w-4 rounded-md border-slate-300 text-primary focus:ring-primary accent-primary cursor-pointer mt-1 sm:mt-0"
+        className="h-4 w-4 rounded-md border-border text-primary focus:ring-primary accent-primary cursor-pointer mt-1 sm:mt-0"
         aria-label={`Select ${item.title}`}
       />
 
       {/* Product Thumbnail */}
-      <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50 flex items-center justify-center p-2">
+      <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-xl border border-border bg-muted flex items-center justify-center p-2">
         {item.image ? (
           <Image
             src={item.image}
@@ -59,7 +59,7 @@ export function CartItemRow({
             className="object-contain p-1"
           />
         ) : (
-          <ShoppingBag className="h-8 w-8 text-slate-300" />
+          <ShoppingBag className="h-8 w-8 text-secondary/60" />
         )}
       </div>
 
@@ -78,7 +78,7 @@ export function CartItemRow({
             {Object.entries(item.attributes).map(([k, v]) => (
               <span
                 key={k}
-                className="text-xs font-medium px-2 py-0.5 rounded-md bg-slate-100 text-slate-600"
+                className="text-xs font-medium px-2 py-0.5 rounded-md bg-muted text-secondary"
               >
                 {k}: {String(v)}
               </span>
@@ -88,7 +88,7 @@ export function CartItemRow({
 
         {/* Status Badges */}
         {item.isOutOfStock ? (
-          <p className="text-xs font-bold text-rose-600 flex items-center gap-1 mt-1">
+          <p className="text-xs font-bold text-highlight flex items-center gap-1 mt-1">
             <AlertTriangle className="h-3.5 w-3.5" />
             Out of Stock
           </p>
@@ -109,7 +109,7 @@ export function CartItemRow({
           <button
             type="button"
             onClick={() => onToggleSaveForLater(item.id, true)}
-            className="text-xs font-medium text-slate-500 hover:text-primary flex items-center gap-1 transition-colors cursor-pointer"
+            className="text-xs font-medium text-secondary hover:text-primary flex items-center gap-1 transition-colors cursor-pointer"
           >
             <Bookmark className="h-3.5 w-3.5" />
             <span>Save for later</span>
@@ -118,7 +118,7 @@ export function CartItemRow({
           <button
             type="button"
             onClick={() => onRemoveItem(item.id)}
-            className="text-xs font-medium text-slate-500 hover:text-rose-600 flex items-center gap-1 transition-colors cursor-pointer"
+            className="text-xs font-medium text-secondary hover:text-highlight flex items-center gap-1 transition-colors cursor-pointer"
           >
             <Trash2 className="h-3.5 w-3.5" />
             <span>Delete</span>
@@ -133,11 +133,11 @@ export function CartItemRow({
         </span>
 
         {/* Quantity Stepper */}
-        <div className="flex items-center rounded-xl border border-slate-200 bg-white shadow-2xs">
+        <div className="flex items-center rounded-xl border border-border bg-white shadow-2xs">
           <button
             type="button"
             onClick={() => onUpdateQuantity(item.id, item.quantity - 1)}
-            className="h-8 w-8 flex items-center justify-center text-slate-600 hover:bg-slate-50 rounded-l-xl cursor-pointer"
+            className="h-8 w-8 flex items-center justify-center text-secondary hover:bg-muted rounded-l-xl cursor-pointer"
             aria-label="Decrease quantity"
           >
             <Minus className="h-3.5 w-3.5" />
@@ -148,7 +148,7 @@ export function CartItemRow({
           <button
             type="button"
             onClick={() => onUpdateQuantity(item.id, item.quantity + 1)}
-            className="h-8 w-8 flex items-center justify-center text-slate-600 hover:bg-slate-50 rounded-r-xl cursor-pointer"
+            className="h-8 w-8 flex items-center justify-center text-secondary hover:bg-muted rounded-r-xl cursor-pointer"
             aria-label="Increase quantity"
           >
             <Plus className="h-3.5 w-3.5" />

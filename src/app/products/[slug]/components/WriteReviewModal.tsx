@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { Star, X, Loader2, Sparkles, ImagePlus, ShieldCheck } from "lucide-react";
@@ -90,11 +90,11 @@ export function WriteReviewModal({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden border border-slate-100 animate-in zoom-in-95 duration-150"
+        className="bg-white rounded-2xl shadow-xl w-full max-w-lg overflow-hidden border border-border animate-in zoom-in-95 duration-150"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Modal Header */}
-        <div className="flex items-center justify-between p-5 border-b border-slate-100 bg-slate-50/50">
+        <div className="flex items-center justify-between p-5 border-b border-border bg-muted/50">
           <div>
             <h3 className="text-base font-bold text-primary">Write a Customer Review</h3>
             <p className="text-xs text-secondary truncate max-w-xs">{productTitle}</p>
@@ -102,7 +102,7 @@ export function WriteReviewModal({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-primary hover:bg-slate-100 transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-secondary hover:text-primary hover:bg-muted transition-colors cursor-pointer"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -130,14 +130,14 @@ export function WriteReviewModal({
                     onClick={() => setRating(star)}
                     onMouseEnter={() => setHoverRating(star)}
                     onMouseLeave={() => setHoverRating(0)}
-                    className="p-1 text-slate-200 hover:scale-115 transition-transform cursor-pointer"
+                    className="p-1 text-secondary/40 hover:scale-115 transition-transform cursor-pointer"
                     aria-label={`${star} Stars`}
                   >
                     <Star
                       className={`w-7 h-7 ${
                         activeStarRating >= star
                           ? "fill-amber-400 text-amber-400 drop-shadow-xs"
-                          : "text-slate-200"
+                          : "text-secondary/40"
                       }`}
                     />
                   </button>
@@ -160,7 +160,7 @@ export function WriteReviewModal({
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               placeholder="What did you like or dislike? What should other shoppers know before purchasing?"
-              className="w-full text-xs text-slate-800 p-3 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-hidden resize-none transition-all placeholder:text-slate-400"
+              className="w-full text-xs text-primary p-3 rounded-xl border border-border focus:border-primary focus:ring-2 focus:ring-primary/10 outline-hidden resize-none transition-all placeholder:text-secondary"
             />
           </div>
 
@@ -175,12 +175,12 @@ export function WriteReviewModal({
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 placeholder="https://example.com/photo.jpg"
-                className="flex-1 text-xs text-slate-800 p-2.5 rounded-xl border border-slate-200 focus:border-primary focus:ring-2 focus:ring-primary/10 outline-hidden placeholder:text-slate-400"
+                className="flex-1 text-xs text-primary p-2.5 rounded-xl border border-border focus:border-primary focus:ring-2 focus:ring-primary/10 outline-hidden placeholder:text-secondary"
               />
               <button
                 type="button"
                 onClick={handleAddImage}
-                className="bg-slate-100 hover:bg-slate-200 text-primary text-xs font-bold px-3.5 py-2.5 rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 shrink-0"
+                className="bg-muted hover:bg-muted text-primary text-xs font-bold px-3.5 py-2.5 rounded-xl transition-colors cursor-pointer flex items-center gap-1.5 shrink-0"
               >
                 <ImagePlus className="w-4 h-4" />
                 <span>Add</span>
@@ -192,7 +192,7 @@ export function WriteReviewModal({
                 {images.map((img, idx) => (
                   <div
                     key={idx}
-                    className="relative w-14 h-14 rounded-lg overflow-hidden border border-slate-200 group bg-slate-100"
+                    className="relative w-14 h-14 rounded-lg overflow-hidden border border-border group bg-muted"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={img} alt={`Review photo ${idx + 1}`} className="w-full h-full object-cover" />
@@ -211,11 +211,11 @@ export function WriteReviewModal({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+          <div className="flex items-center justify-end gap-3 pt-3 border-t border-border">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+              className="px-4 py-2.5 rounded-xl text-xs font-bold text-secondary hover:bg-muted transition-colors cursor-pointer"
             >
               Cancel
             </button>

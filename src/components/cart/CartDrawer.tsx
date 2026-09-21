@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Image from "next/image";
@@ -120,7 +120,7 @@ export function CartDrawer() {
     <div className="fixed inset-0 z-50 overflow-hidden" aria-modal="true" role="dialog">
       {/* Backdrop with smooth fade */}
       <div
-        className={`fixed inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity duration-300 ease-in-out ${
+        className={`fixed inset-0 bg-primary/40 backdrop-blur-xs transition-opacity duration-300 ease-in-out ${
           isVisible ? "opacity-100" : "opacity-0"
         }`}
         onClick={() => setCartDrawerOpen(false)}
@@ -136,11 +136,11 @@ export function CartDrawer() {
           }`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-6 py-5 border-b border-slate-100">
+          <div className="flex items-center justify-between px-6 py-5 border-b border-border">
             <div className="flex items-center gap-2">
               <h2 className="text-xl font-bold text-primary">Your Cart</h2>
               {mounted && itemCount > 0 && (
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-secondary">
+                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-muted text-secondary">
                   {itemCount} {itemCount === 1 ? "item" : "items"}
                 </span>
               )}
@@ -149,7 +149,7 @@ export function CartDrawer() {
             <button
               type="button"
               onClick={() => setCartDrawerOpen(false)}
-              className="h-9 w-9 rounded-xl bg-slate-100/80 hover:bg-slate-200/80 text-secondary flex items-center justify-center transition-colors cursor-pointer"
+              className="h-9 w-9 rounded-xl bg-muted hover:bg-muted/80 text-secondary flex items-center justify-center transition-colors cursor-pointer"
               aria-label="Close cart drawer"
             >
               <X className="h-5 w-5" />
@@ -159,14 +159,14 @@ export function CartDrawer() {
           {/* Cart Items List */}
           <div className="flex-1 overflow-y-auto px-6 py-4">
             {isSyncing && activeItems.length === 0 ? (
-              <div className="h-full flex flex-col items-center justify-center text-slate-400 gap-3">
+              <div className="h-full flex flex-col items-center justify-center text-secondary gap-3">
                 <Loader2 className="h-7 w-7 animate-spin text-primary" />
                 <p className="text-xs font-medium">Loading your cart items...</p>
               </div>
             ) : activeItems.length === 0 ? (
               /* Empty Cart State */
               <div className="h-full flex flex-col items-center justify-center text-center px-4">
-                <div className="h-20 w-20 rounded-2xl bg-slate-100 flex items-center justify-center mb-4 text-primary">
+                <div className="h-20 w-20 rounded-2xl bg-muted flex items-center justify-center mb-4 text-primary">
                   <ShoppingBag className="h-10 w-10" />
                 </div>
                 <h3 className="text-lg font-bold text-primary">Your cart is empty</h3>
@@ -194,7 +194,7 @@ export function CartDrawer() {
                     <div key={item.id} className="py-4 first:pt-1 last:pb-2">
                       <div className="flex items-start gap-3.5">
                         {/* Thumbnail Image */}
-                        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-slate-100 bg-slate-50/60 p-1 flex items-center justify-center">
+                        <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-border bg-muted/60 p-1 flex items-center justify-center">
                           {item.image ? (
                             <Image
                               src={item.image}
@@ -204,7 +204,7 @@ export function CartDrawer() {
                               className="object-contain p-1"
                             />
                           ) : (
-                            <ShoppingBag className="h-8 w-8 text-slate-300" />
+                            <ShoppingBag className="h-8 w-8 text-secondary/60" />
                           )}
                         </div>
 
@@ -223,7 +223,7 @@ export function CartDrawer() {
                             <button
                               type="button"
                               onClick={() => removeItem(item.id)}
-                              className="text-slate-400 hover:text-rose-500 p-1 rounded-md transition-colors cursor-pointer shrink-0"
+                              className="text-secondary hover:text-highlight p-1 rounded-md transition-colors cursor-pointer shrink-0"
                               title="Remove item"
                               aria-label="Remove item"
                             >
@@ -237,7 +237,7 @@ export function CartDrawer() {
                               {Object.entries(item.attributes).map(([key, val]) => (
                                 <span
                                   key={key}
-                                  className="text-[10px] font-medium px-1.5 py-0.5 rounded-md bg-slate-100 text-secondary"
+                                  className="text-[10px] font-medium px-1.5 py-0.5 rounded-md bg-muted text-secondary"
                                 >
                                   {key}: {val}
                                 </span>
@@ -247,7 +247,7 @@ export function CartDrawer() {
 
                           {/* Validation alerts if any */}
                           {item.isOutOfStock && (
-                            <div className="flex items-center gap-1 text-[11px] text-rose-600 font-medium mt-1">
+                            <div className="flex items-center gap-1 text-[11px] text-highlight font-medium mt-1">
                               <AlertTriangle className="h-3 w-3 shrink-0" />
                               <span>Out of stock</span>
                             </div>
@@ -262,15 +262,15 @@ export function CartDrawer() {
                           {/* Bottom Row: Stepper + Price */}
                           <div className="mt-3 flex items-center justify-between">
                             {/* Quantity Stepper */}
-                            <div className="flex items-center rounded-lg border border-slate-200 bg-white shadow-2xs">
+                            <div className="flex items-center rounded-lg border border-border bg-white shadow-2xs">
                               <button
                                 type="button"
                                 onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                className="h-7 w-7 flex items-center justify-center text-slate-500 hover:bg-slate-50 hover:text-primary transition-colors rounded-l-lg cursor-pointer"
+                                className="h-7 w-7 flex items-center justify-center text-secondary hover:bg-muted hover:text-primary transition-colors rounded-l-lg cursor-pointer"
                                 aria-label="Decrease quantity"
                               >
                                 {item.quantity === 1 ? (
-                                  <Trash2 className="h-3.5 w-3.5 text-rose-500" />
+                                  <Trash2 className="h-3.5 w-3.5 text-highlight" />
                                 ) : (
                                   <Minus className="h-3.5 w-3.5" />
                                 )}
@@ -283,7 +283,7 @@ export function CartDrawer() {
                               <button
                                 type="button"
                                 onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                className="h-7 w-7 flex items-center justify-center text-slate-500 hover:bg-slate-50 hover:text-primary transition-colors rounded-r-lg cursor-pointer"
+                                className="h-7 w-7 flex items-center justify-center text-secondary hover:bg-muted hover:text-primary transition-colors rounded-r-lg cursor-pointer"
                                 aria-label="Increase quantity"
                               >
                                 <Plus className="h-3.5 w-3.5" />
@@ -308,7 +308,7 @@ export function CartDrawer() {
 
           {/* Footer Section */}
           {activeItems.length > 0 && (
-            <div className="border-t border-slate-100 px-6 py-5 bg-white space-y-4 shadow-lg">
+            <div className="border-t border-border px-6 py-5 bg-white space-y-4 shadow-lg">
               {/* Total Row */}
               <div className="flex items-center justify-between text-base font-bold text-primary">
                 <span>Total:</span>
@@ -319,7 +319,7 @@ export function CartDrawer() {
 
               {/* Free Shipping Tier */}
               <div className="pt-2">
-                <div className="text-center mb-2 text-xs font-medium text-slate-700">
+                <div className="text-center mb-2 text-xs font-medium text-secondary">
                   {remainingForFreeShipping > 0 ? (
                     <>
                       Buy{" "}
@@ -338,7 +338,7 @@ export function CartDrawer() {
                 </div>
 
                 {/* Progress Bar */}
-                <div className="relative h-2 w-full rounded-full bg-slate-100 overflow-visible my-3">
+                <div className="relative h-2 w-full rounded-full bg-muted overflow-visible my-3">
                   <div
                     className="h-full rounded-full bg-primary transition-all duration-300"
                     style={{ width: `${freeShippingProgress}%` }}
@@ -359,7 +359,7 @@ export function CartDrawer() {
                 <button
                   type="button"
                   onClick={handleViewCart}
-                  className="w-full py-3 px-4 rounded-xl border border-slate-200 bg-white text-primary font-bold text-sm hover:bg-slate-50 hover:border-primary transition-colors cursor-pointer text-center shadow-2xs"
+                  className="w-full py-3 px-4 rounded-xl border border-border bg-white text-primary font-bold text-sm hover:bg-muted hover:border-primary transition-colors cursor-pointer text-center shadow-2xs"
                 >
                   View Cart
                 </button>

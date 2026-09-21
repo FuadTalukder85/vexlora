@@ -1,4 +1,4 @@
-import * as React from "react";
+﻿import * as React from "react";
 import { CheckCircle2, Tag, Loader2, ShieldCheck, Truck } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
@@ -44,8 +44,8 @@ export function OrderSummaryCard({
   return (
     <div className="space-y-5 lg:sticky lg:top-24">
       {/* Free Shipping Tier */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-2xs">
-        <div className="text-center mb-1 text-xs font-medium text-slate-700">
+      <div className="bg-white rounded-2xl border border-border p-5 shadow-2xs">
+        <div className="text-center mb-1 text-xs font-medium text-secondary">
           {isFreeShipping ? (
             <span className="font-bold text-emerald-700 flex items-center justify-center gap-1.5">
               <CheckCircle2 className="h-4 w-4 text-emerald-600" />
@@ -64,8 +64,8 @@ export function OrderSummaryCard({
       </div>
 
       {/* Order Summary Breakdown Card */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-2xs space-y-5">
-        <h3 className="text-lg font-bold text-primary pb-3 border-b border-slate-100">
+      <div className="bg-white rounded-2xl border border-border p-6 shadow-2xs space-y-5">
+        <h3 className="text-lg font-bold text-primary pb-3 border-b border-border">
           Order Summary
         </h3>
 
@@ -91,7 +91,7 @@ export function OrderSummaryCard({
             </div>
           )}
 
-          <div className="pt-3 border-t border-slate-100 flex justify-between items-baseline">
+          <div className="pt-3 border-t border-border flex justify-between items-baseline">
             <span className="text-base font-bold text-primary">Total to Pay:</span>
             <span className="text-2xl font-black text-primary">
               {formatCurrency(finalTotal)}
@@ -103,7 +103,7 @@ export function OrderSummaryCard({
         <form onSubmit={onApplyCoupon} className="pt-2">
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+              <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-secondary" />
               <input
                 type="text"
                 value={couponCode}
@@ -112,18 +112,18 @@ export function OrderSummaryCard({
                   setCouponError("");
                 }}
                 placeholder="Coupon Code"
-                className="w-full rounded-xl border border-slate-200 pl-8 pr-3 py-2 text-xs text-primary uppercase placeholder:normal-case focus:border-primary focus:outline-none"
+                className="w-full rounded-xl border border-border pl-8 pr-3 py-2 text-xs text-primary uppercase placeholder:normal-case focus:border-primary focus:outline-none"
               />
             </div>
             <button
               type="submit"
-              className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-primary font-bold text-xs transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-muted hover:bg-muted text-primary font-bold text-xs transition-colors cursor-pointer"
             >
               Apply
             </button>
           </div>
           {couponError && (
-            <p className="text-[11px] text-rose-500 font-medium mt-1">
+            <p className="text-[11px] text-highlight font-medium mt-1">
               {couponError}
             </p>
           )}
@@ -159,7 +159,7 @@ export function OrderSummaryCard({
         </button>
 
         {/* Marketplace Guarantees */}
-        <div className="space-y-2.5 pt-4 border-t border-slate-100 text-xs text-secondary">
+        <div className="space-y-2.5 pt-4 border-t border-border text-xs text-secondary">
           <div className="flex items-center gap-2">
             <ShieldCheck className="h-4 w-4 text-emerald-600 shrink-0" />
             <span>100% Secure Checkout & Buyer Protection</span>

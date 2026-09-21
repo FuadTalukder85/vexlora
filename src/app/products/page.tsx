@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
@@ -72,20 +72,20 @@ function ProductListingContent() {
   const activeKeyword = currentParams.q || currentParams.searchTerm;
 
   return (
-    <div className="w-full min-h-screen bg-slate-50/50 py-6 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 space-y-6">
+    <div className="w-full min-h-screen bg-muted/50 py-6 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 space-y-6">
       {/* 1. Breadcrumb Bar */}
       <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs text-secondary font-medium">
         <Link href="/" className="hover:text-primary transition-colors flex items-center gap-1">
           <Home className="w-3.5 h-3.5" />
           <span>Home</span>
         </Link>
-        <ChevronRight className="w-3 h-3 text-slate-300" />
+        <ChevronRight className="w-3 h-3 text-secondary/60" />
         <Link href="/products" className="hover:text-primary transition-colors">
           Products
         </Link>
         {activeKeyword && (
           <>
-            <ChevronRight className="w-3 h-3 text-slate-300" />
+            <ChevronRight className="w-3 h-3 text-secondary/60" />
             <span className="text-primary font-bold truncate max-w-xs">
               Search: &ldquo;{activeKeyword}&rdquo;
             </span>

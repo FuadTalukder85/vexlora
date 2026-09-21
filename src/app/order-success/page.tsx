@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -44,16 +44,16 @@ export default function OrderSuccessPage() {
 
   if (!mounted) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center bg-slate-50/50">
+      <div className="min-h-[60vh] flex items-center justify-center bg-muted/50">
         <div className="h-8 w-8 border-3 border-primary border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/60 py-12 lg:py-16">
+    <div className="min-h-screen bg-muted/60 py-12 lg:py-16">
       <div className="layout-container max-w-2xl px-4 sm:px-6">
-        <div className="bg-white rounded-3xl border border-slate-200/80 p-6 sm:p-10 shadow-sm text-center space-y-6">
+        <div className="bg-white rounded-3xl border border-border p-6 sm:p-10 shadow-sm text-center space-y-6">
           
           {/* Success Icon */}
           <div className="h-20 w-20 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto shadow-xs animate-in zoom-in-50 duration-300">
@@ -73,7 +73,7 @@ export default function OrderSuccessPage() {
           </div>
 
           {/* Order Reference Box */}
-          <div className="bg-slate-50/80 rounded-2xl border border-slate-200/80 p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-left">
+          <div className="bg-muted/80 rounded-2xl border border-border p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-left">
             <div>
               <span className="text-[11px] font-semibold text-secondary block">
                 Order Reference Number
@@ -86,7 +86,7 @@ export default function OrderSuccessPage() {
             <button
               type="button"
               onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-primary hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer shrink-0"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-border text-xs font-bold text-primary hover:bg-muted transition-colors shadow-2xs cursor-pointer shrink-0"
             >
               {copied ? (
                 <>
@@ -104,19 +104,19 @@ export default function OrderSuccessPage() {
 
           {/* Key Details Highlights */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-left pt-2">
-            <div className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-1">
+            <div className="p-4 rounded-xl border border-border bg-muted/50 space-y-1">
               <Clock className="h-4 w-4 text-primary mb-1" />
               <h4 className="text-xs font-bold text-primary">Estimated Delivery</h4>
               <p className="text-[11px] text-secondary">3 - 5 business days</p>
             </div>
 
-            <div className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-1">
+            <div className="p-4 rounded-xl border border-border bg-muted/50 space-y-1">
               <Truck className="h-4 w-4 text-primary mb-1" />
               <h4 className="text-xs font-bold text-primary">Shipping Carrier</h4>
               <p className="text-[11px] text-secondary">Tracked Merchant Express</p>
             </div>
 
-            <div className="p-4 rounded-xl border border-slate-100 bg-slate-50/50 space-y-1">
+            <div className="p-4 rounded-xl border border-border bg-muted/50 space-y-1">
               <ShieldCheck className="h-4 w-4 text-emerald-600 mb-1" />
               <h4 className="text-xs font-bold text-primary">Buyer Protection</h4>
               <p className="text-[11px] text-secondary">100% Guaranteed</p>
@@ -135,7 +135,7 @@ export default function OrderSuccessPage() {
 
             <Link
               href="/cart"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-primary font-bold text-xs transition-colors text-center"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-xl border border-border bg-white hover:bg-muted text-primary font-bold text-xs transition-colors text-center"
             >
               View Cart
             </Link>
