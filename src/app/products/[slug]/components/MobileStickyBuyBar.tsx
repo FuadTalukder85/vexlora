@@ -33,7 +33,12 @@ export function MobileStickyBuyBar({ product, selectedVariant }: MobileStickyBuy
     ? Number(discountPrice)
     : Number(basePrice);
 
-  const activeImage = selectedVariant?.image || images[0] || "/images/placeholder-product.png";
+  const rawVariantImg = selectedVariant?.image?.trim();
+  const validVariantImg = rawVariantImg && !rawVariantImg.startsWith("blob:") ? rawVariantImg : null;
+  const activeImage =
+    validVariantImg ||
+    images.find((img) => img && !img.startsWith("blob:")) ||
+    "/images/placeholder-product.png";
 
   const handleAddToCart = async () => {
     if (isOutOfStock) return;

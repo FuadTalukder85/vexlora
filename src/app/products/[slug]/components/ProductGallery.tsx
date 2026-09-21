@@ -20,17 +20,33 @@ export function ProductGallery({
   selectedVariantImage,
   isOutOfStock,
 }: ProductGalleryProps) {
-  // Combine product images with variant image if not already present
-  const allImages = React.useMemo(() => {
-    const list = images && images.length > 0 ? [...images] : ["/images/placeholder-product.png"];
-    if (selectedVariantImage && !list.includes(selectedVariantImage)) {
-      return [selectedVariantImage, ...list];
+  // Base gallery images uploaded for the product (filtering out invalid blob: URLs)
+  const galleryImages = React.useMemo(() => {
+    const list = images && images.length > 0 ? images.filter((img) => img && !img.startsWith("blob:")) : [];
+    return list.length > 0 ? list : ["/images/placeholder-product.png"];
+  }, [images]);
+
+  // Valid variant image (ignoring blob: temporary URLs)
+  const validVariantImage = React.useMemo(() => {
+    if (selectedVariantImage && typeof selectedVariantImage === "string") {
+      const trimmed = selectedVariantImage.trim();
+      if (trimmed && !trimmed.startsWith("blob:")) {
+        return trimmed;
+      }
     }
-    return list;
-  }, [images, selectedVariantImage]);
+    return null;
+  }, [selectedVariantImage]);
+
+  // Combine product images with valid variant image if not already present
+  const allImages = React.useMemo(() => {
+    if (validVariantImage && !galleryImages.includes(validVariantImage)) {
+      return [...galleryImages, validVariantImage];
+    }
+    return galleryImages;
+  }, [galleryImages, validVariantImage]);
 
   const [userSelectedIdx, setUserSelectedIdx] = React.useState<number | null>(null);
-  const [prevVariantImg, setPrevVariantImg] = React.useState<string | null | undefined>(selectedVariantImage);
+  const [prevVariantImg, setPrevVariantImg] = React.useState<string | null | undefined>(validVariantImage);
   const [isZooming, setIsZooming] = React.useState(false);
   const [zoomCoords, setZoomCoords] = React.useState({ x: 50, y: 50 });
   const [isLightboxOpen, setIsLightboxOpen] = React.useState(false);
@@ -128,8 +144,8 @@ export function ProductGallery({
         </div>
       )}
 
-      {/* 2. Main Large Image Display Box (Lighter clean background) */}
-      <div className="relative flex-1 w-full aspect-square bg-slate-900/40 border border-slate-100 rounded-2xl overflow-hidden group">
+      {/* 2. Main Large Image Display Box (Pure white background, no gray overlay) */}
+      <div className="relative flex-1 w-full aspect-square bg-white border border-slate-200/80 rounded-2xl overflow-hidden group shadow-2xs">
         {/* Badges Overlay */}
         <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start pointer-events-none">
           {discountBadge && (
@@ -149,7 +165,7 @@ export function ProductGallery({
         <button
           type="button"
           onClick={() => setIsLightboxOpen(true)}
-          className="absolute top-3 right-3 z-20 p-2.5 rounded-xl bg-white/95 hover:bg-white text-primary shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer flex items-center gap-1 text-xs font-bold"
+          className="absolute top-3 right-3 z-20 p-2.5 rounded-xl bg-white/95 hover:bg-white text-primary shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer flex items-center gap-1 text-xs font-bold border border-slate-200/60"
           title="Fullscreen preview"
           aria-label="Fullscreen preview"
         >
@@ -158,7 +174,7 @@ export function ProductGallery({
 
         {/* Interactive Image Container with Fluid Hover Magnifier Zoom */}
         <div
-          className="relative w-full h-full flex items-center justify-center cursor-zoom-in overflow-hidden p-6"
+          className="relative w-full h-full flex items-center justify-center cursor-zoom-in overflow-hidden p-2 sm:p-4 bg-white"
           onMouseEnter={() => setIsZooming(true)}
           onMouseLeave={() => setIsZooming(false)}
           onMouseMove={handleMouseMove}
@@ -170,13 +186,14 @@ export function ProductGallery({
             fill
             priority
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
-            className={`object-contain p-4 transition-transform duration-200 ease-out will-change-transform ${isZooming ? "scale-175" : "scale-100"
-              }`}
+            className={`object-contain p-2 transition-transform duration-200 ease-out will-change-transform ${
+              isZooming ? "scale-175" : "scale-100"
+            }`}
             style={
               isZooming
                 ? {
-                  transformOrigin: `${zoomCoords.x}% ${zoomCoords.y}%`,
-                }
+                    transformOrigin: `${zoomCoords.x}% ${zoomCoords.y}%`,
+                  }
                 : undefined
             }
           />
