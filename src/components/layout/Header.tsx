@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Image from "next/image";
@@ -25,6 +25,7 @@ import { formatCurrency, useIsMounted } from "@/lib/utils";
 import { toast } from "sonner";
 import { MobileNav } from "./MobileNav";
 import { Navbar } from "./Navbar";
+import { ImageSearchDropdown } from "@/components/search/ImageSearchDropdown";
 
 export function Header() {
   const router = useRouter();
@@ -142,25 +143,15 @@ export function Header() {
               </Link>
             </div>
 
-            {/* Search Bar with Category Dropdown */}
+            {/* Search Bar */}
             <div className="hidden md:flex flex-1 max-w-3xl mx-4">
               <form
                 onSubmit={handleSearchSubmit}
                 className="w-full relative flex items-center rounded-2xl border border-border bg-muted/70 p-1 focus-within:border-primary focus-within:bg-white focus-within:ring-4 focus-within:ring-primary/10 transition-all duration-200"
               >
-                <div className="hidden sm:flex items-center pl-3 pr-2 py-1.5 border-r border-border">
-                  <select
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="bg-transparent text-xs font-semibold text-secondary outline-none cursor-pointer pr-1"
-                  >
-                    <option value="all">All Categories</option>
-                    <option value="electronics">Electronics</option>
-                    <option value="laptops-computers">Laptops & Computers</option>
-                    <option value="fashion-apparel">Fashion & Apparel</option>
-                    <option value="home-kitchen">Home & Kitchen</option>
-                    <option value="beauty-welness">Beauty & Wellness</option>
-                  </select>
+                {/* Image Search Button (Left side, replacing all categories) */}
+                <div className="flex items-center pl-1.5 pr-1 border-r border-border/80">
+                  <ImageSearchDropdown variant="desktop" />
                 </div>
 
                 <div className="relative flex-1 flex items-center">
@@ -331,14 +322,19 @@ export function Header() {
               onSubmit={handleSearchSubmit}
               className="w-full relative flex items-center rounded-xl border border-border bg-muted p-1 focus-within:border-primary focus-within:bg-white"
             >
-              <Search className="absolute left-3.5 h-4 w-4 text-secondary pointer-events-none" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search products & vendors..."
-                className="w-full bg-transparent pl-10 pr-3 py-1.5 text-xs text-primary placeholder:text-secondary focus:outline-none"
-              />
+              <div className="flex items-center pl-1 pr-1 border-r border-border/80">
+                <ImageSearchDropdown variant="mobile" />
+              </div>
+              <div className="relative flex-1 flex items-center">
+                <Search className="absolute left-3 h-3.5 w-3.5 text-secondary pointer-events-none" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search products & vendors..."
+                  className="w-full bg-transparent pl-8 pr-2 py-1.5 text-xs text-primary placeholder:text-secondary focus:outline-none"
+                />
+              </div>
             </form>
           </div>
         </div>
