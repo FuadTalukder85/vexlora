@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Image from "next/image";
@@ -239,8 +239,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-secondary hover:text-primary transition-colors">
-                  Gift Cards & Vouchers
+                <Link href="/coupons" className="text-secondary hover:text-primary transition-colors">
+                  Coupons & Vouchers
                 </Link>
               </li>
             </ul>
