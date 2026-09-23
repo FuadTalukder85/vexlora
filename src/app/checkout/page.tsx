@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import { toast } from "sonner";
@@ -12,6 +12,8 @@ import { useAddresses, useCreateAddress } from "@/hooks/useAddresses";
 import { useCreateOrder } from "@/hooks/useOrders";
 import { useIsMounted } from "@/lib/utils";
 import { orderApi } from "@/lib/api/orders";
+import { useValidateCoupon } from "@/hooks/useCoupons";
+import { AvailableCouponsModal } from "@/components/coupons/AvailableCouponsModal";
 
 import { CheckoutEmptyState } from "./components/CheckoutEmptyState";
 import { ShippingAddressSection } from "./components/ShippingAddressSection";
@@ -34,19 +36,20 @@ export default function CheckoutPage() {
     fetchCart,
   } = useCartStore();
 
-  // TanStack Query: Addresses
+  // TanStack Query: Addresses & Orders
   const { data: addresses = [] } = useAddresses();
   const createAddressMutation = useCreateAddress();
-
-  // TanStack Query: Orders
   const createOrderMutation = useCreateOrder();
+  const validateCouponMutation = useValidateCoupon();
 
   const [selectedAddressId, setSelectedAddressId] = React.useState<string>("");
   const [paymentMethod, setPaymentMethod] = React.useState<string>("cod");
   const [couponCode, setCouponCode] = React.useState<string>("");
+  const [appliedCouponCode, setAppliedCouponCode] = React.useState<string>("");
   const [couponApplied, setCouponApplied] = React.useState<boolean>(false);
   const [couponDiscount, setCouponDiscount] = React.useState<number>(0);
   const [couponError, setCouponError] = React.useState<string>("");
+  const [isCouponsModalOpen, setIsCouponsModalOpen] = React.useState<boolean>(false);
 
   // Stripe-specific loading state (controlled prop for StripePaymentSection)
   const [isPlacingOrder, setIsPlacingOrder] = React.useState<boolean>(false);
@@ -92,6 +95,37 @@ export default function CheckoutPage() {
     (i) => selectedItemIds.includes(i.id) && !i.savedForLater
   );
 
+  // Auto-apply coupon carried over from cart sessionStorage on initial mount
+  React.useEffect(() => {
+    const savedCoupon = sessionStorage.getItem("vexlora_checkout_coupon");
+    if (savedCoupon && selectedItems.length > 0 && !couponApplied) {
+      validateCouponMutation.mutate(
+        {
+          code: savedCoupon,
+          items: selectedItems.map((it) => ({
+            productId: it.productId,
+            vendorId: it.vendorId,
+            price: Number(it.price),
+            quantity: it.quantity,
+          })),
+          subtotal: selectedSubtotal,
+        },
+        {
+          onSuccess: (data) => {
+            setAppliedCouponCode(data.coupon.code);
+            setCouponCode(data.coupon.code);
+            setCouponDiscount(data.discountAmount);
+            setCouponApplied(true);
+            setCouponError("");
+          },
+          onError: () => {
+            sessionStorage.removeItem("vexlora_checkout_coupon");
+          },
+        }
+      );
+    }
+  }, [selectedItems.length, selectedSubtotal]);
+
   const isFreeShipping = selectedSubtotal >= FREE_SHIPPING_THRESHOLD;
   const shippingFee = isFreeShipping ? 0 : 15;
   const finalTotal = Math.max(0, selectedSubtotal - couponDiscount + shippingFee);
@@ -101,9 +135,9 @@ export default function CheckoutPage() {
     return await orderApi.createPaymentIntent({
       selectedCartItemIds: selectedItems.map((i) => i.id),
       shippingAddressId: selectedAddressId || undefined,
-      couponCode: couponApplied ? couponCode : undefined,
+      couponCode: couponApplied ? appliedCouponCode : undefined,
     });
-  }, [selectedItems, isAuthenticated, selectedAddressId, couponApplied, couponCode]);
+  }, [selectedItems, isAuthenticated, selectedAddressId, couponApplied, appliedCouponCode]);
 
   const handleCreateAddress = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -126,31 +160,61 @@ export default function CheckoutPage() {
         });
       }
     } catch {
-      // Error toast is handled by useCreateAddress hook
+      // Handled by hook
     }
   };
 
-  const handleApplyCoupon = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!couponCode.trim()) return;
+  const handleApplyCoupon = (e?: React.FormEvent, overrideCode?: string) => {
+    if (e) e.preventDefault();
+    const codeToApply = (overrideCode || couponCode).trim().toUpperCase();
+    if (!codeToApply) return;
 
-    if (couponCode.toUpperCase() === "SAVE10") {
-      const discount = selectedSubtotal * 0.1;
-      setCouponDiscount(discount);
-      setCouponApplied(true);
-      setCouponError("");
-      toast.success("Coupon applied successfully!");
-    } else if (couponCode.toUpperCase() === "FREESHIP") {
-      setCouponDiscount(15);
-      setCouponApplied(true);
-      setCouponError("");
-      toast.success("Coupon applied successfully!");
-    } else {
-      setCouponError("Invalid or expired coupon code");
-      toast.error("Invalid or expired coupon code");
-      setCouponDiscount(0);
-      setCouponApplied(false);
+    if (selectedItems.length === 0) {
+      setCouponError("Please select cart items to apply coupon");
+      return;
     }
+
+    setCouponError("");
+
+    validateCouponMutation.mutate(
+      {
+        code: codeToApply,
+        items: selectedItems.map((it) => ({
+          productId: it.productId,
+          vendorId: it.vendorId,
+          price: Number(it.price),
+          quantity: it.quantity,
+        })),
+        subtotal: selectedSubtotal,
+      },
+      {
+        onSuccess: (data) => {
+          setAppliedCouponCode(data.coupon.code);
+          setCouponCode(data.coupon.code);
+          setCouponDiscount(data.discountAmount);
+          setCouponApplied(true);
+          setCouponError("");
+          sessionStorage.setItem("vexlora_checkout_coupon", data.coupon.code);
+          toast.success(data.message || `Coupon "${data.coupon.code}" applied!`);
+        },
+        onError: (err: any) => {
+          const message = err?.message || "Invalid or ineligible coupon code";
+          setCouponError(message);
+          setCouponApplied(false);
+          setCouponDiscount(0);
+        },
+      }
+    );
+  };
+
+  const handleRemoveCoupon = () => {
+    setCouponApplied(false);
+    setCouponDiscount(0);
+    setAppliedCouponCode("");
+    setCouponCode("");
+    setCouponError("");
+    sessionStorage.removeItem("vexlora_checkout_coupon");
+    toast.info("Coupon removed");
   };
 
   // Called ONLY after Stripe confirms the card payment was successful
@@ -161,9 +225,10 @@ export default function CheckoutPage() {
         shippingAddressId: selectedAddressId,
         paymentMethod: "stripe",
         paymentIntentId,
-        couponCode: couponApplied ? couponCode : undefined,
+        couponCode: couponApplied ? appliedCouponCode : undefined,
       });
 
+      sessionStorage.removeItem("vexlora_checkout_coupon");
       router.push(`/order-success?orderNumber=${order.orderNumber}&orderId=${order.id}`);
     } catch (err: unknown) {
       const message =
@@ -206,9 +271,10 @@ export default function CheckoutPage() {
         selectedCartItemIds: selectedItems.map((i) => i.id),
         shippingAddressId: selectedAddressId,
         paymentMethod: "cod",
-        couponCode: couponApplied ? couponCode : undefined,
+        couponCode: couponApplied ? appliedCouponCode : undefined,
       });
 
+      sessionStorage.removeItem("vexlora_checkout_coupon");
       router.push(`/order-success?orderNumber=${order.orderNumber}&orderId=${order.id}`);
     } catch (err: unknown) {
       const message =
@@ -298,7 +364,10 @@ export default function CheckoutPage() {
               couponDiscount={couponDiscount}
               couponError={couponError}
               setCouponError={setCouponError}
+              isApplyingCoupon={validateCouponMutation.isPending}
               onApplyCoupon={handleApplyCoupon}
+              onRemoveCoupon={handleRemoveCoupon}
+              onOpenCouponsModal={() => setIsCouponsModalOpen(true)}
               finalTotal={finalTotal}
               isOrderInProgress={isOrderInProgress}
               paymentMethod={paymentMethod}
@@ -317,6 +386,14 @@ export default function CheckoutPage() {
         setNewAddress={setNewAddress}
         onSubmit={handleCreateAddress}
         isSaving={createAddressMutation.isPending}
+      />
+
+      {/* Available Coupons Modal */}
+      <AvailableCouponsModal
+        isOpen={isCouponsModalOpen}
+        onClose={() => setIsCouponsModalOpen(false)}
+        onSelectCoupon={(code) => handleApplyCoupon(undefined, code)}
+        currentSubtotal={selectedSubtotal}
       />
     </div>
   );
