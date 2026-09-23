@@ -1,11 +1,14 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { Trash2 } from "lucide-react";
+import { toast } from "sonner";
 import { useCartStore } from "@/stores/cart.store";
 import { useAuthStore } from "@/stores/auth.store";
 import { useIsMounted } from "@/lib/utils";
+import { useValidateCoupon } from "@/hooks/useCoupons";
+import { AvailableCouponsModal } from "@/components/coupons/AvailableCouponsModal";
 
 import { CartEmptyState } from "./components/CartEmptyState";
 import { CartVendorGroupList } from "./components/CartVendorGroupList";
@@ -35,10 +38,13 @@ export default function CartPage() {
   } = useCartStore();
 
   const [couponCode, setCouponCode] = React.useState("");
+  const [appliedCouponCode, setAppliedCouponCode] = React.useState("");
   const [couponApplied, setCouponApplied] = React.useState(false);
   const [couponDiscount, setCouponDiscount] = React.useState(0);
   const [couponError, setCouponError] = React.useState("");
+  const [isCouponsModalOpen, setIsCouponsModalOpen] = React.useState(false);
 
+  const validateCouponMutation = useValidateCoupon();
   const mounted = useIsMounted();
 
   React.useEffect(() => {
@@ -46,6 +52,7 @@ export default function CartPage() {
   }, [fetchCart]);
 
   const activeItems = items.filter((i) => !i.savedForLater);
+  const selectedItems = activeItems.filter((item) => selectedItemIds.includes(item.id));
   const selectedSubtotal = getSelectedSubtotal();
   const selectedCount = getSelectedCount();
 
@@ -61,30 +68,101 @@ export default function CartPage() {
 
   const finalTotal = Math.max(0, selectedSubtotal - couponDiscount);
 
-  const handleApplyCoupon = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!couponCode.trim()) return;
-
-    if (couponCode.toUpperCase() === "SAVE10") {
-      const discount = selectedSubtotal * 0.1;
-      setCouponDiscount(discount);
-      setCouponApplied(true);
-      setCouponError("");
-    } else if (couponCode.toUpperCase() === "FREESHIP") {
-      setCouponDiscount(15);
-      setCouponApplied(true);
-      setCouponError("");
-    } else {
-      setCouponError("Invalid or expired coupon code");
-      setCouponDiscount(0);
+  // Re-validate coupon if cart items change while coupon is applied
+  React.useEffect(() => {
+    if (couponApplied && appliedCouponCode && selectedItems.length > 0) {
+      validateCouponMutation.mutate(
+        {
+          code: appliedCouponCode,
+          items: selectedItems.map((it) => ({
+            productId: it.productId,
+            vendorId: it.vendorId,
+            price: Number(it.price),
+            quantity: it.quantity,
+          })),
+          subtotal: selectedSubtotal,
+        },
+        {
+          onSuccess: (res) => {
+            setCouponDiscount(res.discountAmount);
+          },
+          onError: (err: any) => {
+            const msg = err?.message || "Cart changed: coupon conditions no longer satisfied";
+            setCouponError(msg);
+            setCouponApplied(false);
+            setCouponDiscount(0);
+            setAppliedCouponCode("");
+          },
+        }
+      );
+    } else if (selectedItems.length === 0 && couponApplied) {
       setCouponApplied(false);
+      setCouponDiscount(0);
+      setAppliedCouponCode("");
     }
+  }, [selectedSubtotal, selectedItems.length]);
+
+  const handleApplyCoupon = (e?: React.FormEvent, overrideCode?: string) => {
+    if (e) e.preventDefault();
+    const codeToApply = (overrideCode || couponCode).trim().toUpperCase();
+    if (!codeToApply) return;
+
+    if (selectedItems.length === 0) {
+      setCouponError("Please select at least one item to apply a coupon");
+      return;
+    }
+
+    setCouponError("");
+
+    validateCouponMutation.mutate(
+      {
+        code: codeToApply,
+        items: selectedItems.map((it) => ({
+          productId: it.productId,
+          vendorId: it.vendorId,
+          price: Number(it.price),
+          quantity: it.quantity,
+        })),
+        subtotal: selectedSubtotal,
+      },
+      {
+        onSuccess: (data) => {
+          setAppliedCouponCode(data.coupon.code);
+          setCouponCode(data.coupon.code);
+          setCouponDiscount(data.discountAmount);
+          setCouponApplied(true);
+          setCouponError("");
+          toast.success(data.message || `Coupon "${data.coupon.code}" applied!`);
+        },
+        onError: (err: any) => {
+          const message = err?.message || "Invalid or ineligible coupon code";
+          setCouponError(message);
+          setCouponApplied(false);
+          setCouponDiscount(0);
+        },
+      }
+    );
+  };
+
+  const handleRemoveCoupon = () => {
+    setCouponApplied(false);
+    setCouponDiscount(0);
+    setAppliedCouponCode("");
+    setCouponCode("");
+    setCouponError("");
+    toast.info("Coupon removed");
   };
 
   const handleProceedToCheckout = () => {
     if (!isAuthenticated) {
       router.push("/login?redirect=/checkout");
       return;
+    }
+    // If coupon is applied, we can store it or pass in query / state
+    if (couponApplied && appliedCouponCode) {
+      sessionStorage.setItem("vexlora_checkout_coupon", appliedCouponCode);
+    } else {
+      sessionStorage.removeItem("vexlora_checkout_coupon");
     }
     router.push("/checkout");
   };
@@ -164,13 +242,24 @@ export default function CartPage() {
               couponApplied={couponApplied}
               couponDiscount={couponDiscount}
               couponError={couponError}
+              isApplyingCoupon={validateCouponMutation.isPending}
               onApplyCoupon={handleApplyCoupon}
+              onRemoveCoupon={handleRemoveCoupon}
+              onOpenCouponsModal={() => setIsCouponsModalOpen(true)}
               finalTotal={finalTotal}
               onProceedToCheckout={handleProceedToCheckout}
             />
           </div>
         </div>
       </div>
+
+      {/* Available Coupons Modal */}
+      <AvailableCouponsModal
+        isOpen={isCouponsModalOpen}
+        onClose={() => setIsCouponsModalOpen(false)}
+        onSelectCoupon={(code) => handleApplyCoupon(undefined, code)}
+        currentSubtotal={selectedSubtotal}
+      />
     </div>
   );
 }
