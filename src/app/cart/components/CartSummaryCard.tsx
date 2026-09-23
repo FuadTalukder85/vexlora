@@ -1,4 +1,4 @@
-﻿import * as React from "react";
+import * as React from "react";
 import {
   CheckCircle2,
   Star,
@@ -6,6 +6,9 @@ import {
   ShieldCheck,
   Truck,
   RotateCcw,
+  Sparkles,
+  X,
+  Loader2,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
@@ -19,7 +22,10 @@ interface CartSummaryCardProps {
   couponApplied: boolean;
   couponDiscount: number;
   couponError: string;
+  isApplyingCoupon?: boolean;
   onApplyCoupon: (e: React.FormEvent) => void;
+  onRemoveCoupon: () => void;
+  onOpenCouponsModal: () => void;
   finalTotal: number;
   onProceedToCheckout: () => void;
 }
@@ -34,7 +40,10 @@ export function CartSummaryCard({
   couponApplied,
   couponDiscount,
   couponError,
+  isApplyingCoupon = false,
   onApplyCoupon,
+  onRemoveCoupon,
+  onOpenCouponsModal,
   finalTotal,
   onProceedToCheckout,
 }: CartSummaryCardProps) {
@@ -79,9 +88,19 @@ export function CartSummaryCard({
 
       {/* Order Summary Details Card */}
       <div className="bg-white rounded-2xl border border-border p-6 shadow-2xs space-y-5">
-        <h3 className="text-lg font-bold text-primary pb-3 border-b border-border">
-          Order Summary
-        </h3>
+        <div className="flex items-center justify-between pb-3 border-b border-border">
+          <h3 className="text-lg font-bold text-primary">
+            Order Summary
+          </h3>
+          <button
+            type="button"
+            onClick={onOpenCouponsModal}
+            className="text-xs font-bold text-primary hover:text-highlight flex items-center gap-1.5 py-1 px-2.5 rounded-lg bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-highlight" />
+            <span>View Coupons</span>
+          </button>
+        </div>
 
         <div className="space-y-3 text-sm text-secondary">
           <div className="flex justify-between">
@@ -100,7 +119,9 @@ export function CartSummaryCard({
 
           {couponApplied && (
             <div className="flex justify-between text-emerald-600 font-medium">
-              <span>Coupon Discount:</span>
+              <span className="flex items-center gap-1">
+                Coupon Savings:
+              </span>
               <span>-{formatCurrency(couponDiscount)}</span>
             </div>
           )}
@@ -115,37 +136,60 @@ export function CartSummaryCard({
           </div>
         </div>
 
-        {/* Coupon Code Box */}
-        <form onSubmit={onApplyCoupon} className="pt-2">
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary" />
-              <input
-                type="text"
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
-                placeholder="Coupon code (e.g. SAVE10)"
-                className="w-full rounded-xl border border-border pl-9 pr-3 py-2 text-xs text-primary uppercase placeholder:normal-case focus:border-primary focus:outline-none"
-              />
+        {/* Coupon Section */}
+        <div className="pt-2">
+          {couponApplied ? (
+            <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="font-mono font-bold text-xs bg-emerald-700 text-white px-2 py-0.5 rounded">
+                  {couponCode}
+                </span>
+                <span className="text-xs text-emerald-800 font-semibold">
+                  Saved {formatCurrency(couponDiscount)}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={onRemoveCoupon}
+                className="text-emerald-700 hover:text-highlight p-1 rounded-md transition-colors cursor-pointer"
+                title="Remove Coupon"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
-            <button
-              type="submit"
-              className="px-4 py-2 rounded-xl bg-muted hover:bg-muted text-primary font-bold text-xs transition-colors cursor-pointer"
-            >
-              Apply
-            </button>
-          </div>
-          {couponError && (
-            <p className="text-[11px] text-highlight font-medium mt-1">
-              {couponError}
-            </p>
+          ) : (
+            <form onSubmit={onApplyCoupon}>
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-secondary" />
+                  <input
+                    type="text"
+                    value={couponCode}
+                    onChange={(e) => setCouponCode(e.target.value)}
+                    placeholder="Coupon code (e.g. SAVE10)"
+                    className="w-full rounded-xl border border-border pl-9 pr-3 py-2 text-xs text-primary uppercase placeholder:normal-case focus:border-primary focus:outline-none"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isApplyingCoupon || !couponCode.trim()}
+                  className="px-4 py-2 rounded-xl bg-primary hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-xs transition-colors cursor-pointer flex items-center gap-1.5"
+                >
+                  {isApplyingCoupon ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    "Apply"
+                  )}
+                </button>
+              </div>
+              {couponError && (
+                <p className="text-[11px] text-highlight font-medium mt-1">
+                  {couponError}
+                </p>
+              )}
+            </form>
           )}
-          {couponApplied && (
-            <p className="text-[11px] text-emerald-600 font-medium mt-1">
-              Coupon applied successfully!
-            </p>
-          )}
-        </form>
+        </div>
 
         {/* Checkout Button */}
         <button

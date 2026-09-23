@@ -50,6 +50,8 @@ export const queryKeys = {
 
   // Coupons
   coupons: {
+    all: ["coupons"] as const,
+    public: (vendorId?: string) => [...queryKeys.coupons.all, "public", vendorId ?? "all"] as const,
     validate: (code: string) => ["coupons", "validate", code] as const,
   },
 
