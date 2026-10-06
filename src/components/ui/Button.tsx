@@ -1,10 +1,10 @@
-﻿import * as React from "react";
+import * as React from "react";
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger";
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger" | "highlight";
   size?: "sm" | "md" | "lg" | "icon";
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
@@ -40,6 +40,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         "text-secondary hover:text-primary hover:bg-muted",
       danger:
         "bg-highlight text-white hover:opacity-90 shadow-sm",
+      highlight:
+        "bg-highlight text-white hover:bg-highlight/90 shadow-sm",
     };
 
     const sizes = {
