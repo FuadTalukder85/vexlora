@@ -111,6 +111,9 @@ export interface ProductSearchParams {
   category?: string;
   categoryId?: string;
   brand?: string;
+  vendorSlug?: string;
+  storeSlug?: string;
+  vendorId?: string;
   minPrice?: number | string;
   maxPrice?: number | string;
   minRating?: number | string;

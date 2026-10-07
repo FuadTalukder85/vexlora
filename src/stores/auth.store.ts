@@ -4,6 +4,8 @@ import { User, VendorProfile, CreateVendorProfilePayload } from "@/types/auth";
 import { apiClient, http } from "@/lib/api/client";
 import { useCartStore } from "@/stores/cart.store";
 
+export type { User, VendorProfile, CreateVendorProfilePayload };
+
 const AUTH_BASE_URL =
   process.env.NEXT_PUBLIC_AUTH_URL ||
   (process.env.NEXT_PUBLIC_API_URL

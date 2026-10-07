@@ -26,6 +26,16 @@ export const getProducts = async (
     queryParams.brand = params.brand;
   }
 
+  // Vendor / Store filter
+  if (params.vendorSlug) {
+    queryParams.vendorSlug = params.vendorSlug;
+  } else if (params.storeSlug) {
+    queryParams.storeSlug = params.storeSlug;
+  }
+  if (params.vendorId) {
+    queryParams.vendorId = params.vendorId;
+  }
+
   // Price range filters
   if (params.minPrice !== undefined && params.minPrice !== "") {
     queryParams.minPrice = Number(params.minPrice);
