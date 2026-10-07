@@ -15,10 +15,12 @@ import {
   Plus,
   Loader2,
   Lock,
+  MessageSquare,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Product, ProductVariant } from "@/types/product";
 import { useCartStore } from "@/stores/cart.store";
+import { useChatStore } from "@/stores/chat.store";
 import { useUIStore } from "@/stores/ui.store";
 import { formatCurrency } from "@/lib/utils";
 
@@ -31,12 +33,31 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
   const router = useRouter();
   const addItem = useCartStore((s) => s.addItem);
   const setCartDrawerOpen = useUIStore((s) => s.setCartDrawerOpen);
+  const openChatWithVendor = useChatStore((s) => s.openChatWithVendor);
 
   const [quantity, setQuantity] = React.useState<number>(1);
   const [isAddingToCart, setIsAddingToCart] = React.useState(false);
   const [isBuyingNow, setIsBuyingNow] = React.useState(false);
 
   const { id, title, slug, vendor, basePrice, discountPrice, totalStock, images } = product;
+
+  const handleChatWithSeller = () => {
+    if (!product.vendorId) return;
+    openChatWithVendor(product.vendorId, {
+      productId: product.id,
+      productPreview: {
+        title: product.title,
+        images: product.images,
+        basePrice: product.basePrice,
+        discountPrice: product.discountPrice,
+      },
+      vendorPreview: {
+        storeName: vendor?.storeName || "Vendor Store",
+        storeLogo: vendor?.storeLogo,
+      },
+      initialMessage: `Hi, I have a question regarding "${product.title}".`,
+    });
+  };
 
   // Active pricing and stock
   const activeStock = selectedVariant ? selectedVariant.stock : totalStock;
@@ -315,6 +336,15 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
               <span className="text-secondary">On Time</span>
             </div>
           </div>
+
+          <button
+            type="button"
+            onClick={handleChatWithSeller}
+            className="w-full mt-2 py-2.5 px-3 bg-white hover:bg-neutral-900 hover:text-white text-neutral-800 rounded-xl text-xs font-bold border border-border shadow-2xs hover:shadow-xs transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+          >
+            <MessageSquare className="w-3.5 h-3.5 text-amber-500" />
+            <span>Chat with Seller</span>
+          </button>
         </div>
       )}
     </div>
