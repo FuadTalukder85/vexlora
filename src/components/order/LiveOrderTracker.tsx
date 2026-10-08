@@ -83,7 +83,6 @@ export const LiveOrderTracker: React.FC<LiveOrderTrackerProps> = ({ initialOrder
   const handleContactVendor = (subOrder: SubOrder) => {
     openChatWithVendor(subOrder.vendorId, {
       subOrderId: subOrder.id,
-      initialMessage: `Hi, I'm inquiring about my order #${order.orderNumber} (Sub-order: ${subOrder.id})`,
       vendorPreview: {
         storeName: subOrder.vendor?.storeName || "Vendor Store",
         storeLogo: subOrder.vendor?.storeLogo,

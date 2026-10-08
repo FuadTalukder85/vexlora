@@ -36,7 +36,6 @@ export default function VerifiedStoresPage() {
         storeName: store.storeName,
         storeLogo: store.storeLogo,
       },
-      initialMessage: `Hi ${store.storeName}, I have an inquiry about your store products.`,
     });
   };
 
