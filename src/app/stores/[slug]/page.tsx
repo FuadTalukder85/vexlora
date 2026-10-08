@@ -76,7 +76,6 @@ export default function VendorStoreFrontPage({
         storeName: vendor.storeName,
         storeLogo: vendor.storeLogo,
       },
-      initialMessage: `Hi ${vendor.storeName}, I'm browsing your storefront on Vexlora and have a question.`,
     });
   };
 

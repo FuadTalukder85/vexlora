@@ -9,11 +9,13 @@ const SOCKET_URL =
     : "http://localhost:5000");
 
 export const getSocket = (): Socket => {
-  if (!socket) {
+  if (!socket || !socket.connected) {
     const token = typeof window !== "undefined" ? localStorage.getItem("vexlora_token") : null;
 
     socket = io(SOCKET_URL, {
       auth: { token },
+      withCredentials: true,
+      transports: ["websocket", "polling"],
       autoConnect: true,
       reconnection: true,
       reconnectionAttempts: 10,

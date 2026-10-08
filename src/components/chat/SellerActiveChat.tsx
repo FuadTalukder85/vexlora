@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Send, CheckCheck, Sparkles } from "lucide-react";
+import { ArrowLeft, Send, Check, CheckCheck, Sparkles } from "lucide-react";
 import { Conversation, ChatMessage } from "@/stores/chat.store";
 import { User } from "@/stores/auth.store";
 import { getSocket } from "@/lib/socket";
@@ -32,11 +32,16 @@ export const SellerActiveChat: React.FC<SellerActiveChatProps> = ({
   onCloseModal,
 }) => {
   const [inputText, setInputText] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   }, [messages, isTyping]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -119,7 +124,7 @@ export const SellerActiveChat: React.FC<SellerActiveChatProps> = ({
       )}
 
       {/* Messages Feed */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin">
+      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-thin">
         {messages.length === 0 ? (
           <div className="py-12 text-center text-secondary">
             <Sparkles className="w-8 h-8 mx-auto mb-2 text-highlight/60" />
@@ -151,7 +156,21 @@ export const SellerActiveChat: React.FC<SellerActiveChatProps> = ({
                     hour: "2-digit",
                     minute: "2-digit",
                   })}
-                  {isMe && <CheckCheck className="w-3 h-3 text-secondary" />}
+                  {isMe && (
+                    msg.isRead ? (
+                      <span className="flex items-center text-sky-500" title="Seen">
+                        <CheckCheck className="w-3.5 h-3.5 stroke-[2.5]" />
+                      </span>
+                    ) : msg.isDelivered ? (
+                      <span className="flex items-center text-secondary" title="Delivered">
+                        <CheckCheck className="w-3.5 h-3.5" />
+                      </span>
+                    ) : (
+                      <span className="flex items-center text-secondary/60" title="Sent">
+                        <Check className="w-3.5 h-3.5" />
+                      </span>
+                    )
+                  )}
                 </span>
               </div>
             );
@@ -163,7 +182,6 @@ export const SellerActiveChat: React.FC<SellerActiveChatProps> = ({
             <span>{typingUser || "Seller"} is typing...</span>
           </div>
         )}
-        <div ref={messagesEndRef} />
       </div>
 
       {/* Vendor Chat Input */}

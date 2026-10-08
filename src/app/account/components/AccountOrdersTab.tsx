@@ -65,7 +65,6 @@ export const AccountOrdersTab: React.FC = () => {
         storeName: subOrder.vendor?.storeName || "Seller Store",
         storeLogo: subOrder.vendor?.storeLogo,
       },
-      initialMessage: `Hi, I have a question regarding Order #${order.orderNumber} (Sub-order: ${subOrder.id}).`,
     });
   };
 

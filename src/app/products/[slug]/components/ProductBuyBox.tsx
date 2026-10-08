@@ -55,7 +55,6 @@ export function ProductBuyBox({ product, selectedVariant }: ProductBuyBoxProps) 
         storeName: vendor?.storeName || "Vendor Store",
         storeLogo: vendor?.storeLogo,
       },
-      initialMessage: `Hi, I have a question regarding "${product.title}".`,
     });
   };
 
