@@ -17,10 +17,15 @@ export const AIChatTab: React.FC<AIChatTabProps> = ({ onCloseModal }) => {
   const { messages, isThinking, sendMessageToAI } = useAIChatStore();
   const { addItem } = useCartStore();
   const [inputText, setInputText] = useState("");
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
   }, [messages, isThinking]);
 
   const handleSend = async (textToSend?: string) => {
@@ -59,7 +64,7 @@ export const AIChatTab: React.FC<AIChatTabProps> = ({ onCloseModal }) => {
   return (
     <div className="flex-1 flex flex-col min-h-0 bg-muted/30">
       {/* Message Feed */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
+      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin">
         {messages.map((msg) => {
           const isUser = msg.sender === "user";
 
@@ -141,7 +146,6 @@ export const AIChatTab: React.FC<AIChatTabProps> = ({ onCloseModal }) => {
             <span>AI Copilot is searching products & policies...</span>
           </div>
         )}
-        <div ref={messagesEndRef} />
       </div>
 
       {/* AI Chat Input Footer */}

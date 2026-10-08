@@ -60,7 +60,6 @@ export const SellerMessagesTab: React.FC<SellerMessagesTabProps> = ({ onCloseMod
         storeName: vendor.storeName,
         storeLogo: vendor.storeLogo,
       },
-      initialMessage: "Hi, I would like to inquire about your store products.",
     });
   };
 

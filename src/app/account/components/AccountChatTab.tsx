@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -15,87 +13,37 @@ import {
   CheckCheck,
   Maximize2,
 } from "lucide-react";
-import { useChatStore } from "@/stores/chat.store";
+import { useCustomerChat } from "@/hooks/useCustomerChat";
 import { useAIChatStore } from "@/stores/aiChat.store";
-import { useAuthStore } from "@/stores/auth.store";
-import { chatApi } from "@/lib/api/chat";
-import { VendorStorePicker, VendorItem } from "@/components/chat/VendorStorePicker";
+import { VendorStorePicker } from "@/components/chat/VendorStorePicker";
 
 export const AccountChatTab: React.FC = () => {
   const {
+    user,
     conversations,
+    filteredConversations,
     activeConversation,
     setActiveConversation,
     messages,
-    sendMessage,
+    messageText,
+    setMessageText,
+    searchQuery,
+    setSearchQuery,
     isSending,
     isTyping,
     typingUser,
-    fetchConversations,
-    openChatWithVendor,
-    setOpen: setFloatingChatOpen,
-  } = useChatStore();
+    isStorePickerOpen,
+    setIsStorePickerOpen,
+    vendors,
+    loadingVendors,
+    messagesContainerRef,
+    setFloatingChatOpen,
+    loadVendors,
+    handleStartChatWithVendor,
+    handleSendMessage,
+  } = useCustomerChat();
 
   const { setActiveTab: setAITab } = useAIChatStore();
-  const { user, isAuthenticated } = useAuthStore();
-
-  const [messageText, setMessageText] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isStorePickerOpen, setIsStorePickerOpen] = useState(false);
-  const [vendors, setVendors] = useState<VendorItem[]>([]);
-  const [loadingVendors, setLoadingVendors] = useState(false);
-
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchConversations();
-    }
-  }, [isAuthenticated, fetchConversations]);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
-
-  const loadVendors = async () => {
-    setLoadingVendors(true);
-    try {
-      const list = await chatApi.getVendors();
-      setVendors(list || []);
-    } catch {
-      // Ignore
-    } finally {
-      setLoadingVendors(false);
-    }
-  };
-
-  const handleStartChatWithVendor = async (vendor: VendorItem) => {
-    setIsStorePickerOpen(false);
-    await openChatWithVendor(vendor.id, {
-      vendorPreview: {
-        storeName: vendor.storeName,
-        storeLogo: vendor.storeLogo,
-      },
-      initialMessage: "Hi, I have a question regarding your store products.",
-    });
-  };
-
-  const handleSendMessage = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!messageText.trim() || isSending) return;
-    const textToSend = messageText.trim();
-    setMessageText("");
-    await sendMessage(textToSend);
-  };
-
-  const filteredConversations = conversations.filter((conv) => {
-    if (!searchQuery.trim()) return true;
-    const q = searchQuery.toLowerCase().trim();
-    return (
-      conv.vendor?.storeName.toLowerCase().includes(q) ||
-      conv.lastMessage?.toLowerCase().includes(q)
-    );
-  });
 
   return (
     <div className="bg-white rounded-3xl border border-border shadow-xs overflow-hidden h-[700px] flex flex-col md:flex-row text-[14px]">
@@ -208,17 +156,24 @@ export const AccountChatTab: React.FC = () => {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-1 mb-0.5">
-                      <p className="text-[14px] font-bold text-primary truncate">
+                      <p className={`text-[14px] truncate ${unread > 0 ? "font-black text-primary" : "font-bold text-primary"}`}>
                         {conv.vendor?.storeName || "Vendor"}
                       </p>
-                      {conv.lastMessageAt && (
-                        <span className="text-xs text-secondary shrink-0">
-                          {new Date(conv.lastMessageAt).toLocaleDateString(undefined, {
-                            month: "short",
-                            day: "numeric",
-                          })}
-                        </span>
-                      )}
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        {conv.lastMessageAt && (
+                          <span className={`text-xs ${unread > 0 ? "font-bold text-highlight" : "text-secondary"}`}>
+                            {new Date(conv.lastMessageAt).toLocaleDateString(undefined, {
+                              month: "short",
+                              day: "numeric",
+                            })}
+                          </span>
+                        )}
+                        {unread > 0 && (
+                          <span className="px-1.5 py-0.2 text-[10px] font-black bg-highlight text-white rounded-full min-w-4 text-center">
+                            {unread}
+                          </span>
+                        )}
+                      </div>
                     </div>
                     <p
                       className={`text-[14px] truncate ${unread > 0 ? "font-bold text-primary" : "text-secondary"
@@ -322,7 +277,7 @@ export const AccountChatTab: React.FC = () => {
             </div>
 
             {/* Message History Feed */}
-            <div className="flex-1 p-5 overflow-y-auto space-y-4 bg-muted/15">
+            <div ref={messagesContainerRef} className="flex-1 p-5 overflow-y-auto space-y-4 bg-muted/15">
               {messages.length === 0 ? (
                 <div className="py-16 text-center text-secondary">
                   <MessageSquare className="w-10 h-10 mx-auto mb-2 text-muted-foreground" />
@@ -359,9 +314,17 @@ export const AccountChatTab: React.FC = () => {
                         </span>
                         {isMe && (
                           msg.isRead ? (
-                            <CheckCheck className="w-3.5 h-3.5 text-emerald-600" />
+                            <span className="flex items-center text-sky-500" title="Seen">
+                              <CheckCheck className="w-3.5 h-3.5 stroke-[2.5]" />
+                            </span>
+                          ) : msg.isDelivered ? (
+                            <span className="flex items-center text-secondary" title="Delivered">
+                              <CheckCheck className="w-3.5 h-3.5" />
+                            </span>
                           ) : (
-                            <Check className="w-3.5 h-3.5 text-secondary" />
+                            <span className="flex items-center text-secondary/60" title="Sent">
+                              <Check className="w-3.5 h-3.5" />
+                            </span>
                           )
                         )}
                       </div>
@@ -383,8 +346,6 @@ export const AccountChatTab: React.FC = () => {
                   </span>
                 </div>
               )}
-
-              <div ref={messagesEndRef} />
             </div>
 
             {/* Input composer row */}

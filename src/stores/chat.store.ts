@@ -75,6 +75,12 @@ export const useChatStore = create<ChatState>((set, get) => ({
   setActiveConversation: (conversation: Conversation | null) => {
     set({ activeConversation: conversation, messages: [] });
     if (conversation) {
+      set((state) => ({
+        conversations: state.conversations.map((c) =>
+          c.id === conversation.id ? { ...c, unreadCountCustomer: 0 } : c
+        ),
+        unreadCount: Math.max(0, state.unreadCount - (conversation.unreadCountCustomer || 0)),
+      }));
       get().fetchMessages(conversation.id);
       const socket = getSocket();
       socket.emit("join_conversation", conversation.id);
@@ -97,17 +103,30 @@ export const useChatStore = create<ChatState>((set, get) => ({
 
       const socket = getSocket();
       socket.emit("join_conversation", conv.id);
-    } catch {
+      chatApi.markAsRead(conv.id).catch(() => {});
+    } catch (err: any) {
       set({ isLoading: false });
-      toast.error("Please login to message the seller.");
+      const statusCode = err?.status || err?.statusCode || err?.response?.status;
+      const errorMessage =
+        err?.response?.data?.message ||
+        err?.message ||
+        (statusCode === 401
+          ? "Please login to message the seller."
+          : "Failed to open conversation with seller.");
+
+      toast.error(errorMessage);
     }
   },
 
   fetchConversations: async () => {
     try {
       const convs = await chatApi.getConversations();
-      const totalUnread = convs.reduce((acc, c) => acc + (c.unreadCountCustomer || 0), 0);
-      set({ conversations: convs, unreadCount: totalUnread });
+      const activeId = get().activeConversation?.id;
+      const normalizedConvs = convs.map((c) =>
+        activeId && c.id === activeId ? { ...c, unreadCountCustomer: 0 } : c
+      );
+      const totalUnread = normalizedConvs.reduce((acc, c) => acc + (c.unreadCountCustomer || 0), 0);
+      set({ conversations: normalizedConvs, unreadCount: totalUnread });
     } catch {
       // Ignored if user not logged in
     }
@@ -133,8 +152,16 @@ export const useChatStore = create<ChatState>((set, get) => ({
         attachments,
       });
 
+      const currentMessages = get().messages;
       set({
-        messages: [...messages, newMsg],
+        messages: currentMessages.some((m) => m.id === newMsg.id)
+          ? currentMessages
+          : [...currentMessages, newMsg],
+        conversations: get().conversations.map((c) =>
+          c.id === activeConversation.id
+            ? { ...c, lastMessage: newMsg.text, lastMessageAt: newMsg.createdAt }
+            : c
+        ),
         isSending: false,
       });
 
@@ -156,18 +183,51 @@ export const useChatStore = create<ChatState>((set, get) => ({
     socket.on("NEW_CHAT_MESSAGE", (data: { conversationId: string; message: ChatMessage }) => {
       const { activeConversation, messages } = get();
       if (activeConversation && activeConversation.id === data.conversationId) {
-        // Prevent duplicate appending if sender already added optimistic/response message
         if (!messages.some((m) => m.id === data.message.id)) {
           set({ messages: [...messages, data.message] });
         }
-        chatApi.markAsRead(data.conversationId).catch(() => {});
+        set((state) => ({
+          conversations: state.conversations.map((c) =>
+            c.id === data.conversationId
+              ? {
+                  ...c,
+                  lastMessage: data.message.text,
+                  lastMessageAt: data.message.createdAt,
+                  unreadCountCustomer: 0,
+                }
+              : c
+          ),
+        }));
+        if (data.message.senderRole !== "CUSTOMER") {
+          socket.emit("message_delivered", { conversationId: data.conversationId });
+          chatApi.markAsRead(data.conversationId).catch(() => {});
+        }
       } else {
-        // Increment unread count & refresh conversation list
+        if (data.message.senderRole !== "CUSTOMER") {
+          socket.emit("message_delivered", { conversationId: data.conversationId });
+        }
+        set((state) => ({
+          conversations: state.conversations.map((c) =>
+            c.id === data.conversationId
+              ? {
+                  ...c,
+                  lastMessage: data.message.text,
+                  lastMessageAt: data.message.createdAt,
+                  unreadCountCustomer: (c.unreadCountCustomer || 0) + 1,
+                }
+              : c
+          ),
+          unreadCount: state.unreadCount + 1,
+        }));
         get().fetchConversations();
       }
     });
 
     socket.on("NEW_CHAT_NOTIFICATION", (data: { conversationId: string; senderName: string; text: string }) => {
+      const { activeConversation } = get();
+      if (activeConversation && activeConversation.id === data.conversationId) {
+        return;
+      }
       toast.info(`${data.senderName}: ${data.text}`, {
         action: {
           label: "Reply",
@@ -186,6 +246,38 @@ export const useChatStore = create<ChatState>((set, get) => ({
       const { activeConversation } = get();
       if (activeConversation && activeConversation.id === data.conversationId) {
         set({ isTyping: data.isTyping, typingUser: data.isTyping ? data.userName : null });
+      }
+    });
+
+    socket.on("MESSAGES_DELIVERED", (data: { conversationId: string; deliveredTo: string }) => {
+      const { activeConversation, messages } = get();
+      if (activeConversation && activeConversation.id === data.conversationId) {
+        const isDeliveredToVendor = data.deliveredTo !== activeConversation.customerId;
+        if (isDeliveredToVendor) {
+          set({
+            messages: messages.map((m) =>
+              (m.senderRole === "CUSTOMER" || m.senderId === activeConversation.customerId)
+                ? { ...m, isDelivered: true }
+                : m
+            ),
+          });
+        }
+      }
+    });
+
+    socket.on("MESSAGES_READ", (data: { conversationId: string; readBy: string }) => {
+      const { activeConversation, messages } = get();
+      if (activeConversation && activeConversation.id === data.conversationId) {
+        const isReadByVendor = data.readBy !== activeConversation.customerId;
+        if (isReadByVendor) {
+          set({
+            messages: messages.map((m) =>
+              (m.senderRole === "CUSTOMER" || m.senderId === activeConversation.customerId)
+                ? { ...m, isRead: true, isDelivered: true }
+                : m
+            ),
+          });
+        }
       }
     });
   },
