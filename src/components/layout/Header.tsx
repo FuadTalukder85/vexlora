@@ -214,11 +214,38 @@ export function Header() {
 
                         <div className="py-1">
                           <Link
-                            href="/vendor-apply"
+                            href="/account"
+                            onClick={() => setUserDropdownOpen(false)}
+                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-primary font-semibold hover:bg-muted text-left"
+                          >
+                            <User className="w-4 h-4 text-primary" />
+                            My Account
+                          </Link>
+
+                          <Link
+                            href="/account?tab=orders"
+                            onClick={() => setUserDropdownOpen(false)}
+                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-primary font-semibold hover:bg-muted text-left"
+                          >
+                            <Package className="w-4 h-4 text-primary" />
+                            My Orders
+                          </Link>
+
+                          <Link
+                            href="/account?tab=chat"
                             onClick={() => setUserDropdownOpen(false)}
                             className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-primary font-semibold hover:bg-muted text-left"
                           >
                             <Store className="w-4 h-4 text-primary" />
+                            Seller Messages
+                          </Link>
+
+                          <Link
+                            href="/vendor-apply"
+                            onClick={() => setUserDropdownOpen(false)}
+                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-secondary font-semibold hover:bg-muted text-left border-t border-border mt-1 pt-2"
+                          >
+                            <Store className="w-4 h-4 text-secondary" />
                             {vendorProfile
                               ? vendorProfile.status === "APPROVED"
                                 ? "Manage Store Profile"
