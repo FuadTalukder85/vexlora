@@ -116,16 +116,16 @@ export const AccountHeader: React.FC<AccountHeaderProps> = ({
                 href={process.env.NEXT_PUBLIC_VENDOR_URL || "#"}
                 target="_blank"
                 rel="noreferrer"
-                className="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold flex items-center gap-1.5 transition-colors border border-amber-200"
+                className="px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 text-[14px] font-bold flex items-center gap-1.5 transition-colors border border-amber-200"
               >
-                <Store className="w-3.5 h-3.5" />
+                <Store className="w-4 h-4" />
                 <span>Vendor Dashboard</span>
-                <ExternalLink className="w-3 h-3 opacity-80" />
+                <ExternalLink className="w-3.5 h-3.5 opacity-80" />
               </a>
             ) : (
               <button
                 onClick={() => onNavigateToTab("settings")}
-                className="px-3 py-1.5 rounded-xl border border-border bg-muted/60 hover:bg-muted text-primary text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl border border-border bg-muted/60 hover:bg-muted text-primary text-[14px] font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
               >
                 <Edit3 className="w-3.5 h-3.5" />
                 <span>Edit Profile</span>
@@ -140,30 +140,30 @@ export const AccountHeader: React.FC<AccountHeaderProps> = ({
             <h1 className="text-lg sm:text-xl font-black text-primary tracking-tight">
               {user?.name || "Valued Customer"}
             </h1>
-            <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200 flex items-center gap-1">
-              <ShieldCheck className="w-3 h-3" />
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200 flex items-center gap-1">
+              <ShieldCheck className="w-3.5 h-3.5" />
               Verified Account
             </span>
-            <span className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
               {user?.role || "CUSTOMER"}
             </span>
           </div>
 
-          <div className="mt-3 space-y-1.5 text-xs text-secondary font-medium">
+          <div className="mt-3 space-y-1.5 text-[14px] text-secondary font-medium">
             {user?.email && (
               <div className="flex items-center gap-2 text-secondary">
-                <Mail className="w-3.5 h-3.5 text-primary shrink-0" />
+                <Mail className="w-4 h-4 text-primary shrink-0" />
                 <span className="truncate">{user.email}</span>
               </div>
             )}
             {user?.phone ? (
               <div className="flex items-center gap-2 text-secondary">
-                <Phone className="w-3.5 h-3.5 text-primary shrink-0" />
+                <Phone className="w-4 h-4 text-primary shrink-0" />
                 <span>{user.phone}</span>
               </div>
             ) : (
               <div className="flex items-center gap-2 text-muted-foreground">
-                <Phone className="w-3.5 h-3.5 shrink-0" />
+                <Phone className="w-4 h-4 shrink-0" />
                 <button
                   onClick={() => onNavigateToTab("settings")}
                   className="text-primary hover:underline font-semibold"
@@ -173,7 +173,7 @@ export const AccountHeader: React.FC<AccountHeaderProps> = ({
               </div>
             )}
             <div className="flex items-center gap-2 text-secondary">
-              <Calendar className="w-3.5 h-3.5 text-primary shrink-0" />
+              <Calendar className="w-4 h-4 text-primary shrink-0" />
               <span>Member since {formattedDate}</span>
             </div>
           </div>

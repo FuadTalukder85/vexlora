@@ -98,7 +98,7 @@ export const AccountChatTab: React.FC = () => {
   });
 
   return (
-    <div className="bg-white rounded-3xl border border-border shadow-xs overflow-hidden h-[700px] flex flex-col md:flex-row">
+    <div className="bg-white rounded-3xl border border-border shadow-xs overflow-hidden h-[700px] flex flex-col md:flex-row text-[14px]">
       {/* Left Sidebar: Conversations Inbox */}
       <div className="w-full md:w-80 lg:w-96 border-r border-border flex flex-col shrink-0 h-full bg-card">
         {/* Header */}
@@ -108,7 +108,7 @@ export const AccountChatTab: React.FC = () => {
               <div className="w-8 h-8 rounded-xl bg-highlight/10 text-highlight flex items-center justify-center">
                 <MessageSquare className="w-4 h-4" />
               </div>
-              <h3 className="text-sm font-bold text-primary">Seller Inquiries</h3>
+              <h3 className="text-base font-bold text-primary">Seller Inquiries</h3>
             </div>
 
             <div className="flex items-center gap-1.5">
@@ -137,13 +137,13 @@ export const AccountChatTab: React.FC = () => {
 
           {/* Search box */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-secondary pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-secondary pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search conversations..."
-              className="w-full pl-8.5 pr-3 py-1.5 bg-white border border-border rounded-xl text-xs text-primary placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full pl-9 pr-3 py-2 bg-white border border-border rounded-xl text-[14px] text-primary placeholder:text-secondary focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
           </div>
         </div>
@@ -153,8 +153,8 @@ export const AccountChatTab: React.FC = () => {
           {conversations.length === 0 ? (
             <div className="py-16 text-center text-secondary px-6">
               <Store className="w-10 h-10 mx-auto mb-2 text-muted-foreground" />
-              <p className="text-xs font-bold text-primary">No conversations yet</p>
-              <p className="text-[11px] text-secondary mt-1 mb-4">
+              <p className="text-[14px] font-bold text-primary">No conversations yet</p>
+              <p className="text-xs text-secondary mt-1 mb-4">
                 Message verified seller stores about orders, discounts, and item specs.
               </p>
               <button
@@ -162,13 +162,13 @@ export const AccountChatTab: React.FC = () => {
                   setIsStorePickerOpen(true);
                   loadVendors();
                 }}
-                className="px-4 py-2 bg-primary hover:bg-primary/90 text-white text-xs font-bold rounded-xl transition-colors cursor-pointer shadow-xs"
+                className="px-4 py-2 bg-primary hover:bg-primary/90 text-white text-[14px] font-bold rounded-xl transition-colors cursor-pointer shadow-xs"
               >
                 Start New Chat
               </button>
             </div>
           ) : filteredConversations.length === 0 ? (
-            <div className="py-12 text-center text-xs text-secondary">
+            <div className="py-12 text-center text-[14px] text-secondary">
               No matching conversations found
             </div>
           ) : (
@@ -197,7 +197,7 @@ export const AccountChatTab: React.FC = () => {
                         className="object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center font-bold text-primary text-xs">
+                      <div className="w-full h-full flex items-center justify-center font-bold text-primary text-sm">
                         {conv.vendor?.storeName?.[0] || "V"}
                       </div>
                     )}
@@ -208,11 +208,11 @@ export const AccountChatTab: React.FC = () => {
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-1 mb-0.5">
-                      <p className="text-xs font-bold text-primary truncate">
+                      <p className="text-[14px] font-bold text-primary truncate">
                         {conv.vendor?.storeName || "Vendor"}
                       </p>
                       {conv.lastMessageAt && (
-                        <span className="text-[10px] text-secondary shrink-0">
+                        <span className="text-xs text-secondary shrink-0">
                           {new Date(conv.lastMessageAt).toLocaleDateString(undefined, {
                             month: "short",
                             day: "numeric",
@@ -221,7 +221,7 @@ export const AccountChatTab: React.FC = () => {
                       )}
                     </div>
                     <p
-                      className={`text-xs truncate ${unread > 0 ? "font-bold text-primary" : "text-secondary"
+                      className={`text-[14px] truncate ${unread > 0 ? "font-bold text-primary" : "text-secondary"
                         }`}
                     >
                       {conv.lastMessage || "Conversation open"}
@@ -240,14 +240,14 @@ export const AccountChatTab: React.FC = () => {
           <div className="p-6 h-full flex flex-col">
             <div className="flex items-center justify-between pb-4 border-b border-border mb-4">
               <div>
-                <h4 className="text-sm font-bold text-primary">Start a New Conversation</h4>
-                <p className="text-xs text-secondary">
+                <h4 className="text-base font-bold text-primary">Start a New Conversation</h4>
+                <p className="text-[14px] text-secondary">
                   Select any verified store to ask questions or get assistance
                 </p>
               </div>
               <button
                 onClick={() => setIsStorePickerOpen(false)}
-                className="px-3 py-1.5 rounded-xl border border-border text-xs font-bold text-secondary hover:text-primary hover:bg-muted"
+                className="px-3 py-1.5 rounded-xl border border-border text-[14px] font-bold text-secondary hover:text-primary hover:bg-muted cursor-pointer"
               >
                 Back to Inbox
               </button>
@@ -277,7 +277,7 @@ export const AccountChatTab: React.FC = () => {
                       className="object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center font-bold text-primary text-xs">
+                    <div className="w-full h-full flex items-center justify-center font-bold text-primary text-sm">
                       {activeConversation.vendor?.storeName?.[0] || "V"}
                     </div>
                   )}
@@ -285,14 +285,14 @@ export const AccountChatTab: React.FC = () => {
 
                 <div>
                   <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-bold text-primary">
+                    <h4 className="text-base font-bold text-primary">
                       {activeConversation.vendor?.storeName || "Vendor"}
                     </h4>
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                    <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                       Verified Seller
                     </span>
                   </div>
-                  <p className="text-[11px] text-secondary">
+                  <p className="text-xs text-secondary">
                     Direct communication protected by Vexlora Buyer Shield
                   </p>
                 </div>
@@ -302,12 +302,12 @@ export const AccountChatTab: React.FC = () => {
                 {activeConversation.vendor?.storeSlug && (
                   <Link
                     href={`/stores/${activeConversation.vendor.storeSlug}`}
-                    className="p-2 rounded-xl bg-muted hover:bg-muted/80 text-primary text-xs font-bold flex items-center gap-1 transition-colors"
+                    className="p-2 rounded-xl bg-muted hover:bg-muted/80 text-primary text-[14px] font-bold flex items-center gap-1 transition-colors"
                     title="Visit Seller Store"
                   >
-                    <Store className="w-3.5 h-3.5" />
+                    <Store className="w-4 h-4" />
                     <span className="hidden sm:inline">Store Page</span>
-                    <ExternalLink className="w-3 h-3" />
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </Link>
                 )}
 
@@ -316,7 +316,7 @@ export const AccountChatTab: React.FC = () => {
                   className="p-2 rounded-xl border border-border hover:bg-muted text-secondary hover:text-primary transition-colors cursor-pointer"
                   title="Pop out to floating window"
                 >
-                  <Maximize2 className="w-3.5 h-3.5" />
+                  <Maximize2 className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -326,8 +326,8 @@ export const AccountChatTab: React.FC = () => {
               {messages.length === 0 ? (
                 <div className="py-16 text-center text-secondary">
                   <MessageSquare className="w-10 h-10 mx-auto mb-2 text-muted-foreground" />
-                  <p className="text-xs font-bold text-primary">No messages yet</p>
-                  <p className="text-[11px] text-secondary mt-1">
+                  <p className="text-[14px] font-bold text-primary">No messages yet</p>
+                  <p className="text-xs text-secondary mt-1">
                     Send a message below to start chatting with{" "}
                     {activeConversation.vendor?.storeName || "the store"}.
                   </p>
@@ -342,7 +342,7 @@ export const AccountChatTab: React.FC = () => {
                       className={`flex flex-col ${isMe ? "items-end" : "items-start"}`}
                     >
                       <div
-                        className={`max-w-[78%] sm:max-w-[65%] rounded-2xl p-3.5 text-xs shadow-xs leading-relaxed ${isMe
+                        className={`max-w-[78%] sm:max-w-[65%] rounded-2xl p-3.5 text-[14px] shadow-xs leading-relaxed ${isMe
                             ? "bg-primary text-white rounded-br-xs"
                             : "bg-white text-primary border border-border rounded-bl-xs"
                           }`}
@@ -350,7 +350,7 @@ export const AccountChatTab: React.FC = () => {
                         <p className="whitespace-pre-wrap break-words">{msg.text}</p>
                       </div>
 
-                      <div className="flex items-center gap-1.5 mt-1 px-1 text-[10px] text-secondary">
+                      <div className="flex items-center gap-1.5 mt-1 px-1 text-xs text-secondary">
                         <span>
                           {new Date(msg.createdAt).toLocaleTimeString([], {
                             hour: "2-digit",
@@ -359,9 +359,9 @@ export const AccountChatTab: React.FC = () => {
                         </span>
                         {isMe && (
                           msg.isRead ? (
-                            <CheckCheck className="w-3 h-3 text-emerald-600" />
+                            <CheckCheck className="w-3.5 h-3.5 text-emerald-600" />
                           ) : (
-                            <Check className="w-3 h-3 text-secondary" />
+                            <Check className="w-3.5 h-3.5 text-secondary" />
                           )
                         )}
                       </div>
@@ -378,7 +378,7 @@ export const AccountChatTab: React.FC = () => {
                     <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce [animation-delay:0.2s]" />
                     <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce [animation-delay:0.4s]" />
                   </div>
-                  <span className="text-[11px]">
+                  <span className="text-xs">
                     {typingUser || "Seller"} is typing...
                   </span>
                 </div>
@@ -397,16 +397,16 @@ export const AccountChatTab: React.FC = () => {
                 value={messageText}
                 onChange={(e) => setMessageText(e.target.value)}
                 placeholder={`Message ${activeConversation.vendor?.storeName || "seller"}...`}
-                className="flex-1 px-4 py-2.5 bg-muted/50 border border-border rounded-2xl text-xs text-primary placeholder:text-secondary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
+                className="flex-1 px-4 py-2.5 bg-muted/50 border border-border rounded-2xl text-[14px] text-primary placeholder:text-secondary focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all"
               />
 
               <button
                 type="submit"
                 disabled={!messageText.trim() || isSending}
-                className="h-10 px-5 bg-primary hover:bg-primary/90 text-white rounded-2xl text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                className="h-10 px-5 bg-primary hover:bg-primary/90 text-white rounded-2xl text-[14px] font-bold flex items-center gap-1.5 transition-colors cursor-pointer shadow-xs disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <span>Send</span>
-                <Send className="w-3.5 h-3.5" />
+                <Send className="w-4 h-4" />
               </button>
             </form>
           </div>
@@ -416,7 +416,7 @@ export const AccountChatTab: React.FC = () => {
               <MessageSquare className="w-8 h-8" />
             </div>
             <h4 className="text-base font-bold text-primary">No Conversation Selected</h4>
-            <p className="text-xs text-secondary mt-1 max-w-sm">
+            <p className="text-[14px] text-secondary mt-1 max-w-sm">
               Select a conversation from the sidebar to view existing chats, or start a new chat with any store.
             </p>
             <button
@@ -424,7 +424,7 @@ export const AccountChatTab: React.FC = () => {
                 setIsStorePickerOpen(true);
                 loadVendors();
               }}
-              className="mt-5 px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-xs font-bold rounded-xl transition-colors shadow-xs cursor-pointer flex items-center gap-1.5"
+              className="mt-5 px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-[14px] font-bold rounded-xl transition-colors shadow-xs cursor-pointer flex items-center gap-1.5"
             >
               <Plus className="w-4 h-4" />
               <span>Message a Seller</span>

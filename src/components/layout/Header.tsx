@@ -181,20 +181,20 @@ export function Header() {
                 <div className="relative">
                   <button
                     onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl border border-border bg-white hover:bg-muted text-primary transition-colors cursor-pointer"
+                    className="flex items-center gap-2.5 p-2 sm:px-3.5 sm:py-2 rounded-xl border border-border bg-white hover:bg-muted text-primary transition-colors cursor-pointer"
                   >
-                    <div className="h-7 w-7 rounded-lg bg-primary text-white flex items-center justify-center font-bold text-xs">
+                    <div className="h-8 w-8 rounded-lg bg-primary text-white flex items-center justify-center font-bold text-sm">
                       {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
                     </div>
                     <div className="hidden xl:flex flex-col text-left">
-                      <span className="text-[11px] font-medium text-secondary leading-none truncate max-w-[120px]">
+                      <span className="text-xs font-medium text-secondary leading-none truncate max-w-[130px]">
                         Hi, {user?.name ? user.name.split(" ")[0] : "Account"}
                       </span>
-                      <span className="text-xs font-bold text-primary leading-tight mt-0.5">
+                      <span className="text-sm font-bold text-primary leading-tight mt-0.5">
                         My Account
                       </span>
                     </div>
-                    <ChevronDown className="w-3.5 h-3.5 text-secondary hidden xl:block" />
+                    <ChevronDown className="w-4 h-4 text-secondary hidden xl:block" />
                   </button>
 
                   {userDropdownOpen && (
@@ -203,11 +203,11 @@ export function Header() {
                         className="fixed inset-0 z-40"
                         onClick={() => setUserDropdownOpen(false)}
                       />
-                      <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-border py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                        <div className="px-4 py-2 border-b border-border">
-                          <p className="text-xs font-bold text-primary truncate">{user?.name || "Vexlora User"}</p>
-                          <p className="text-[11px] text-secondary truncate">{user?.email || ""}</p>
-                          <span className="inline-block mt-1 px-2 py-0.5 rounded-full bg-muted text-primary text-[10px] font-semibold uppercase">
+                      <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-border py-2.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                        <div className="px-4 py-2.5 border-b border-border">
+                          <p className="text-sm font-bold text-primary truncate">{user?.name || "Vexlora User"}</p>
+                          <p className="text-xs text-secondary truncate mt-0.5">{user?.email || ""}</p>
+                          <span className="inline-block mt-1.5 px-2.5 py-0.5 rounded-full bg-muted text-primary text-xs font-semibold uppercase">
                             Role: {user?.role || "CUSTOMER"}
                           </span>
                         </div>
@@ -216,36 +216,36 @@ export function Header() {
                           <Link
                             href="/account"
                             onClick={() => setUserDropdownOpen(false)}
-                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-primary font-semibold hover:bg-muted text-left"
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-primary font-semibold hover:bg-muted text-left transition-colors"
                           >
-                            <User className="w-4 h-4 text-primary" />
+                            <User className="w-4 h-4 text-primary shrink-0" />
                             My Account
                           </Link>
 
                           <Link
                             href="/account?tab=orders"
                             onClick={() => setUserDropdownOpen(false)}
-                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-primary font-semibold hover:bg-muted text-left"
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-primary font-semibold hover:bg-muted text-left transition-colors"
                           >
-                            <Package className="w-4 h-4 text-primary" />
+                            <Package className="w-4 h-4 text-primary shrink-0" />
                             My Orders
                           </Link>
 
                           <Link
                             href="/account?tab=chat"
                             onClick={() => setUserDropdownOpen(false)}
-                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-primary font-semibold hover:bg-muted text-left"
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-primary font-semibold hover:bg-muted text-left transition-colors"
                           >
-                            <Store className="w-4 h-4 text-primary" />
+                            <Store className="w-4 h-4 text-primary shrink-0" />
                             Seller Messages
                           </Link>
 
                           <Link
                             href="/vendor-apply"
                             onClick={() => setUserDropdownOpen(false)}
-                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-secondary font-semibold hover:bg-muted text-left border-t border-border mt-1 pt-2"
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-secondary font-semibold hover:bg-muted text-left border-t border-border mt-1 pt-2.5 transition-colors"
                           >
-                            <Store className="w-4 h-4 text-secondary" />
+                            <Store className="w-4 h-4 text-secondary shrink-0" />
                             {vendorProfile
                               ? vendorProfile.status === "APPROVED"
                                 ? "Manage Store Profile"
@@ -258,9 +258,9 @@ export function Header() {
                               href={process.env.NEXT_PUBLIC_VENDOR_URL || "#"}
                               target="_blank"
                               rel="noreferrer"
-                              className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-amber-700 font-semibold hover:bg-amber-50 text-left"
+                              className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-amber-700 font-semibold hover:bg-amber-50 text-left transition-colors"
                             >
-                              <ExternalLink className="w-4 h-4 text-amber-600" />
+                              <ExternalLink className="w-4 h-4 text-amber-600 shrink-0" />
                               Open Vendor Dashboard
                             </a>
                           )}
@@ -273,9 +273,9 @@ export function Header() {
                               await logout();
                               toast.success("Signed out successfully");
                             }}
-                            className="w-full flex items-center gap-2.5 px-4 py-2 text-xs text-highlight font-semibold hover:bg-highlight/10 text-left cursor-pointer"
+                            className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-highlight font-semibold hover:bg-highlight/10 text-left cursor-pointer transition-colors"
                           >
-                            <LogOut className="w-4 h-4 text-highlight" />
+                            <LogOut className="w-4 h-4 text-highlight shrink-0" />
                             Sign Out
                           </button>
                         </div>
@@ -286,16 +286,16 @@ export function Header() {
               ) : (
                 <Link
                   href="/login"
-                  className="flex items-center gap-2 p-2 sm:px-3 sm:py-2 rounded-xl border border-border bg-white hover:bg-muted text-primary transition-colors"
+                  className="flex items-center gap-2.5 p-2 sm:px-3.5 sm:py-2 rounded-xl border border-border bg-white hover:bg-muted text-primary transition-colors"
                 >
-                  <div className="h-7 w-7 rounded-lg bg-muted flex items-center justify-center text-primary">
-                    <User className="h-4 w-4" />
+                  <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center text-primary">
+                    <User className="h-4.5 w-4.5" />
                   </div>
                   <div className="hidden xl:flex flex-col text-left">
-                    <span className="text-[11px] font-medium text-secondary leading-none">
+                    <span className="text-xs font-medium text-secondary leading-none">
                       Sign In / Register
                     </span>
-                    <span className="text-xs font-bold text-primary leading-tight mt-0.5">
+                    <span className="text-sm font-bold text-primary leading-tight mt-0.5">
                       My Account
                     </span>
                   </div>

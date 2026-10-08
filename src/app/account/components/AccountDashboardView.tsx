@@ -60,7 +60,7 @@ export const AccountDashboardView: React.FC = () => {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center">
         <div className="w-10 h-10 border-3 border-primary border-t-transparent rounded-full animate-spin mb-3" />
-        <p className="text-xs font-bold text-primary">Loading your account...</p>
+        <p className="text-sm font-bold text-primary">Loading your account...</p>
       </div>
     );
   }
@@ -75,19 +75,19 @@ export const AccountDashboardView: React.FC = () => {
           <h2 className="text-xl font-black text-primary tracking-tight">
             Customer Profile & Account
           </h2>
-          <p className="text-xs text-secondary mt-2 mb-6">
+          <p className="text-sm text-secondary mt-2 mb-6">
             Please sign in to view your account dashboard, cart items, pending orders, and seller chat messages.
           </p>
           <div className="space-y-2.5">
             <Link
               href="/login"
-              className="w-full py-3 bg-primary hover:bg-primary/90 text-white rounded-xl text-xs font-bold transition-colors block shadow-xs"
+              className="w-full py-3 bg-primary hover:bg-primary/90 text-white rounded-xl text-sm font-bold transition-colors block shadow-xs"
             >
               Sign In to Your Account
             </Link>
             <Link
               href="/register"
-              className="w-full py-2.5 bg-muted hover:bg-muted/80 text-primary rounded-xl text-xs font-bold transition-colors block"
+              className="w-full py-2.5 bg-muted hover:bg-muted/80 text-primary rounded-xl text-sm font-bold transition-colors block"
             >
               Create New Account
             </Link>
@@ -101,7 +101,7 @@ export const AccountDashboardView: React.FC = () => {
     <div className="bg-[#f8fafc] min-h-screen pb-16">
       {/* Breadcrumbs */}
       <div className="bg-white border-b border-border py-2.5 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20">
-        <div className="layout-container flex items-center gap-1.5 text-xs text-secondary">
+        <div className="layout-container flex items-center gap-1.5 text-[14px] text-secondary">
           <Link href="/" className="hover:text-primary transition-colors">
             Home
           </Link>

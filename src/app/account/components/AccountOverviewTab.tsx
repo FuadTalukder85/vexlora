@@ -61,7 +61,7 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-[14px]">
       {/* 1. Top Section: Daraz-Style Profile & Address Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {/* Personal Profile Summary Card */}
@@ -69,19 +69,19 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-secondary">
+                <span className="text-[14px] font-bold uppercase tracking-wider text-secondary">
                   Personal Profile
                 </span>
-                <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                   Verified
                 </span>
               </div>
               <button
                 onClick={() => onSelectTab("settings")}
-                className="text-xs font-bold text-primary hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-[14px] font-bold text-primary hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>Edit</span>
-                <Edit3 className="w-3 h-3" />
+                <Edit3 className="w-3.5 h-3.5" />
               </button>
             </div>
 
@@ -99,8 +99,8 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
                 )}
               </div>
 
-              <div className="space-y-1 text-xs">
-                <p className="font-bold text-primary text-sm">{user?.name || "Customer"}</p>
+              <div className="space-y-1 text-[14px]">
+                <p className="font-bold text-primary text-base">{user?.name || "Customer"}</p>
                 <p className="text-secondary">{user?.email || "No email"}</p>
                 <p className="text-secondary font-medium">
                   {user?.phone || "No phone number added"}
@@ -109,7 +109,7 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-[11px] text-secondary">
+          <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-[13px] text-secondary">
             <span>
               Role: <strong className="text-primary">{user?.role || "CUSTOMER"}</strong>
             </span>
@@ -122,28 +122,28 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold uppercase tracking-wider text-secondary">
+                <span className="text-[14px] font-bold uppercase tracking-wider text-secondary">
                   Address Book
                 </span>
                 {defaultAddress && (
-                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                     Default Shipping
                   </span>
                 )}
               </div>
               <button
                 onClick={() => onSelectTab("addresses")}
-                className="text-xs font-bold text-primary hover:underline flex items-center gap-1 cursor-pointer"
+                className="text-[14px] font-bold text-primary hover:underline flex items-center gap-1 cursor-pointer"
               >
                 <span>Manage</span>
-                <Edit3 className="w-3 h-3" />
+                <Edit3 className="w-3.5 h-3.5" />
               </button>
             </div>
 
             <div className="mt-4">
               {defaultAddress ? (
-                <div className="space-y-1.5 text-xs text-secondary">
-                  <p className="font-bold text-primary text-sm">
+                <div className="space-y-1.5 text-[14px] text-secondary">
+                  <p className="font-bold text-primary text-base">
                     {defaultAddress.label || "Home / Office"}
                   </p>
                   <p className="text-primary font-medium">{defaultAddress.street}</p>
@@ -151,15 +151,15 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
                     {defaultAddress.city}, {defaultAddress.zip}
                   </p>
                   {defaultAddress.phone && (
-                    <p className="text-[11px]">Contact: {defaultAddress.phone}</p>
+                    <p className="text-xs text-secondary">Contact: {defaultAddress.phone}</p>
                   )}
                 </div>
               ) : (
-                <div className="text-xs text-secondary py-2">
+                <div className="text-[14px] text-secondary py-2">
                   <p>No default shipping address selected.</p>
                   <button
                     onClick={() => onSelectTab("addresses")}
-                    className="mt-2 text-xs font-bold text-primary hover:underline cursor-pointer block"
+                    className="mt-2 text-[14px] font-bold text-primary hover:underline cursor-pointer block"
                   >
                     + Add New Address
                   </button>
@@ -168,7 +168,7 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-[11px] text-secondary">
+          <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-[13px] text-secondary">
             <span>
               Total Saved:{" "}
               <strong className="text-primary">
@@ -189,7 +189,7 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
       {/* 2. Middle Section: Activity & Order Lifecycle Funnel (Stat Cards in one row) */}
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-secondary">
+          <h4 className="text-[14px] font-bold uppercase tracking-wider text-secondary">
             Activity & Purchase Pipeline
           </h4>
         </div>
@@ -208,7 +208,7 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
             </div>
             <div>
               <h3 className="text-base font-bold text-primary">Recent Orders</h3>
-              <p className="text-xs text-secondary">
+              <p className="text-[14px] text-secondary">
                 Track live delivery milestones and view store packages
               </p>
             </div>
@@ -216,23 +216,23 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
 
           <button
             onClick={() => onSelectTab("orders")}
-            className="text-xs font-bold text-primary hover:text-primary/80 flex items-center gap-1 cursor-pointer"
+            className="text-[14px] font-bold text-primary hover:text-primary/80 flex items-center gap-1 cursor-pointer"
           >
             <span>View All Orders</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
 
         {recentOrders.length === 0 ? (
           <div className="py-12 text-center text-secondary">
             <Package className="w-10 h-10 mx-auto mb-2 text-muted-foreground" />
-            <p className="text-sm font-bold text-primary">No orders placed yet</p>
-            <p className="text-xs text-secondary mt-1 mb-4">
+            <p className="text-base font-bold text-primary">No orders placed yet</p>
+            <p className="text-[14px] text-secondary mt-1 mb-4">
               Discover verified products across 500+ multi-vendor stores.
             </p>
             <Link
               href="/products"
-              className="inline-block px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-xs font-bold rounded-xl transition-colors shadow-xs"
+              className="inline-block px-5 py-2.5 bg-primary hover:bg-primary/90 text-white text-[14px] font-bold rounded-xl transition-colors shadow-xs"
             >
               Start Shopping
             </Link>
@@ -268,12 +268,12 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
 
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-xs font-bold font-mono text-primary">
+                        <span className="text-[14px] font-bold font-mono text-primary">
                           #{order.orderNumber}
                         </span>
                         {firstSubOrder && getStatusBadge(firstSubOrder.status)}
                       </div>
-                      <p className="text-xs text-secondary mt-1">
+                      <p className="text-[14px] text-secondary mt-1">
                         Placed on{" "}
                         {new Date(order.createdAt).toLocaleDateString(undefined, {
                           month: "short",
@@ -289,17 +289,17 @@ export const AccountOverviewTab: React.FC<AccountOverviewTabProps> = ({
 
                   <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pl-15 sm:pl-0">
                     <div className="text-left sm:text-right">
-                      <span className="text-sm font-black text-primary block">
+                      <span className="text-base font-black text-primary block">
                         {formatCurrency(Number(order.totalAmount))}
                       </span>
-                      <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+                      <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
                         {order.paymentStatus}
                       </span>
                     </div>
 
                     <Link
                       href={`/track-order?orderNumber=${encodeURIComponent(order.orderNumber)}`}
-                      className="px-3.5 py-1.5 rounded-xl border border-border bg-white hover:bg-muted text-primary text-xs font-bold transition-colors"
+                      className="px-3.5 py-1.5 rounded-xl border border-border bg-white hover:bg-muted text-primary text-[14px] font-bold transition-colors"
                     >
                       Track Order
                     </Link>

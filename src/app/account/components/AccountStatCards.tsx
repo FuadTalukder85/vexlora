@@ -58,7 +58,7 @@ export const AccountStatCards: React.FC<AccountStatCardsProps> = ({
       actionText: "View Cart",
       onAction: () => setCartDrawerOpen(true),
       badge: (
-        <span className="text-[10px] font-semibold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
+        <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
           Ready to checkout
         </span>
       ),
@@ -78,7 +78,7 @@ export const AccountStatCards: React.FC<AccountStatCardsProps> = ({
       onAction: () => onSelectTab("orders"),
       badge: (
         <span
-          className={`text-[10px] font-semibold px-1.5 py-0.5 rounded ${
+          className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
             pendingOrders > 0
               ? "text-amber-700 bg-amber-50"
               : "text-emerald-700 bg-emerald-50"
@@ -100,7 +100,7 @@ export const AccountStatCards: React.FC<AccountStatCardsProps> = ({
       actionText: "Order History",
       onAction: () => onSelectTab("orders"),
       badge: (
-        <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded flex items-center gap-1">
+        <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-1">
           <Sparkles className="w-2.5 h-2.5" />
           Verified Buyer
         </span>
@@ -116,11 +116,11 @@ export const AccountStatCards: React.FC<AccountStatCardsProps> = ({
         return (
           <div
             key={card.id}
-            className="bg-white rounded-2xl border border-border p-4 hover:border-primary/40 hover:shadow-xs transition-all duration-200 group flex flex-col justify-between"
+            className="bg-white rounded-2xl border border-border p-4.5 hover:border-primary/40 hover:shadow-xs transition-all duration-200 group flex flex-col justify-between"
           >
             <div>
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold text-secondary uppercase tracking-wider">
+                <span className="text-[13px] font-bold text-secondary uppercase tracking-wider">
                   {card.title}
                 </span>
                 <div
@@ -135,24 +135,24 @@ export const AccountStatCards: React.FC<AccountStatCardsProps> = ({
                   {card.value}
                 </span>
                 {card.unit && (
-                  <span className="text-[11px] text-secondary font-medium">
+                  <span className="text-[13px] text-secondary font-medium">
                     {card.unit}
                   </span>
                 )}
               </div>
 
-              <p className="text-[11px] text-secondary mt-0.5 truncate">
+              <p className="text-[13px] text-secondary mt-0.5 truncate">
                 {card.subtitle}
               </p>
             </div>
 
-            <div className="mt-3 pt-2.5 border-t border-border flex items-center justify-between">
+            <div className="mt-3.5 pt-2.5 border-t border-border flex items-center justify-between">
               <button
                 onClick={card.onAction}
-                className="text-[11px] font-bold text-primary hover:text-primary/80 flex items-center gap-1 group-hover:gap-1.5 transition-all cursor-pointer"
+                className="text-[14px] font-bold text-primary hover:text-primary/80 flex items-center gap-1 group-hover:gap-1.5 transition-all cursor-pointer"
               >
                 <span>{card.actionText}</span>
-                <ArrowRight className="w-3 h-3" />
+                <ArrowRight className="w-3.5 h-3.5" />
               </button>
               {card.badge}
             </div>

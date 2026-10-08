@@ -15,7 +15,6 @@ import {
   ExternalLink,
   LogOut,
   Camera,
-  ShieldCheck,
   Truck,
 } from "lucide-react";
 import { User as UserType, VendorProfile } from "@/types/auth";
@@ -113,11 +112,10 @@ export const AccountSidebar: React.FC<AccountSidebarProps> = ({
           badge:
             pendingOrdersCount && pendingOrdersCount > 0 ? (
               <span
-                className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                  activeTab === "orders"
-                    ? "bg-white text-primary"
-                    : "bg-amber-50 text-amber-700"
-                }`}
+                className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${activeTab === "orders"
+                  ? "bg-white text-primary"
+                  : "bg-amber-50 text-amber-700"
+                  }`}
               >
                 {pendingOrdersCount} active
               </span>
@@ -142,11 +140,10 @@ export const AccountSidebar: React.FC<AccountSidebarProps> = ({
           badge:
             unreadCount > 0 ? (
               <span
-                className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${
-                  activeTab === "chat"
-                    ? "bg-white text-highlight"
-                    : "bg-highlight text-white animate-pulse"
-                }`}
+                className={`text-[10px] font-black px-1.5 py-0.5 rounded-full ${activeTab === "chat"
+                  ? "bg-white text-highlight"
+                  : "bg-highlight text-white animate-pulse"
+                  }`}
               >
                 {unreadCount} new
               </span>
@@ -165,11 +162,10 @@ export const AccountSidebar: React.FC<AccountSidebarProps> = ({
           badge:
             cartItemCount > 0 ? (
               <span
-                className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
-                  activeTab === "cart"
-                    ? "bg-white text-primary"
-                    : "bg-muted text-primary font-bold"
-                }`}
+                className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${activeTab === "cart"
+                  ? "bg-white text-primary"
+                  : "bg-muted text-primary font-bold"
+                  }`}
               >
                 {cartItemCount}
               </span>
@@ -227,33 +223,28 @@ export const AccountSidebar: React.FC<AccountSidebarProps> = ({
         </div>
 
         <div className="min-w-0">
-          <p className="text-[11px] text-secondary font-medium">Hello,</p>
-          <p className="text-xs font-bold text-primary truncate">
+          <p className="text-[14px] text-secondary font-medium">Hello,</p>
+          <p className="text-[14px] font-bold text-primary truncate">
             {user?.name || "Customer"}
           </p>
-          <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700">
-            <ShieldCheck className="w-3 h-3 text-emerald-600" />
-            Verified Account
-          </span>
         </div>
       </div>
 
       {/* 2. Structured Dynamic Navigation Groups */}
-      <div className="space-y-5 text-xs">
+      <div className="space-y-5 text-[14px]">
         {navGroups.map((group) => (
           <div key={group.title}>
-            <h4 className="text-[11px] font-bold text-primary uppercase tracking-wider mb-2 px-2">
+            <h4 className="text-[14px] font-bold text-primary tracking-wider mb-2 px-2">
               {group.title}
             </h4>
             <div className="space-y-0.5">
               {group.items.map((item) => {
                 const Icon = item.icon;
                 const isActive = item.tab === activeTab;
-                const commonClasses = `w-full flex items-center justify-between px-3 py-2 rounded-xl font-medium transition-colors text-left ${
-                  isActive
-                    ? "bg-primary text-white font-bold"
-                    : "text-secondary hover:text-primary hover:bg-muted/70"
-                }`;
+                const commonClasses = `w-full flex items-center justify-between px-3 py-2 rounded-xl font-medium transition-colors text-left ${isActive
+                  ? "bg-primary text-white font-bold"
+                  : "text-secondary hover:text-primary hover:bg-muted/70"
+                  }`;
 
                 if (item.href) {
                   return (

@@ -50,7 +50,7 @@ export const AccountCartTab: React.FC = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 text-[14px]">
       {/* Items list */}
       <div className="lg:col-span-2 bg-white rounded-3xl border border-border p-6 shadow-xs">
         <div className="flex items-center justify-between pb-4 border-b border-border">
@@ -63,7 +63,7 @@ export const AccountCartTab: React.FC = () => {
 
           <button
             onClick={() => clearCart()}
-            className="text-xs font-bold text-highlight hover:opacity-85 transition-opacity cursor-pointer"
+            className="text-[14px] font-bold text-highlight hover:opacity-85 transition-opacity cursor-pointer"
           >
             Clear Cart
           </button>
@@ -93,18 +93,18 @@ export const AccountCartTab: React.FC = () => {
                   <div>
                     <Link
                       href={`/products/${item.slug || item.productId}`}
-                      className="text-xs font-bold text-primary hover:underline line-clamp-1"
+                      className="text-[14px] font-bold text-primary hover:underline line-clamp-1"
                     >
                       {item.title || "Product"}
                     </Link>
 
                     {item.vendorName && (
-                      <p className="text-[11px] text-secondary mt-0.5">
+                      <p className="text-xs text-secondary mt-0.5">
                         Sold by: <span className="font-semibold text-primary">{item.vendorName}</span>
                       </p>
                     )}
 
-                    <p className="text-xs font-black text-primary mt-1">
+                    <p className="text-base font-black text-primary mt-1">
                       {formatCurrency(itemPrice)}
                     </p>
                   </div>
@@ -118,9 +118,9 @@ export const AccountCartTab: React.FC = () => {
                       disabled={isLoading || item.quantity <= 1}
                       className="w-7 h-7 rounded-lg bg-white flex items-center justify-center text-primary hover:bg-muted disabled:opacity-40 transition-colors cursor-pointer"
                     >
-                      <Minus className="w-3 h-3" />
+                      <Minus className="w-3.5 h-3.5" />
                     </button>
-                    <span className="w-8 text-center text-xs font-bold text-primary">
+                    <span className="w-8 text-center text-[14px] font-bold text-primary">
                       {item.quantity}
                     </span>
                     <button
@@ -128,13 +128,13 @@ export const AccountCartTab: React.FC = () => {
                       disabled={isLoading}
                       className="w-7 h-7 rounded-lg bg-white flex items-center justify-center text-primary hover:bg-muted transition-colors cursor-pointer"
                     >
-                      <Plus className="w-3 h-3" />
+                      <Plus className="w-3.5 h-3.5" />
                     </button>
                   </div>
 
                   {/* Total & Delete */}
                   <div className="flex items-center gap-3">
-                    <span className="text-xs font-black text-primary w-20 text-right">
+                    <span className="text-[14px] font-black text-primary w-20 text-right">
                       {formatCurrency(itemTotal)}
                     </span>
                     <button
@@ -159,7 +159,7 @@ export const AccountCartTab: React.FC = () => {
             Order Summary
           </h3>
 
-          <div className="mt-4 space-y-3 text-xs">
+          <div className="mt-4 space-y-3 text-[14px]">
             <div className="flex items-center justify-between text-secondary">
               <span>Cart Subtotal</span>
               <span className="font-bold text-primary">{formatCurrency(subtotal)}</span>
@@ -173,9 +173,9 @@ export const AccountCartTab: React.FC = () => {
               <span className="text-secondary font-medium">Included</span>
             </div>
 
-            <div className="pt-3 border-t border-border flex items-center justify-between text-sm">
+            <div className="pt-3 border-t border-border flex items-center justify-between text-base">
               <span className="font-bold text-primary">Estimated Total</span>
-              <span className="text-lg font-black text-primary">
+              <span className="text-xl font-black text-primary">
                 {formatCurrency(subtotal)}
               </span>
             </div>
@@ -185,7 +185,7 @@ export const AccountCartTab: React.FC = () => {
         <div className="space-y-3">
           <Link
             href="/checkout"
-            className="w-full py-3 bg-primary hover:bg-primary/90 text-white rounded-2xl text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-xs"
+            className="w-full py-3 bg-primary hover:bg-primary/90 text-white rounded-2xl text-[14px] font-bold flex items-center justify-center gap-2 transition-colors shadow-xs"
           >
             <span>Proceed to Checkout</span>
             <ArrowRight className="w-4 h-4" />
@@ -193,12 +193,12 @@ export const AccountCartTab: React.FC = () => {
 
           <Link
             href="/products"
-            className="w-full py-2.5 bg-muted hover:bg-muted/80 text-primary rounded-2xl text-xs font-bold flex items-center justify-center transition-colors"
+            className="w-full py-2.5 bg-muted hover:bg-muted/80 text-primary rounded-2xl text-[14px] font-bold flex items-center justify-center transition-colors"
           >
             Continue Shopping
           </Link>
 
-          <div className="pt-2 flex items-center justify-center gap-1.5 text-[11px] text-secondary font-medium">
+          <div className="pt-2 flex items-center justify-center gap-1.5 text-xs text-secondary font-medium">
             <ShieldCheck className="w-3.5 h-3.5 text-primary" />
             <span>100% Escrow Protection via Vexlora</span>
           </div>

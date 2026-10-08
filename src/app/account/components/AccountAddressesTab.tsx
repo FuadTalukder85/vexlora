@@ -80,12 +80,12 @@ export const AccountAddressesTab: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 text-[14px]">
       {/* Top Header */}
       <div className="bg-white rounded-3xl border border-border p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h3 className="text-base font-bold text-primary">Shipping Addresses</h3>
-          <p className="text-xs text-secondary">
+          <p className="text-[14px] text-secondary">
             Manage your saved delivery locations for fast 1-click checkout
           </p>
         </div>
@@ -94,7 +94,7 @@ export const AccountAddressesTab: React.FC = () => {
           onClick={() => setIsModalOpen(true)}
           size="sm"
           leftIcon={<Plus className="w-4 h-4" />}
-          className="self-start sm:self-auto"
+          className="self-start sm:self-auto text-[14px] font-bold"
         >
           Add New Address
         </Button>
@@ -104,19 +104,20 @@ export const AccountAddressesTab: React.FC = () => {
       {isLoading ? (
         <div className="py-16 text-center text-secondary bg-white rounded-3xl border border-border">
           <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-          <p className="text-xs font-bold text-primary">Loading addresses...</p>
+          <p className="text-[14px] font-bold text-primary">Loading addresses...</p>
         </div>
       ) : !addresses || addresses.length === 0 ? (
         <div className="py-16 text-center text-secondary bg-white rounded-3xl border border-border px-4">
           <MapPin className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-          <h4 className="text-sm font-bold text-primary">No addresses saved</h4>
-          <p className="text-xs text-secondary mt-1 mb-4 max-w-sm mx-auto">
+          <h4 className="text-base font-bold text-primary">No addresses saved</h4>
+          <p className="text-[14px] text-secondary mt-1 mb-4 max-w-sm mx-auto">
             Save your home or office address now for faster delivery and accurate shipping rates.
           </p>
           <Button
             onClick={() => setIsModalOpen(true)}
             size="sm"
             leftIcon={<Plus className="w-4 h-4" />}
+            className="text-[14px] font-bold"
           >
             Add First Address
           </Button>
@@ -138,34 +139,34 @@ export const AccountAddressesTab: React.FC = () => {
                     <div className="w-8 h-8 rounded-xl bg-muted flex items-center justify-center">
                       {getLabelIcon(addr.label)}
                     </div>
-                    <span className="text-xs font-bold text-primary">
+                    <span className="text-[14px] font-bold text-primary">
                       {addr.label || "Address"}
                     </span>
                   </div>
 
                   {addr.isDefault ? (
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
-                      <Star className="w-3 h-3 fill-emerald-600 text-emerald-600" />
+                    <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+                      <Star className="w-3.5 h-3.5 fill-emerald-600 text-emerald-600" />
                       Default
                     </span>
                   ) : (
                     <button
                       onClick={() => setDefaultAddressMutation.mutate(addr.id)}
                       disabled={setDefaultAddressMutation.isPending}
-                      className="text-[11px] font-bold text-secondary hover:text-primary transition-colors cursor-pointer"
+                      className="text-xs font-bold text-secondary hover:text-primary transition-colors cursor-pointer"
                     >
                       Set as Default
                     </button>
                   )}
                 </div>
 
-                <div className="mt-4 space-y-1 text-xs">
-                  <p className="text-primary font-bold text-sm">{addr.street}</p>
+                <div className="mt-4 space-y-1 text-[14px]">
+                  <p className="text-primary font-bold text-base">{addr.street}</p>
                   <p className="text-secondary">
                     {addr.city}, {addr.zip}
                   </p>
                   {addr.phone && (
-                    <p className="text-secondary text-[11px] pt-1">
+                    <p className="text-secondary text-xs pt-1">
                       Phone: <span className="text-primary font-semibold">{addr.phone}</span>
                     </p>
                   )}
@@ -173,7 +174,7 @@ export const AccountAddressesTab: React.FC = () => {
               </div>
 
               <div className="mt-5 pt-3 border-t border-border flex items-center justify-between">
-                <span className="text-[11px] text-muted-foreground">
+                <span className="text-xs text-muted-foreground">
                   Saved Address
                 </span>
                 <button
@@ -265,7 +266,7 @@ export const AccountAddressesTab: React.FC = () => {
               onChange={handleInputChange}
               className="w-4 h-4 rounded text-primary border-border focus:ring-primary/20 cursor-pointer"
             />
-            <label htmlFor="isDefault" className="text-xs font-medium text-primary cursor-pointer">
+            <label htmlFor="isDefault" className="text-[14px] font-medium text-primary cursor-pointer">
               Set as default shipping address
             </label>
           </div>

@@ -80,7 +80,7 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 text-[14px]">
       {/* 2-Column Grid: Personal Details & Change Password */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Personal Profile Details Card */}
@@ -91,7 +91,7 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
             </div>
             <div>
               <h3 className="text-base font-bold text-primary">Personal Details</h3>
-              <p className="text-xs text-secondary">
+              <p className="text-[14px] text-secondary">
                 Update your account name and phone number
               </p>
             </div>
@@ -130,7 +130,7 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
               <Button
                 type="submit"
                 isLoading={updateProfileMutation.isPending}
-                className="w-full"
+                className="w-full text-[14px] font-bold"
               >
                 Save Profile Details
               </Button>
@@ -146,7 +146,7 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
             </div>
             <div>
               <h3 className="text-base font-bold text-primary">Security & Password</h3>
-              <p className="text-xs text-secondary">
+              <p className="text-[14px] text-secondary">
                 Ensure account protection with a strong passphrase
               </p>
             </div>
@@ -195,7 +195,7 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
               />
               <label
                 htmlFor="revokeOtherSessions"
-                className="text-xs text-secondary cursor-pointer"
+                className="text-[14px] text-secondary cursor-pointer"
               >
                 Sign out of all other devices on password change
               </label>
@@ -206,7 +206,7 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
                 type="submit"
                 variant="highlight"
                 isLoading={changePasswordMutation.isPending}
-                className="w-full"
+                className="w-full text-[14px] font-bold"
               >
                 Update Password
               </Button>
@@ -224,7 +224,7 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
             </div>
             <div>
               <h3 className="text-base font-bold text-primary">Active Login Sessions</h3>
-              <p className="text-xs text-secondary">
+              <p className="text-[14px] text-secondary">
                 Devices where you are currently signed in to Vexlora
               </p>
             </div>
@@ -236,7 +236,7 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
             size="sm"
             isLoading={revokeOtherSessionsMutation.isPending}
             leftIcon={<LogOut className="w-3.5 h-3.5 text-secondary" />}
-            className="self-start sm:self-auto hover:text-highlight hover:border-rose-200"
+            className="self-start sm:self-auto hover:text-highlight hover:border-rose-200 text-[14px] font-bold"
           >
             Sign Out All Other Sessions
           </Button>
@@ -244,11 +244,11 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
 
         <div className="mt-4 divide-y divide-border">
           {loadingSessions ? (
-            <div className="py-8 text-center text-xs text-secondary">
+            <div className="py-8 text-center text-[14px] text-secondary">
               Loading active sessions...
             </div>
           ) : !sessions || sessions.length === 0 ? (
-            <div className="py-8 text-center text-xs text-secondary">
+            <div className="py-8 text-center text-[14px] text-secondary">
               1 Active Session (Current Device)
             </div>
           ) : (
@@ -263,7 +263,7 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <p className="text-xs font-bold text-primary">
+                      <p className="text-[14px] font-bold text-primary">
                         {sess.userAgent?.includes("Mobile")
                           ? "Mobile Browser"
                           : sess.userAgent?.includes("Macintosh")
@@ -273,12 +273,12 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
                           : "Web Browser"}
                       </p>
                       {sess.isCurrent && (
-                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                        <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                           Current Device
                         </span>
                       )}
                     </div>
-                    <p className="text-[11px] text-secondary mt-0.5">
+                    <p className="text-xs text-secondary mt-0.5">
                       IP: {sess.ipAddress || "Unknown IP"} • Signed in:{" "}
                       {new Date(sess.createdAt).toLocaleDateString(undefined, {
                         month: "short",
@@ -293,7 +293,7 @@ export const AccountSettingsTab: React.FC<AccountSettingsTabProps> = ({ user }) 
                   <button
                     onClick={() => revokeSessionMutation.mutate(sess.id)}
                     disabled={revokeSessionMutation.isPending}
-                    className="text-xs font-bold text-highlight hover:underline cursor-pointer disabled:opacity-50"
+                    className="text-[14px] font-bold text-highlight hover:underline cursor-pointer disabled:opacity-50"
                   >
                     Revoke
                   </button>
