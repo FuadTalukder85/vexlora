@@ -19,7 +19,7 @@ export interface SubOrder {
   subtotal: number;
   commissionAmount: number;
   vendorEarning: number;
-  status: "PENDING" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED" | "RETURNED";
+  status: "PENDING" | "CONFIRMED" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED" | "RETURNED";
   payoutStatus: "UNPAID" | "PENDING" | "PAID" | "REJECTED";
   trackingNumber?: string | null;
   shippingCarrier?: string | null;
@@ -117,6 +117,11 @@ export const orderApi = {
 
   cancelMyOrder: async (id: string, reason?: string) => {
     const res = await http.patch<Order, { reason?: string }>(`/orders/my-orders/${id}/cancel`, { reason });
+    return res.data;
+  },
+
+  trackOrder: async (orderNumber: string, email?: string) => {
+    const res = await http.get<Order>(`/orders/track/${encodeURIComponent(orderNumber)}`, email ? { email } : undefined);
     return res.data;
   },
 };

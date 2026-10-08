@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Image from "next/image";
@@ -136,17 +136,14 @@ export function MobileNav() {
           </button>
 
           {isAuthenticated && user ? (
-            <button
-              onClick={async () => {
-                setMobileMenuOpen(false);
-                await logout();
-                toast.success("Signed out successfully");
-              }}
-              className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-highlight/30 text-center hover:bg-highlight/10 transition-colors cursor-pointer"
+            <Link
+              href="/account"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex flex-col items-center justify-center p-2 rounded-xl bg-white border border-border text-center hover:border-primary transition-colors"
             >
-              <User className="h-4 w-4 text-highlight mb-1" />
-              <span className="text-[11px] font-medium text-highlight">Sign Out</span>
-            </button>
+              <User className="h-4 w-4 text-primary mb-1" />
+              <span className="text-[11px] font-medium text-secondary">Account</span>
+            </Link>
           ) : (
             <Link
               href="/login"
@@ -191,7 +188,7 @@ export function MobileNav() {
             </h4>
             <div className="space-y-1">
               <Link
-                href="#"
+                href="/track-order"
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-3 py-2 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-muted hover:text-primary transition-colors"
               >

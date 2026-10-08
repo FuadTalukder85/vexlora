@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Star, Heart, Eye, BarChart2 } from "lucide-react";
 import { useCartStore } from "@/stores/cart.store";
 import { useWishlistStore } from "@/stores/wishlist.store";
+import { useCompareStore } from "@/stores/compare.store";
 import { useUIStore } from "@/stores/ui.store";
 import { formatCurrency } from "@/lib/utils";
 
@@ -42,6 +43,10 @@ export function ProductCard(props: ProductCardProps) {
   const addItem = useCartStore((s) => s.addItem);
   const toggleWishlist = useWishlistStore((s) => s.toggleWishlist);
   const setCartDrawerOpen = useUIStore((s) => s.setCartDrawerOpen);
+  const addToCompare = useCompareStore((s) => s.addToCompare);
+  const removeFromCompare = useCompareStore((s) => s.removeFromCompare);
+  const isInCompare = useCompareStore((s) => s.isInCompare);
+  const isCompared = id ? isInCompare(id) : false;
 
   const activeInWishlist = useWishlistStore((s) =>
     s.items.some((w) => (id && w.productId === id) || (slug && w.slug === slug))
@@ -115,10 +120,41 @@ export function ProductCard(props: ProductCardProps) {
           </Link>
           <button
             type="button"
-            className="p-1.5 text-primary hover:text-primary transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs"
+            onClick={() => {
+              if (!id || !name) return;
+              if (isCompared) {
+                removeFromCompare(id);
+              } else {
+                addToCompare({
+                  id,
+                  vendorId: "vendor-1",
+                  title: name,
+                  slug: slug || id,
+                  images: image ? [image] : [],
+                  basePrice: originalPrice || price || 0,
+                  discountPrice: price,
+                  totalStock: 50,
+                  status: "ACTIVE",
+                  ratingAvg: rating || 5,
+                  ratingCount: reviews || 0,
+                  tags: [],
+                  createdAt: new Date().toISOString(),
+                  updatedAt: new Date().toISOString(),
+                  vendor: {
+                    id: "vendor-1",
+                    storeName: vendor || "Vexlora",
+                    storeSlug: "vexlora",
+                  },
+                });
+              }
+            }}
+            className={`p-1.5 transition-colors cursor-pointer rounded-full bg-white/80 backdrop-blur-xs shadow-xs ${
+              isCompared ? "text-amber-500 font-bold" : "text-primary hover:text-amber-500"
+            }`}
             aria-label="Compare"
+            title={isCompared ? "Remove from comparison" : "Add to comparison"}
           >
-            <BarChart2 className="h-4.5 w-4.5" />
+            <BarChart2 className={`h-4.5 w-4.5 ${isCompared ? "stroke-[2.5]" : ""}`} />
           </button>
         </div>
 

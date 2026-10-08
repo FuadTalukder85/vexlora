@@ -58,8 +58,8 @@ export function Navbar() {
             Beauty & Wellness
           </Link>
           <Link
-            href="/products"
-            className="text-secondary hover:text-primary transition-colors py-1"
+            href="/stores"
+            className="text-secondary hover:text-primary transition-colors py-1 font-semibold"
           >
             Verified Stores
           </Link>

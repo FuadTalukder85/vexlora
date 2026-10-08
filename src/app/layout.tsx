@@ -7,6 +7,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { MobileNav } from "@/components/layout/MobileNav";
+import { CompareDrawer } from "@/components/compare/CompareDrawer";
+import { CustomerChatModal } from "@/components/chat/CustomerChatModal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,6 +44,12 @@ export default function RootLayout({
 
           {/* Cart Drawer Overlay & Sidebar */}
           <CartDrawer />
+
+          {/* Product Comparison Floating Drawer */}
+          <CompareDrawer />
+
+          {/* Live Vendor-Customer Chat Widget */}
+          <CustomerChatModal />
 
           {/* Mobile Drawer Navigation */}
           <MobileNav />
