@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -7,23 +7,80 @@ import {
   Shirt,
   Home as HomeIcon,
   Sparkles,
+  Dumbbell,
+  Layers,
   Zap,
-  TrendingUp,
   ShieldCheck,
   ChevronRight,
   Store,
 } from "lucide-react";
+import { useCategoryTree } from "@/hooks/useCategories";
+import { useVendorStats } from "@/hooks/useVendorStats";
+import { useIsMounted } from "@/lib/utils";
 
-const categories = [
-  { name: "Electronics & Tech", icon: Laptop, count: "1,240 items", tag: "Popular" },
-  { name: "Fashion & Apparel", icon: Shirt, count: "3,890 items", tag: "Hot" },
-  { name: "Home & Kitchen", icon: HomeIcon, count: "980 items" },
-  { name: "Beauty & Wellness", icon: Sparkles, count: "640 items" },
-  { name: "Top Rated Stores", icon: Store, count: "500+ vendors", tag: "Verified" },
-  { name: "Trending Products", icon: TrendingUp, count: "850 items" },
-];
+function getCategoryIcon(slug: string) {
+  const s = slug.toLowerCase();
+  if (s.includes("electr") || s.includes("laptop") || s.includes("tech") || s.includes("computer")) {
+    return Laptop;
+  }
+  if (s.includes("fashion") || s.includes("apparel") || s.includes("cloth")) {
+    return Shirt;
+  }
+  if (s.includes("home") || s.includes("kitchen")) {
+    return HomeIcon;
+  }
+  if (s.includes("beauty") || s.includes("welness") || s.includes("care")) {
+    return Sparkles;
+  }
+  if (s.includes("fit") || s.includes("sport")) {
+    return Dumbbell;
+  }
+  return Layers;
+}
 
 export function CategorySidebar() {
+  const mounted = useIsMounted();
+  const { data: categoryTree = [] } = useCategoryTree();
+  const { data: vendorCount } = useVendorStats();
+
+  // Dynamic category list mapped from database
+  const displayCategories = React.useMemo(() => {
+    const dbCategories = (categoryTree || []).slice(0, 6).map((cat, idx) => {
+      let tag: string | undefined;
+      if (idx === 0) tag = "Popular";
+      if (idx === 1 || idx === 2) tag = "Hot";
+
+      const childCount = cat.children ? cat.children.length : 0;
+      const countLabel = childCount > 0 ? `${childCount} sub-taxonomies` : "Trending";
+
+      return {
+        id: cat.id || cat.slug,
+        name: cat.name,
+        slug: cat.slug,
+        href: `/products?category=${cat.slug}`,
+        icon: getCategoryIcon(cat.slug),
+        count: countLabel,
+        tag,
+      };
+    });
+
+    // Add Top Rated Stores
+    const vendorCountLabel =
+      typeof vendorCount === "number" ? `${vendorCount}+ vendors` : "Verified vendors";
+
+    dbCategories.push({
+      id: "stores",
+      name: "Top Rated Stores",
+      slug: "stores",
+      href: "/stores",
+      icon: Store,
+      count: vendorCountLabel,
+      tag: "Verified",
+    });
+
+    return dbCategories;
+  }, [categoryTree, vendorCount]);
+
   return (
     <div className="hidden lg:block lg:col-span-3 bg-white rounded-2xl border border-border p-4 shadow-xs flex flex-col justify-between">
       <div>
@@ -38,31 +95,46 @@ export function CategorySidebar() {
         </div>
 
         <nav className="space-y-1">
-          {categories.map((cat) => {
-            const IconComponent = cat.icon;
-            return (
-              <Link
-                key={cat.name}
-                href="#"
-                className="flex items-center justify-between p-2.5 rounded-xl text-sm font-semibold text-primary hover:bg-muted hover:text-primary transition-all group"
+          {!mounted ? (
+            Array.from({ length: 7 }).map((_, idx) => (
+              <div
+                key={idx}
+                className="flex items-center justify-between p-2.5 rounded-xl animate-pulse"
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="h-8 w-8 rounded-lg bg-muted group-hover:bg-primary group-hover:text-white flex items-center justify-center text-primary transition-colors">
-                    <IconComponent className="h-4 w-4" />
+                  <div className="h-8 w-8 rounded-lg bg-muted shrink-0" />
+                  <div className="h-3.5 w-24 bg-muted rounded" />
+                </div>
+                <div className="h-3 w-3 bg-muted rounded" />
+              </div>
+            ))
+          ) : (
+            displayCategories.map((cat) => {
+              const IconComponent = cat.icon;
+              return (
+                <Link
+                  key={cat.id || cat.slug}
+                  href={cat.href}
+                  className="flex items-center justify-between p-2.5 rounded-xl text-sm font-semibold text-primary hover:bg-muted hover:text-primary transition-all group"
+                >
+                  <div className="flex items-center gap-2.5 truncate">
+                    <div className="h-8 w-8 rounded-lg bg-muted group-hover:bg-primary group-hover:text-white flex items-center justify-center text-primary transition-colors shrink-0">
+                      <IconComponent className="h-4 w-4" />
+                    </div>
+                    <span className="truncate">{cat.name}</span>
                   </div>
-                  <span>{cat.name}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  {cat.tag && (
-                    <span className="text-[9px] font-semibold text-white bg-highlight px-1.5 py-0.5 rounded">
-                      {cat.tag}
-                    </span>
-                  )}
-                  <ChevronRight className="h-3.5 w-3.5 text-secondary group-hover:translate-x-0.5 transition-transform" />
-                </div>
-              </Link>
-            );
-          })}
+                  <div className="flex items-center gap-1 shrink-0">
+                    {cat.tag && (
+                      <span className="text-[9px] font-semibold text-white bg-highlight px-1.5 py-0.5 rounded">
+                        {cat.tag}
+                      </span>
+                    )}
+                    <ChevronRight className="h-3.5 w-3.5 text-secondary group-hover:translate-x-0.5 transition-transform" />
+                  </div>
+                </Link>
+              );
+            })
+          )}
         </nav>
       </div>
 
