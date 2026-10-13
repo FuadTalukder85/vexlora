@@ -13,20 +13,24 @@ import {
   Sparkles,
   ChevronRight,
   User,
+  Flame,
+  Ticket,
 } from "lucide-react";
 import { useUIStore } from "@/stores/ui.store";
 import { useWishlistStore } from "@/stores/wishlist.store";
 import { useCartStore } from "@/stores/cart.store";
 import { useAuthStore } from "@/stores/auth.store";
 import { useIsMounted } from "@/lib/utils";
+import { useCategoryTree } from "@/hooks/useCategories";
 import { toast } from "sonner";
 
-const categories = [
-  { name: "Electronics & Gadgets", href: "/products?category=electronics", count: "500k+ items" },
-  { name: "Laptops & Computers", href: "/products?category=laptops-computers", count: "500k+ items" },
-  { name: "Fashion & Apparel", href: "/products?category=fashion-apparel", count: "Popular" },
-  { name: "Home & Kitchen", href: "/products?category=home-kitchen", count: "Trending" },
+const defaultCategories = [
+  { name: "Electronics & Tech", href: "/products?category=electronics", count: "Popular" },
+  { name: "Laptops & Computers", href: "/products?category=laptops-computers", count: "Trending" },
+  { name: "Fashion & Apparel", href: "/products?category=fashion-apparel", count: "Hot" },
+  { name: "Home & Kitchen", href: "/products?category=home-kitchen", count: "Curated" },
   { name: "Beauty & Wellness", href: "/products?category=beauty-welness", count: "Verified" },
+  { name: "Fitness & Sports", href: "/products?category=fitness", count: "Active" },
 ];
 
 export function MobileNav() {
@@ -35,6 +39,18 @@ export function MobileNav() {
   const cartCount = useCartStore((s) => s.getItemCount());
   const { user, isAuthenticated, logout } = useAuthStore();
   const mounted = useIsMounted();
+  const { data: categoryTree } = useCategoryTree();
+
+  const displayCategories = React.useMemo(() => {
+    if (categoryTree && categoryTree.length > 0) {
+      return categoryTree.map((cat, idx) => ({
+        name: cat.name,
+        href: `/products?category=${cat.slug}`,
+        count: cat.children && cat.children.length > 0 ? `${cat.children.length} sub-items` : "Curated",
+      }));
+    }
+    return defaultCategories;
+  }, [categoryTree]);
 
   // Close drawer on escape key
   React.useEffect(() => {
@@ -158,13 +174,55 @@ export function MobileNav() {
 
         {/* Scrollable Navigation List */}
         <div className="flex-1 overflow-y-auto px-6 py-4 space-y-6">
+          {/* Featured Highlights */}
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-primary mb-3">
+              Special Highlights
+            </h4>
+            <div className="space-y-1">
+              <Link
+                href="/deals"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between py-2.5 px-3 rounded-xl text-sm font-semibold text-highlight hover:bg-rose-50/60 transition-colors"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Flame className="h-4 w-4" />
+                  <span>Today&apos;s Hot Deals</span>
+                </div>
+                <span className="text-[10px] font-bold bg-highlight text-white px-1.5 py-0.5 rounded">Hot</span>
+              </Link>
+              <Link
+                href="/coupons"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between py-2.5 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-muted hover:text-primary transition-colors"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Ticket className="h-4 w-4 text-secondary" />
+                  <span>Exclusive Coupons</span>
+                </div>
+                <ChevronRight className="h-3.5 w-3.5" />
+              </Link>
+              <Link
+                href="/stores"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between py-2.5 px-3 rounded-xl text-sm font-medium text-secondary hover:bg-muted hover:text-primary transition-colors"
+              >
+                <div className="flex items-center gap-2.5">
+                  <Store className="h-4 w-4 text-secondary" />
+                  <span>Verified Stores</span>
+                </div>
+                <ChevronRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          </div>
+
           {/* Main Categories */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-primary mb-3">
               Explore Categories
             </h4>
             <div className="space-y-1">
-              {categories.map((category) => (
+              {displayCategories.map((category) => (
                 <Link
                   key={category.name}
                   href={category.href}
