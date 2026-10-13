@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -8,6 +8,8 @@ export interface DealTile {
   id: string;
   title: string;
   image: string;
+  href?: string;
+  slug?: string;
   discount?: string;
   dealType?: string;
   label?: string;
@@ -19,6 +21,8 @@ export interface ShowcaseCardProps {
   id?: string;
   title: string;
   href?: string;
+  categorySlug?: string;
+  extraParams?: Record<string, string>;
   isDealCard?: boolean;
   items: DealTile[];
   timerString?: string;
@@ -55,10 +59,14 @@ export function ShowcaseCard({
             ? `Ends in ${timerString}`
             : item.dealType;
 
+          const itemHref =
+            item.href ||
+            (item.slug ? `/products?category=${item.slug}` : "#");
+
           return (
             <Link
               key={item.id}
-              href="#"
+              href={itemHref}
               className={`flex flex-col justify-between rounded-xl ${isDealCard
                   ? "bg-[#f5f5f7] hover:bg-[#ebebeb] p-2"
                   : "group/item p-1.5 hover:opacity-90"

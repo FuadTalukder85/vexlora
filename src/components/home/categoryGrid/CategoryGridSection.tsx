@@ -1,11 +1,13 @@
-﻿"use client";
+"use client";
 
 import * as React from "react";
 import showcaseGridData from "./showcaseGrid.json";
 import { ShowcaseCard, ShowcaseCardProps } from "./ShowcaseCard";
+import { useCategoryTree } from "@/hooks/useCategories";
 
 export function CategoryGridSection() {
   const [timerSeconds, setTimerSeconds] = React.useState(28946); // 08:02:26
+  const { data: categoryTree } = useCategoryTree();
 
   React.useEffect(() => {
     const countdown = setInterval(() => {
@@ -21,7 +23,58 @@ export function CategoryGridSection() {
     return `${h}:${m}:${s}`;
   };
 
-  const cards = showcaseGridData as ShowcaseCardProps[];
+  // Dynamically map and enrich categories from database
+  const cards = React.useMemo(() => {
+    const baseCards = showcaseGridData as ShowcaseCardProps[];
+    if (!categoryTree || categoryTree.length === 0) {
+      return baseCards;
+    }
+
+    const categoryMap = new Map<string, any>();
+    categoryTree.forEach((root) => {
+      categoryMap.set(root.slug, root);
+      root.children?.forEach((child: any) => {
+        categoryMap.set(child.slug, child);
+      });
+    });
+
+    return baseCards.map((card) => {
+      if (card.isDealCard || !card.categorySlug) {
+        return card;
+      }
+
+      const rootCat = categoryMap.get(card.categorySlug);
+      if (!rootCat) {
+        return card;
+      }
+
+      const maxPriceParam = card.extraParams?.maxPrice
+        ? `&maxPrice=${card.extraParams.maxPrice}`
+        : "";
+
+      const updatedItems = card.items.map((item) => {
+        const itemSlug = item.slug || item.id;
+        const dbCategory = categoryMap.get(itemSlug);
+
+        if (dbCategory) {
+          return {
+            ...item,
+            label: dbCategory.name || item.label,
+            image: dbCategory.image || item.image,
+            slug: dbCategory.slug,
+            href: `/products?category=${dbCategory.slug}${maxPriceParam}`,
+          };
+        }
+
+        return item;
+      });
+
+      return {
+        ...card,
+        items: updatedItems,
+      };
+    });
+  }, [categoryTree]);
 
   return (
     <section className="w-full py-8 px-4 sm:px-8 lg:px-12 xl:px-16 2xl:px-20 bg-muted/50">
